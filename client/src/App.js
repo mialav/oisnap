@@ -4,8 +4,6 @@ import Navbar from "./components/Navbar";
 import WelcomePopup from "./components/WelcomePopup";
 import { Route } from "react-router-dom";
 import Map from "./components/Map";
-import Map from "./components/Map.jsx";
-
 
 function App() {
   return (

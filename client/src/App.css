@@ -46,15 +46,6 @@
   border: 1px solid black;
 }
 
-/* MAPBOX STYLING */
-.mapContainer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-
 /************************ FOOTER *****************/
 
 footer {
@@ -73,14 +64,13 @@ footer {
   }
 }
 
-/* .content-wrapper {
+.content-wrapper {
   background-color: black;
   background: rgba(0, 0, 0, 0.75);
   color: #fff;
-  height: 100%;
   position: relative;
   z-index: 1;
-} */
+}
 
 /* MAPBOX STYLING */
 .mapContainer {
@@ -89,4 +79,5 @@ footer {
   right: 0;
   left: 0;
   bottom: 0;
+  z-index: 0;
 }
