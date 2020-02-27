@@ -79,4 +79,34 @@ router.get("/loggedin", (req, res) => {
   res.json(req.user);
 });
 
+//SOCIAL LOGIN GOOGLE
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/plus.login"]
+  })
+);
+
+router.get(
+  "google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    res.redirect("/home");
+  }
+);
+
+//SOCIAL LOGIN FACEBOOK
+
+app.get("/facebook", passport.authenticate("facebook"));
+
+app.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", { failureRedirect: "/login" }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect("/home");
+  }
+);
+
 module.exports = router;
