@@ -10,6 +10,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload. Nora Branch!
         </p>
+        <p>This is the best branch ever!!!!</p>
         <a
           className="App-link"
           href="https://reactjs.org"
