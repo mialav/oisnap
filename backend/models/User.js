@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema(
     nickname: String,
     username: String,
     password: String,
+    googleId: String,
+    facebookId: String,
     snaps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Snap" }],
     snapCount: {
       free: { type: Number, default: 0 },
