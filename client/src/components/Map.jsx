@@ -6,9 +6,9 @@ export default class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lng: 5,
-      lat: 34,
-      zoom: 2
+      lng: 13.404954,
+      lat: 52.520007,
+      zoom: 12
     };
   }
 
