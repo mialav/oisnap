@@ -55,6 +55,20 @@
 .container {
   align-content: center;
   background-color: white;
+  height: 70vh;
+}
+
+/******************************FILTER****************/
+
+.filters {
+  background-color: white;
+}
+
+/******************* ADD NEW SNAP *****************/
+
+.detail-page form {
+  display: flex;
+  flex-direction: column;
 }
 
 /************************ FOOTER *****************/

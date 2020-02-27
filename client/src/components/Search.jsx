@@ -9,8 +9,10 @@ class Search extends Component {
     return (
       <div className="container">
         <div>
+          {/* form */}
           <label htmlFor="search">Search location:</label>
           <input type="text" />
+          <button>Go</button>
         </div>
       </div>
     );
