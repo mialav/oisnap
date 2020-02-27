@@ -1,5 +1,5 @@
 const express = require("express");
-const passport = require('passport');
+const passport = require("passport");
 const router = express.Router();
 const User = require("../models/User");
 
@@ -7,34 +7,48 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
-
-router.get("/login", (req, res, next) => {
-  res.render("auth/login", { "message": req.flash("error") });
-});
-
-router.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
-  failureFlash: true,
-  passReqToCallback: true
-}));
-
-router.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+router.post("/login", (req, res, next) => {
+  console.log(req.user);
+  passport.authenticate("local", (err, user, info) => {
+    console.log("user at beginning of auth:", user);
+    if (err) {
+      return res.status(500).json({ message: "Error while authenticating" });
+    }
+    if (!user) {
+      // no user found with username or password didn't match
+      return res.status(400).json({ message: info.message });
+    }
+    // passport req.login
+    req.login(user, err => {
+      if (err) {
+        return res.status(500).json({ message: "Error while logging in" });
+      }
+      res.json(user);
+    });
+  })(req, res, next);
 });
 
 router.post("/signup", (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
   if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
-    return;
+    return res
+      .status(400)
+      .json({ message: "Username and Password can't be empty" });
+  }
+
+  //checks if username has 4-8 characters and contains a number
+  let regex = new RegExp("^(?=.*[0-9])(?=.{4,8})");
+  if (!regex.test(password)) {
+    return res.status(400).json({
+      message:
+        "The password must be between 4 and 8 characters long and has to contain at least one digit."
+    });
   }
 
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
-      return;
+      return res.status(400).json({ message: "This user already exists." });
     }
 
     const salt = bcrypt.genSaltSync(bcryptSalt);
@@ -45,19 +59,24 @@ router.post("/signup", (req, res, next) => {
       password: hashPass
     });
 
-    newUser.save()
-    .then(() => {
-      res.redirect("/");
-    })
-    .catch(err => {
-      res.render("auth/signup", { message: "Something went wrong" });
-    })
+    newUser
+      .save()
+      .then(userDocument => {
+        res.json(userDocument);
+      })
+      .catch(err => {
+        //TODO - Need to send a error response
+      });
   });
 });
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.json({ message: "Successful logout" });
+});
+
+router.get("/loggedin", (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;
