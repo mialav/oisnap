@@ -1,11 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Toolbar = () => {
   return (
     <div className="toolbar">
-      <button>Filter</button>
-      <button>Add</button>
-      <button>Search</button>
+      <button>
+        <Link to="/filter">Filter</Link>
+      </button>
+      <button>
+        <Link to="/add">Add</Link>
+      </button>
+      <button>
+        <Link to="/search">Search</Link>
+      </button>
     </div>
   );
 };
