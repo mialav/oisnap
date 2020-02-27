@@ -32,6 +32,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid black;
+  background-color: white;
 }
 .dropdown {
   position: absolute;
@@ -44,15 +45,18 @@
 
 .welcomePopup {
   border: 1px solid black;
+  background-color: white;
 }
 
 /************************ FOOTER *****************/
 
-footer {
+footer,
+.toolbar {
   position: fixed;
   bottom: 0;
   width: 100%;
   border-top: 1px solid black;
+  background-color: white;
 }
 
 @keyframes App-logo-spin {
@@ -64,20 +68,12 @@ footer {
   }
 }
 
-.content-wrapper {
-  background-color: black;
-  background: rgba(0, 0, 0, 0.75);
-  color: #fff;
-  position: relative;
-  z-index: 1;
-}
-
 /* MAPBOX STYLING */
 .mapContainer {
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   bottom: 0;
-  z-index: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
 }
