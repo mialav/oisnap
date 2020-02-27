@@ -1,10 +1,17 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import WelcomePopup from "./components/WelcomePopup";
 
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
+      <Navbar></Navbar>
+      <WelcomePopup></WelcomePopup>
+      <Footer></Footer>
+=======
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -24,6 +31,7 @@ function App() {
           Learn React
         </a>
       </header>
+>>>>>>> 40ba5b7072262b2ec95e1a6cd75886fa51563421
     </div>
   );
 }
