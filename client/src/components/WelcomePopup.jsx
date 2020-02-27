@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const WelcomePopup = () => {
   return (
-    <div>
+    <div className="welcomePopup">
       <h1>OiSnap!</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi,
@@ -13,6 +14,7 @@ const WelcomePopup = () => {
       <button>
         <Link to="/home">START</Link>
       </button>
+      <Footer />
     </div>
   );
 };
