@@ -21,7 +21,9 @@ router.post("/", (req, res, next) => {
   console.log("POST request sent to /snaps");
   const newSnap = req.body;
   const currentDate = new Date();
-  console.log(req.user);
+  const expiryDate = new Date(currentDate.getTime() + 86400000);
+
+  console.log(req.body);
   Snap.create({
     title: newSnap.title,
     description: newSnap.description,
