@@ -6,16 +6,16 @@ class Filter extends Component {
       <div className="filters">
         <div>
           <div>
-            <input type="checkbox" id="" name="free-stuff" value="" />
-            <label htmlFor="free-stuff"> FREE STUFF </label>
+            <input type="checkbox" id="" name="free" value="" />
+            <label htmlFor="free"> FREE </label>
           </div>
           <div>
-            <input type="checkbox" id="" name="happenings" value="" />
-            <label htmlFor="happenings"> HAPPENINGS </label>
+            <input type="checkbox" id="" name="happening" value="" />
+            <label htmlFor="happening"> HAPPENING </label>
           </div>
           <div>
-            <input type="checkbox" id="" name="crowds" value="" />
-            <label htmlFor="crowds"> CROWDS </label>
+            <input type="checkbox" id="" name="crowd" value="" />
+            <label htmlFor="crowd"> CROWD </label>
           </div>
           <div>
             <input type="checkbox" id="" name="promo" value="" />

@@ -54,7 +54,7 @@ class NewSnap extends Component {
 
     //axios
 
-    // this.props.history.push("/") // redirect
+    // this.props.history.push("/:id") // redirect
   };
 
   render() {
@@ -74,8 +74,8 @@ class NewSnap extends Component {
         {this.state.page === 1 && (
           <div className="page photo-page">
             <p>*****here goes picture upload*****</p>
-            <button onClick={this.assignCategory} value="free stuff">
-              FREE STUFF
+            <button onClick={this.assignCategory} value="free">
+              FREE
             </button>
             <button onClick={this.assignCategory} value="promo">
               PROMO
@@ -119,7 +119,7 @@ class NewSnap extends Component {
               />
               <button type="submit"> Add to</button>
             </form>
-            {this.state.title ? <p></p> : <p>can you please just..?</p>}
+            {this.state.title ? <p></p> : <p>can titile?</p>}
             {this.state.emptyTitleError && <p>{this.state.emptyTitleError}</p>}
           </div>
         )}
