@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class NewSnap extends Component {
   state = {
@@ -8,11 +9,14 @@ class NewSnap extends Component {
     location: "", //props
     title: "",
     description: "",
-    emptyTitleError: ""
+    emptyError: "",
+    //uploading image
+    loading: false,
+    image: null
   };
 
   goNext = () => {
-    if (this.state.category) {
+    if (this.state.category && this.state.image) {
       this.setState({
         page: 2,
         message: ""
@@ -50,11 +54,53 @@ class NewSnap extends Component {
       this.setState({
         emptyTitleError: "PLEEEEEEASE"
       });
+    } else {
+      //axios
+      axios
+        .post("/snaps/", {
+          title: this.state.title,
+          description: this.state.description,
+          category: this.state.category,
+          location: this.state.location,
+          image: this.state.image
+        })
+        .then(response => {
+          console.log("Snap was sent!");
+          console.log(response);
+          this.props.history.push("/home");
+        })
+        .catch(err => {
+          this.setState({
+            emptyError: err.response.data.message
+          });
+        });
     }
+  };
 
-    //axios
+  uploadImage = e => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "oisnap");
 
-    // this.props.history.push("/:id") // redirect
+    this.setState({
+      loading: true
+    });
+
+    fetch("https://api.cloudinary.com/v1_1/oisnap/image/upload", {
+      method: "POST",
+      body: data
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(responseData => {
+        console.log(responseData);
+        this.setState({
+          image: responseData.secure_url,
+          loading: false
+        });
+      });
   };
 
   render() {
@@ -71,9 +117,29 @@ class NewSnap extends Component {
 
         <p>Step {this.state.page} out of 2 </p>
 
+        {/* ***PAGE 1 upload and category *** */}
+
         {this.state.page === 1 && (
           <div className="page photo-page">
-            <p>*****here goes picture upload*****</p>
+            <input
+              style={{ display: "none" }}
+              type="file"
+              name="file"
+              placeholder="Upload an image"
+              onChange={this.uploadImage}
+              ref={fileInput => (this.fileInput = fileInput)}
+            />
+            <button onClick={() => this.fileInput.click()}>Upload image</button>
+            {this.state.loading ? (
+              <h3>Loading </h3>
+            ) : (
+              <img
+                src={this.state.image}
+                style={{ height: "200px" }}
+                alt={this.state.title}
+              />
+            )}
+
             <button onClick={this.assignCategory} value="free">
               FREE
             </button>
@@ -89,6 +155,8 @@ class NewSnap extends Component {
           </div>
         )}
         {this.state.message && <p>{this.state.message}</p>}
+
+        {/* *************  PAGE 2 snap details************* */}
 
         {this.state.page === 2 && (
           <div className="page detail-page">
@@ -120,7 +188,7 @@ class NewSnap extends Component {
               <button type="submit"> Add to</button>
             </form>
             {this.state.title ? <p></p> : <p>can titile?</p>}
-            {this.state.emptyTitleError && <p>{this.state.emptyTitleError}</p>}
+            {this.state.emptyError && <p>{this.state.emptyError}</p>}
           </div>
         )}
       </div>

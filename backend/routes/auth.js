@@ -98,9 +98,9 @@ router.get(
 
 //SOCIAL LOGIN FACEBOOK
 
-app.get("/facebook", passport.authenticate("facebook"));
+router.get("/facebook", passport.authenticate("facebook"));
 
-app.get(
+router.get(
   "/facebook/callback",
   passport.authenticate("facebook", { failureRedirect: "/login" }),
   (req, res) => {
