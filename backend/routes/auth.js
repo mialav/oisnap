@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 router.post("/login", (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   passport.authenticate("local", (err, user, info) => {
     console.log("user at beginning of auth:", user);
     if (err) {
@@ -73,6 +73,12 @@ router.post("/signup", (req, res, next) => {
       .then(userDocument => {
         res.json(userDocument);
         // needs to automatically login the user
+        req.login(userDocument, err => {
+          if (err) {
+            return res.status(500).json({ message: "Error while logging in" });
+          }
+          res.json(userDocument);
+        });
       })
       .catch(err => {
         //TODO - Need to send a error response
@@ -87,11 +93,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/loggedin", (req, res) => {
-  console.log(
-    "route /loggedin was called. The user ",
-    req.user,
-    " was returned"
-  );
+  console.log("route /loggedin was called.");
   res.json(req.user);
 });
 
