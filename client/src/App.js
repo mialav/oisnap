@@ -1,29 +1,31 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { Route, Switch } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import WelcomePopup from "./components/WelcomePopup";
+import Map from "./components/Map";
+import Toolbar from "./components/Toolbar";
+import Search from "./components/Search";
+import Filter from "./components/Filter";
+import NewSnap from "./components/NewSnap";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. Karo Branch!
-        </p>
-
-        <p>This is the best branch ever!!!!</p>
-
-        <p>THIS IS MIA BRANCH</p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar></Navbar>
+      <div className="body-view">
+        <Map />
+        <Switch>
+          <Route exact path="/search" component={Search} />
+          <Filter exact path="/filter" component={Filter} />
+          <Route exact path="/add" component={NewSnap} />
+        </Switch>
+      </div>
+      <Switch>
+        <Route exact path="/" component={WelcomePopup} />
+        <Toolbar />
+      </Switch>
     </div>
   );
 }
