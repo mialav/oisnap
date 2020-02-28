@@ -12,11 +12,8 @@ import Filter from "./components/Filter";
 import NewSnap from "./components/NewSnap";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-<<<<<<< HEAD
 import Profile from "./components/Profile";
-=======
 import SnapDetail from "./components/SnapDetail";
->>>>>>> 3dcf20317762d493c2f3fd3b9f4a3ed0930cfd48
 
 class App extends React.Component {
   state = {
@@ -75,15 +72,15 @@ class App extends React.Component {
             />
             <Route
               exact
-<<<<<<< HEAD
               path="/profile"
               render={props => (
                 <Profile user={this.state.user} history={props.history} />
               )}
-=======
+            />
+            <Route
               path="/snaps/:id"
               render={props => <SnapDetail {...props} user={this.state.user} />}
->>>>>>> 3dcf20317762d493c2f3fd3b9f4a3ed0930cfd48
+            />
             />
           </Switch>
         </div>
