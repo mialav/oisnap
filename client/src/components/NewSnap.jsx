@@ -66,7 +66,7 @@ class NewSnap extends Component {
         .then(response => {
           console.log("Snap was sent!");
           console.log(response);
-          this.props.history.push("/home");
+          this.props.history.push(`/snaps/${response.data._id}`);
         })
         .catch(err => {
           this.setState({
