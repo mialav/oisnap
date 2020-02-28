@@ -7,9 +7,12 @@ const router = express.Router();
 
 router.get("/", (req, res, next) => {
   console.log("GET request sent to /snaps");
-  Snap.find({})
+
+  const filter = { ...req.query };
+  console.log(filter);
+
+  Snap.find(filter)
     .then(snapList => {
-      console.log(snapList);
       res.json(snapList);
     })
     .catch(err => {
@@ -22,7 +25,6 @@ router.post("/", (req, res, next) => {
   const newSnap = req.body;
   const currentDate = new Date();
   const expiryDate = new Date(currentDate.getTime() + 86400000);
-  console.log(req.user);
   Snap.create({
     title: newSnap.title,
     description: newSnap.description,
@@ -33,7 +35,7 @@ router.post("/", (req, res, next) => {
     expireAt: expiryDate
   })
     .then(snapDocument => {
-      console.log(snapDocument);
+      // console.log(snapDocument);
 
       User.updateOne(
         { _id: req.user._id },
@@ -48,7 +50,6 @@ router.post("/", (req, res, next) => {
 
       res.json(snapDocument);
 
-      //TODO: need add to user array of snaps
       //TODO: need to calculte score of the user
     })
     .catch(err => {
@@ -57,7 +58,7 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
-  console.log(req.params.id);
+  // console.log(req.params.id);
 
   Snap.findById(req.params.id)
     .then(snapDocument => {
@@ -106,7 +107,7 @@ router.delete("/:id", (req, res, next) => {
     .then(snapDocument => {
       //check if snap was created by the logged in user. If not, the snap cannot be deleted
       if (snapDocument.user.toString() !== req.user._id.toString()) {
-        console.log("not the same");
+        // console.log("not the same");
         return res
           .status(400)
           .json({ message: "Only the owner of a snap can delete the snap" });
@@ -129,7 +130,7 @@ router.delete("/:id", (req, res, next) => {
         }
       )
         .then(response => {
-          console.log(response);
+          // console.log(response);
           res.json({ message: "User updated" });
         })
         .catch(err => console.log(err));
