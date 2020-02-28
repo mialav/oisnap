@@ -10,7 +10,6 @@ class NewSnap extends Component {
     title: "",
     description: "",
     emptyError: "",
-    //uploading image
     loading: false,
     image: null
   };
