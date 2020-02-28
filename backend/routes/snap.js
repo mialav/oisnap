@@ -21,7 +21,6 @@ router.post("/", (req, res, next) => {
   console.log("POST request sent to /snaps");
   const newSnap = req.body;
   const currentDate = new Date();
-  const expiryDate = new Date(currentDate.getTime() + 86400000);
   console.log(req.user);
   Snap.create({
     title: newSnap.title,
@@ -48,7 +47,6 @@ router.post("/", (req, res, next) => {
 
       res.json(snapDocument);
 
-      //TODO: need add to user array of snaps
       //TODO: need to calculte score of the user
     })
     .catch(err => {
