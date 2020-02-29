@@ -128,3 +128,7 @@ footer,
   text-align: center;
   font-family: "Open Sans", sans-serif;
 }
+.map {
+  position: absolute;
+  z-index: -1;
+}
