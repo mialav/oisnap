@@ -46,8 +46,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar user={this.state.user} setUser={this.setUser} />
-        <div className="body-view">
+        <div className="map">
           <Map />
+        </div>
+        <div className="body-view">
           <Switch>
             <Route exact path="/search" component={Search} />
             <Route exact path="/filter" component={Filter} />
