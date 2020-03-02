@@ -51,8 +51,15 @@ class SnapDetail extends Component {
       return <div>LOADING</div>;
     }
 
+    const categoryColor = {
+      //  if(this.state.snap.category === 'promo'){
+      //    backgroundColor: 'red'
+      //  }
+      //backgroundColor: myFunctio(this.state.snap.category)
+    };
+
     return (
-      <div className="container">
+      <div className="container" style={categoryColor}>
         <div className="snap-box">
           <div className="time-box">
             <p>Created at {snap.created_at}</p>

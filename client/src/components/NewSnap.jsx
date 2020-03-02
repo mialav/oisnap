@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Login from "./Login";
+import categoryFunction from "../styles/snapStyles";
+import categoryColor from "../styles/snapStyles";
 
 class NewSnap extends Component {
   state = {
@@ -10,7 +11,7 @@ class NewSnap extends Component {
     location: "", //props
     title: "",
     description: "",
-    emptyError: "",
+    snapError: "",
     loading: false,
     image: null
   };
@@ -52,7 +53,7 @@ class NewSnap extends Component {
     event.preventDefault();
     if (this.state.title === "") {
       this.setState({
-        emptyTitleError: "PLEEEEEEASE"
+        message: "PLEEEEEEASE"
       });
     } else {
       //axios
@@ -67,13 +68,14 @@ class NewSnap extends Component {
         .then(response => {
           console.log("Snap was sent!");
           console.log(response);
-          this.props.refresh();
+          // this.props.refresh();
           // call update data method from app.js
           this.props.history.push(`/snaps/${response.data._id}`);
         })
         .catch(err => {
+          console.log(err);
           this.setState({
-            emptyError: err.response.data.message
+            snapError: "Couldn't add the snap, try again"
           });
         });
     }
@@ -102,110 +104,117 @@ class NewSnap extends Component {
           image: responseData.secure_url,
           loading: false
         });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
+          snapError: "Couldn't upload the image, please try again"
+        });
       });
-    // add a catch block
+  };
+
+  componentDidMount = () => {
+    if (!this.props.user) {
+      this.props.history.push("/login");
+    }
   };
 
   render() {
+    console.log(categoryFunction("promo"));
     return (
-      <>
-        {!this.props.user ? (
-          <>
-            <Login></Login>
-          </>
-        ) : (
-          <React.Fragment>
-            <div className="container">
-              <button onClick={this.goBack} className="page-button">
-                {" "}
-                BACK{" "}
+      <React.Fragment>
+        <div
+          className="container"
+          style={categoryFunction(this.state.category)}
+        >
+          <button onClick={this.goBack} className="page-button">
+            {" "}
+            BACK{" "}
+          </button>
+          <button onClick={this.goNext} className="page-button">
+            {" "}
+            NEXT{" "}
+          </button>
+
+          <p>Step {this.state.page} out of 2 </p>
+
+          {/* /* ***PAGE 1 upload and category *** */}
+          {this.state.page === 1 && (
+            <div className="page photo-page">
+              <input
+                style={{ display: "none" }}
+                type="file"
+                name="file"
+                placeholder="Upload an image"
+                onChange={this.uploadImage}
+                ref={fileInput => (this.fileInput = fileInput)}
+              />
+              <button onClick={() => this.fileInput.click()}>
+                Upload image
               </button>
-              <button onClick={this.goNext} className="page-button">
-                {" "}
-                NEXT{" "}
+              {this.state.loading ? (
+                <h3>Loading </h3>
+              ) : (
+                <img
+                  src={this.state.image}
+                  style={{ height: "30vh" }}
+                  alt={this.state.title}
+                />
+              )}
+
+              <button onClick={this.assignCategory} value="free">
+                FREE
               </button>
-
-              <p>Step {this.state.page} out of 2 </p>
-
-              {/* /* ***PAGE 1 upload and category *** */}
-              {this.state.page === 1 && (
-                <div className="page photo-page">
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    name="file"
-                    placeholder="Upload an image"
-                    onChange={this.uploadImage}
-                    ref={fileInput => (this.fileInput = fileInput)}
-                  />
-                  <button onClick={() => this.fileInput.click()}>
-                    Upload image
-                  </button>
-                  {this.state.loading ? (
-                    <h3>Loading </h3>
-                  ) : (
-                    <img
-                      src={this.state.image}
-                      style={{ height: "200px" }}
-                      alt={this.state.title}
-                    />
-                  )}
-
-                  <button onClick={this.assignCategory} value="free">
-                    FREE
-                  </button>
-                  <button onClick={this.assignCategory} value="promo">
-                    PROMO
-                  </button>
-                  <button onClick={this.assignCategory} value="crowd">
-                    CROWD
-                  </button>
-                  <button onClick={this.assignCategory} value="happening">
-                    HAPPENING
-                  </button>
-                </div>
-              )}
-              {this.state.message && <p>{this.state.message}</p>}
-
-              {/* /* *************  PAGE 2 snap details************* */}
-
-              {this.state.page === 2 && (
-                <div className="page detail-page">
-                  <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="title">Snap title *</label>
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      value={this.state.title}
-                      onChange={this.handleChange}
-                    />
-                    <label htmlFor="description"> Short description</label>
-                    <input
-                      type="text"
-                      name="description"
-                      id="description"
-                      value={this.state.description}
-                      onChange={this.handleChange}
-                    />
-                    <label htmlFor="location"> Location </label>
-                    <input
-                      type="text"
-                      name="location"
-                      id="location"
-                      value={this.state.location}
-                      onChange={this.handleChange}
-                    />
-                    <button type="submit"> Add to</button>
-                  </form>
-                  {this.state.title ? <p></p> : <p>can titile?</p>}
-                  {this.state.emptyError && <p>{this.state.emptyError}</p>}
-                </div>
-              )}
+              <button onClick={this.assignCategory} value="promo">
+                PROMO
+              </button>
+              <button onClick={this.assignCategory} value="crowd">
+                CROWD
+              </button>
+              <button onClick={this.assignCategory} value="happening">
+                HAPPENING
+              </button>
             </div>
-          </React.Fragment>
-        )}
-      </>
+          )}
+          {this.state.message && <p>{this.state.message}</p>}
+
+          {/* /* *************  PAGE 2 snap details************* */}
+
+          {this.state.page === 2 && (
+            <div className="page detail-page">
+              <form onSubmit={this.handleSubmit}>
+                <label htmlFor="title">Snap title *</label>
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  value={this.state.title}
+                  onChange={this.handleChange}
+                />
+                <label htmlFor="description"> Short description</label>
+                <input
+                  type="text"
+                  name="description"
+                  id="description"
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+                <label htmlFor="location"> Location </label>
+                <input
+                  type="text"
+                  name="location"
+                  id="location"
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                />
+                <button type="submit"> Add to</button>
+              </form>
+              {this.state.title ? <p></p> : <p>can titile?</p>}
+              {this.state.snapError && <p>{this.state.snapError}</p>}
+            </div>
+          )}
+        </div>
+      </React.Fragment>
     );
   }
 }

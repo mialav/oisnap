@@ -62,6 +62,12 @@ export default class Map extends Component {
     // const snaps = [...this.props.snapsData];
     console.log(this.getSnaps());
 
+    const geolocateStyle = {
+      float: "left",
+      marginTop: "100px",
+      padding: "10px"
+    };
+
     return (
       <MapGL
         {...viewport}
@@ -72,12 +78,14 @@ export default class Map extends Component {
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
       >
-        <GeolocateControl
-          style={geolocateStyle}
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-          fitBoundsOptions={{ maxZoom: 3 }}
-        />
+        <div className="geolocation-button">
+          <GeolocateControl
+            style={geolocateStyle}
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation={true}
+            fitBoundsOptions={{ maxZoom: 3 }}
+          />
+        </div>
 
         {this.getSnaps().map(snap => {
           return (
