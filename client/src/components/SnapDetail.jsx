@@ -49,30 +49,41 @@ class SnapDetail extends Component {
 
     if (!snap) {
       return <div>LOADING</div>;
-    }
+    } else {
+      const hours = new Date(snap.created_at).getHours();
+      const minutes = new Date(snap.created_at).getMinutes();
+      let timeStamp;
+      minutes < 10
+        ? (timeStamp = hours + ":0" + minutes)
+        : (timeStamp = hours + ":" + minutes);
 
-    return (
-      <div className="container">
-        <div className="snap-box">
-          <div className="time-box">
-            <p>Created at {snap.created_at}</p>
-          </div>
-          <div className="snap-img">
-            <img src={snap.image} alt={snap.title} style={{ height: "40vh" }} />
-          </div>
-          <div className="details-box">
-            <h2>{snap.title}</h2>
-            {snap.description !== "" && <p>{snap.description}</p>}
-            {this.props.user._id === snap.user && (
-              <div>
-                <button onClick={this.handleSubmit}>Edit</button>
-                <button onClick={this.handleSubmit}>Delete</button>
-              </div>
-            )}
+      return (
+        <div className="container">
+          <div className="snap-box">
+            <div className="time-box">
+              <p>Created at {timeStamp}</p>
+            </div>
+            <div className="snap-img">
+              <img
+                src={snap.image}
+                alt={snap.title}
+                style={{ height: "40vh" }}
+              />
+            </div>
+            <div className="details-box">
+              <h2>{snap.title}</h2>
+              {snap.description !== "" && <p>{snap.description}</p>}
+              {this.props.user._id === snap.user && (
+                <div>
+                  <button onClick={this.handleSubmit}>Edit</button>
+                  <button onClick={this.handleSubmit}>Delete</button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
