@@ -24,12 +24,15 @@ export default class SnapEdit extends Component {
           category: response.data.category,
           img: response.data.image
         });
-        // Geocode.fromLatLng("48.8583701", "2.2922926")
-        //   .then(response => {
-        //     const address = response.results[0].formatted_address;
-        //     console.log(address);
-        //   })
-        //   .catch(err => console.log(err));
+        Geocode.fromLatLng(
+          response.data.location.lat,
+          response.data.location.lng
+        )
+          .then(response => {
+            const address = response.results[0].formatted_address;
+            this.setState({ location: address });
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => {
         this.setState({
@@ -49,8 +52,6 @@ export default class SnapEdit extends Component {
 
     Geocode.fromAddress(this.state.location)
       .then(response => {
-        console.log("geocode called:", response.results[0].geometry.location);
-
         axios
           .patch(`/snaps/${this.props.match.params.id}`, {
             ...this.state,

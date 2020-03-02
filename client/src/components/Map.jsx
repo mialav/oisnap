@@ -29,7 +29,6 @@ export default class Map extends Component {
     let snaps = [];
     if (this.props.snapsData.length !== 0) {
       snaps = this.props.snapsData.map(snap => {
-        console.log(snap.location);
         return {
           _id: snap._id,
           latitude: snap.location.lat,
@@ -54,11 +53,6 @@ export default class Map extends Component {
 
   render() {
     const { viewport } = this.state;
-<<<<<<< HEAD
-    // const snaps = [...this.props.snapsData];
-    // console.log(this.getSnaps());
-=======
->>>>>>> 577ddd22999b81867c087a9a169746c6b76d214f
 
     return (
       <MapGL
