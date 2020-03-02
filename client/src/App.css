@@ -79,6 +79,18 @@
   align-items: center;
 }
 
+/******************* PROFILE PAGE *****************/
+
+.user-snaps {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.user-snaps > div > img {
+  height: 15vh;
+}
+
 /************************ FOOTER *****************/
 
 footer,
