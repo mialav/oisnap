@@ -25,7 +25,9 @@ export default class Profile extends Component {
     event.preventDefault();
     console.log(event.target.parentNode.getAttribute("id"));
     if (event.target.innerText === "Edit") {
-      //TODO - OPEN EDIT PAGE
+      this.props.history.push(
+        `/snaps/${event.target.parentNode.getAttribute("id")}/edit`
+      );
     } else if (event.target.innerText === "Delete") {
       axios
         .delete(`/snaps/${event.target.parentNode.getAttribute("id")}`)
@@ -45,7 +47,7 @@ export default class Profile extends Component {
         <h3>{this.props.user.username}'s Profile</h3>
         <h4>Your current snaps</h4>
         <div className="user-snaps">
-          {this.state.snapData.map(snap => {
+          {this.state.snapData?.map(snap => {
             return (
               <div id={snap._id} key={snap._id}>
                 <img src={snap.image} alt={snap.title} />
@@ -55,6 +57,12 @@ export default class Profile extends Component {
               </div>
             );
           })}
+          {this.state.snapData.length === 0 && (
+            <p>
+              Nothing here yet... <br /> Time to{" "}
+              <Link to="/add">post a snap!</Link>{" "}
+            </p>
+          )}
         </div>
       </div>
     );
