@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Login from "./Login";
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
 
 class NewSnap extends Component {
   state = {
@@ -56,26 +58,32 @@ class NewSnap extends Component {
       });
     } else {
       //axios
-      axios
-        .post("/snaps/", {
-          title: this.state.title,
-          description: this.state.description,
-          category: this.state.category,
-          location: this.state.location,
-          image: this.state.image
-        })
+
+      Geocode.fromAddress(this.state.location)
         .then(response => {
-          console.log("Snap was sent!");
           console.log(response);
-          this.props.refresh();
-          // call update data method from app.js
-          this.props.history.push(`/snaps/${response.data._id}`);
+          axios
+            .post("/snaps/", {
+              title: this.state.title,
+              description: this.state.description,
+              category: this.state.category,
+              location: response.results[0].geometry.location,
+              image: this.state.image
+            })
+            .then(response => {
+              console.log("Snap was sent!");
+              console.log(response);
+              this.props.refresh();
+              // call update data method from app.js
+              this.props.history.push(`/snaps/${response.data._id}`);
+            })
+            .catch(err => {
+              this.setState({
+                emptyError: err.response.data.message
+              });
+            });
         })
-        .catch(err => {
-          this.setState({
-            emptyError: err.response.data.message
-          });
-        });
+        .catch(err => console.log(err));
     }
   };
 

@@ -31,8 +31,8 @@ export default class Map extends Component {
       snaps = this.props.snapsData.map(snap => {
         return {
           _id: snap._id,
-          latitude: parseFloat(snap.location.split(", ")[0]),
-          longitude: parseFloat(snap.location.split(", ")[1])
+          latitude: snap.location.lat,
+          longitude: snap.location.lng
         };
       });
     }
