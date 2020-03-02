@@ -47,10 +47,11 @@ export default class Map extends Component {
     let snaps = [];
     if (this.props.snapsData.length !== 0) {
       snaps = this.props.snapsData.map(snap => {
+        console.log(snap.location);
         return {
           _id: snap._id,
-          latitude: parseFloat(snap.location.split(", ")[0]),
-          longitude: parseFloat(snap.location.split(", ")[1])
+          latitude: snap.location.lat,
+          longitude: snap.location.lng
         };
       });
     }
@@ -60,7 +61,7 @@ export default class Map extends Component {
   render() {
     const { viewport } = this.state;
     // const snaps = [...this.props.snapsData];
-    console.log(this.getSnaps());
+    // console.log(this.getSnaps());
 
     return (
       <MapGL

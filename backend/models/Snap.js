@@ -11,7 +11,7 @@ const snapSchema = new mongoose.Schema(
       enum: ["free", "crowd", "happening", "promo"]
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    location: String,
+    location: Object,
     image: String,
     expireAt: { type: Date, default: undefined }
   },

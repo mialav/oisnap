@@ -25,7 +25,9 @@ export default class Profile extends Component {
     event.preventDefault();
     console.log(event.target.parentNode.getAttribute("id"));
     if (event.target.innerText === "Edit") {
-      this.props.history.push(`/snaps/${this.props.match.params.id}/edit`);
+      this.props.history.push(
+        `/snaps/${event.target.parentNode.getAttribute("id")}/edit`
+      );
     } else if (event.target.innerText === "Delete") {
       axios
         .delete(`/snaps/${event.target.parentNode.getAttribute("id")}`)

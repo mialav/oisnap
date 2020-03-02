@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
 
 export default class SnapEdit extends Component {
   state = {
@@ -19,10 +21,15 @@ export default class SnapEdit extends Component {
           user: response.data.user,
           title: response.data.title,
           description: response.data.description,
-          location: response.data.location,
           category: response.data.category,
           img: response.data.image
         });
+        // Geocode.fromLatLng("48.8583701", "2.2922926")
+        //   .then(response => {
+        //     const address = response.results[0].formatted_address;
+        //     console.log(address);
+        //   })
+        //   .catch(err => console.log(err));
       })
       .catch(err => {
         this.setState({
@@ -39,14 +46,23 @@ export default class SnapEdit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.props);
-    console.log("updating snap");
-    axios
-      .patch(`/snaps/${this.props.match.params.id}`, this.state)
+
+    Geocode.fromAddress(this.state.location)
       .then(response => {
-        console.log(response);
+        console.log("geocode called:", response.results[0].geometry.location);
+
+        axios
+          .patch(`/snaps/${this.props.match.params.id}`, {
+            ...this.state,
+            location: response.results[0].geometry.location
+          })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => console.log(err.message));
       })
-      .catch(err => console.log(err.message));
+      .catch(err => console.log(err));
+
     this.props.history.push(`/snaps/${this.props.match.params.id}`);
   };
 
@@ -72,7 +88,8 @@ export default class SnapEdit extends Component {
             <p>
               <i>You cannot edit the picture once it was posted.</i>
             </p>
-            <div className="page detail-page">
+            {/* className="page detail-page" */}
+            <div>
               <form>
                 <label htmlFor="title">Snap title</label>
                 <input
