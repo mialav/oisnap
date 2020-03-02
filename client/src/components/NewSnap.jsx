@@ -70,8 +70,9 @@ class NewSnap extends Component {
           this.props.history.push(`/snaps/${response.data._id}`);
         })
         .catch(err => {
+          console.log(err);
           this.setState({
-            emptyError: err.response.data.message
+            emptyError: err
           });
         });
     }
