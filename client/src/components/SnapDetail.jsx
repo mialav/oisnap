@@ -29,17 +29,17 @@ class SnapDetail extends Component {
     console.log(this.props.match.params.id);
     console.log(this.props.history);
     if (event.target.innerText === "Edit") {
-      //TODO - OPEN EDIT PAGE
+      this.props.history.push(`/snaps/${this.props.match.params.id}/edit`);
     } else if (event.target.innerText === "Delete") {
-      // axios
-      //   .delete(`/snaps/${this.props.match.params.id}`)
-      //   .then(response => {
-      //     console.log(response);
-      //     this.props.history.push("/home");
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      axios
+        .delete(`/snaps/${this.props.match.params.id}`)
+        .then(response => {
+          console.log(response);
+          this.props.history.push("/home");
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 

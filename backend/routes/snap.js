@@ -70,11 +70,15 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.patch("/:id", (req, res, next) => {
+  console.log("Patch called");
   const editedSnap = req.body;
 
   Snap.findById(req.params.id)
     .then(snapDocument => {
-      if (snapDocument.user._id !== req.user._id) {
+      if (snapDocument.user._id.toString() !== req.user._id.toString()) {
+        console.log(typeof snapDocument.user._id);
+        console.log(typeof req.user._id);
+        console.log("Only the owner of a snap can edit the snap");
         return res
           .status(400)
           .json({ message: "Only the owner of a snap can edit the snap" });
@@ -86,8 +90,7 @@ router.patch("/:id", (req, res, next) => {
           title: editedSnap.title,
           description: editedSnap.description,
           category: editedSnap.category,
-          location: editedSnap.location,
-          image: editedSnap.image
+          location: editedSnap.location
         }
       )
         .then(response => {
