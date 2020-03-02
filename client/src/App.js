@@ -14,7 +14,11 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SnapDetail from "./components/SnapDetail";
+
+import SnapPreview from "./components/SnapPreview";
+
 import SnapEdit from "./components/SnapEdit";
+
 
 class App extends React.Component {
   state = {
@@ -57,7 +61,13 @@ class App extends React.Component {
             <Route
               exact
               path="/add"
-              render={props => <NewSnap refresh={this.getData} />}
+              render={props => (
+                <NewSnap
+                  user={this.state.user}
+                  refresh={this.getData}
+                  history={props.history}
+                />
+              )}
             />
             <Route
               exact
@@ -89,6 +99,16 @@ class App extends React.Component {
               path="/snaps/:id"
               render={props => <SnapDetail {...props} user={this.state.user} />}
             />
+
+            <Route
+              path="/snaps/:id/preview"
+              render={props => (
+                <SnapPreview {...props} user={this.state.user} />
+              )}
+            />
+
+
+
           </Switch>
         </div>
         <Switch>
