@@ -18,30 +18,49 @@ export default class Map extends Component {
       zoom: 12
     },
     snaps: [
-      {
-        lng: 13.456176,
-        lat: 52.513266,
-        showPopup: true
-      },
-      {
-        lng: 13.436218,
-        lat: 52.554971,
-        showPopup: true
-      },
-      {
-        lng: 13.40775,
-        lat: 52.50396,
-        showPopup: true
-      }
+      // {
+      //   lng: 13.456176,
+      //   lat: 52.513266,
+      //   showPopup: false
+      // },
+      // {
+      //   lng: 13.436218,
+      //   lat: 52.554971,
+      //   showPopup: false
+      // },
+      // {
+      //   lng: 13.40775,
+      //   lat: 52.50396,
+      //   showPopup: false
+      // }
+      // ...this.props.snapsData
     ]
   };
 
   _onViewportChange = viewport => this.setState({ viewport });
 
+  // showPopup =
+
   // onGeolocate = () => map.fitBoundsOptions({ maxZoom: 15 });
+
+  getSnaps = () => {
+    let snaps = [];
+    if (this.props.snapsData.length !== 0) {
+      snaps = this.props.snapsData.map(snap => {
+        return {
+          _id: snap._id,
+          latitude: parseFloat(snap.location.split(", ")[0]),
+          longitude: parseFloat(snap.location.split(", ")[1])
+        };
+      });
+    }
+    return snaps;
+  };
 
   render() {
     const { viewport } = this.state;
+    // const snaps = [...this.props.snapsData];
+    console.log(this.getSnaps());
 
     return (
       <MapGL
@@ -60,27 +79,28 @@ export default class Map extends Component {
           fitBoundsOptions={{ maxZoom: 3 }}
         />
 
-        {this.state.snaps.map(snap => {
+        {this.getSnaps().map(snap => {
           return (
             <Marker
-              key={(snap.lat, snap.lng)}
-              latitude={snap.lat}
-              longitude={snap.lng}
+              key={snap._id}
+              latitude={snap.latitude}
+              longitude={snap.longitude}
             >
               <img
                 className="marker"
                 src={require("../images/mapbox-icon.png")}
+                // onClick={this.showPopup}
               />
-              <Popup
+              {/* <Popup
                 latitude={snap.lat}
                 longitude={snap.lng}
                 closeButton={true}
                 closeOnClick={false}
                 onClose={() => this.setState({ showPopup: false })}
                 anchor="top"
-              >
+              > 
                 <div>PLACEHOLDER</div>
-              </Popup>
+              </Popup>*/}
             </Marker>
           );
         })}

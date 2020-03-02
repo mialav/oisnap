@@ -48,7 +48,7 @@ class App extends React.Component {
       <div className="App">
         <Navbar user={this.state.user} setUser={this.setUser} />
         <div className="map">
-          <Map />
+          <Map snapsData={this.state.data} />
         </div>
         <div className="body-view">
           <Switch>
