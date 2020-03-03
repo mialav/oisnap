@@ -7,6 +7,7 @@
 button {
   text-decoration: none;
 }
+
 /************************** NAVBAR **************/
 .navbar {
   display: flex;
@@ -25,7 +26,8 @@ button {
   top: 10%;
   display: flex;
   flex-direction: column;
-  padding: 5%;
+  padding: 3%;
+  background-color: white;
 }
 
 /************************** Landing Page *****************************/
@@ -113,7 +115,6 @@ footer,
 
 /* Font Awesome Icon */
 .fa-map-marker-alt {
-  color: #eb5757;
   font-size: 2rem;
   opacity: 1;
 }

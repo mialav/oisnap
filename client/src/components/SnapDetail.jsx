@@ -76,7 +76,15 @@ class SnapDetail extends Component {
       console.log(categoryColor(this.state.snap));
 
       return (
-        <div className="container" style={categoryColor(this.state.category)}>
+        <div
+          className="container"
+          style={{
+            backgroundColor: categoryColor(
+              this.state.snap.category,
+              this.state.snap.created_at
+            )
+          }}
+        >
           <div className="snap-box">
             <div className="time-box">
               <p>Created {this.getTime(snap)} ago</p>

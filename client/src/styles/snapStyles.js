@@ -1,14 +1,12 @@
 const categoryColor = (category, creation) => {
-  let styles = {};
+  if (!category) return {};
+  let color = "";
 
-  // Markus' math
-  // MAX: 86400000
-  // Notes: 1583080197770
   let maxTime = 86400000; // This number is 24 hours in ms
   let fromMiliseconds = new Date().getTime();
 
   if (creation) {
-    fromMiliseconds = creation.getTime();
+    fromMiliseconds = new Date(creation).getTime();
   }
 
   let startMiliseconds = Date.now();
@@ -18,30 +16,26 @@ const categoryColor = (category, creation) => {
 
   let colorNumber = (timeDifference / maxTime) * 100; // A number from 0-100
 
-  // console.log(colorNumber);
-
   switch (category) {
     case "promo":
-      styles.backgroundColor = `rgb(255, ${colorNumber + 50}, ${colorNumber +
-        50})`;
+      color = `rgb(255, ${colorNumber + 50}, ${colorNumber + 50})`;
       break;
     case "happening":
-      styles.backgroundColor = `rgb(${colorNumber + 100}, ${colorNumber +
-        100}, ${colorNumber + 100})`;
+      color = `rgb(${colorNumber + 100}, ${colorNumber + 100}, ${colorNumber +
+        100})`;
       break;
     case "crowd":
-      styles.backgroundColor = `rgb(255, 255, ${colorNumber})`;
+      color = `rgb(255, 255, ${colorNumber})`;
       break;
     case "free":
-      styles.backgroundColor = `rgb(${colorNumber}, ${colorNumber +
-        204}, ${colorNumber})`;
+      color = `rgb(${colorNumber}, ${colorNumber + 204}, ${colorNumber})`;
       break;
 
     default:
-      styles.backgroundColor = `rgb(242, 242, 242)`;
+      color = `rgb(242, 242, 242)`;
   }
 
-  return styles;
+  return color;
 };
 
 export default categoryColor;

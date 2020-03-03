@@ -14,7 +14,6 @@ export default class Login extends Component {
   };
 
   handleSubmit = event => {
-    console.log("Submit was clicked");
     event.preventDefault();
 
     axios

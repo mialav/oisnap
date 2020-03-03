@@ -7,13 +7,12 @@ const Toolbar = () => {
       {/* <button>
         <Link to="/filter">Filter</Link>
       </button> */}
-      <button>
-        <Link to="/add">
-          <div className="addSnap">
-            <i className="fas fa-camera"></i>
-          </div>
-        </Link>
-      </button>
+      <Link to="/add">
+        <div className="addSnap">
+          <i className="fas fa-camera"></i>
+        </div>
+      </Link>
+
       {/* <button>
         <Link to="/search">Search</Link>
       </button> */}

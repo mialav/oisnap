@@ -38,14 +38,13 @@ class NewSnap extends Component {
     if (!this.props.user) {
       this.props.history.push("/login");
     }
-    console.log();
+
     navigator.geolocation.getCurrentPosition(response => {
       let location = {
         lat: response.coords.latitude,
         lng: response.coords.longitude
       };
 
-      console.log(location);
       Geocode.fromLatLng(location.lat, location.lng)
         .then(response => {
           this.setState({
@@ -88,7 +87,6 @@ class NewSnap extends Component {
 
       Geocode.fromAddress(this.state.address)
         .then(response => {
-          console.log(response);
           axios
             .post("/snaps/", {
               title: this.state.title,
@@ -100,8 +98,6 @@ class NewSnap extends Component {
               image: this.state.image
             })
             .then(response => {
-              console.log("Snap was sent!");
-              console.log(response);
               this.props.refresh();
               // call update data method from app.js
               this.props.history.push(`/snaps/${response.data._id}`);
@@ -150,7 +146,10 @@ class NewSnap extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container" style={categoryColor(this.state.category)}>
+        <div
+          className="container"
+          style={{ backgroundColor: categoryColor(this.state.category) }}
+        >
           <button onClick={this.goBack} className="page-button">
             {" "}
             BACK{" "}

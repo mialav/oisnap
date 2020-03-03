@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import categoryColor from "../styles/snapStyles";
 
-
 class SnapPreview extends Component {
   state = {
     snap: null,
@@ -56,8 +55,15 @@ class SnapPreview extends Component {
       return <div>LOADING</div>;
     } else {
       return (
-
-        <div className="preview" style={categoryColor(this.state.category)}>
+        <div
+          className="preview"
+          style={{
+            backgroundColor: categoryColor(
+              this.state.snap.category,
+              this.state.snap.created_at
+            )
+          }}
+        >
           <div className="snap-box">
             <div className="time-box">
               <p>Created {this.getTime(snap)} ago</p>
