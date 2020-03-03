@@ -14,7 +14,8 @@ class NewSnap extends Component {
     description: "",
     emptyError: "",
     loading: false,
-    image: null
+    image: null,
+    address: ""
   };
 
   goNext = () => {
@@ -67,6 +68,7 @@ class NewSnap extends Component {
               title: this.state.title,
               description: this.state.description,
               category: this.state.category,
+              address: this.state.address,
               location: response.results[0].geometry.location,
               image: this.state.image
             })
@@ -115,6 +117,9 @@ class NewSnap extends Component {
   };
 
   render() {
+    navigator.geolocation.getCurrentPosition(response =>
+      console.log(response.coords.latitude, response.coords.longitude)
+    );
     return (
       <>
         {!this.props.user ? (
@@ -196,11 +201,11 @@ class NewSnap extends Component {
                       value={this.state.description}
                       onChange={this.handleChange}
                     />
-                    <label htmlFor="location"> Location </label>
+                    <label htmlFor="address"> Location </label>
                     <input
                       type="text"
-                      name="location"
-                      id="location"
+                      name="address"
+                      id="address"
                       value={this.state.location}
                       onChange={this.handleChange}
                     />
