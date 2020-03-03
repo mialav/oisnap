@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import SnapPreview from "./SnapPreview.jsx";
+import history from "../history";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
@@ -51,8 +52,19 @@ export default class Map extends Component {
     });
   };
 
+  closeWindows = () => {
+    history.push("/home");
+    console.log("MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP");
+  };
+
   render() {
     const { viewport } = this.state;
+
+    const geolocateStyle = {
+      float: "left",
+      marginTop: "100px",
+      padding: "10px"
+    };
 
     return (
       <MapGL
@@ -63,13 +75,16 @@ export default class Map extends Component {
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
+        onClick={this.closeWindows}
       >
-        <GeolocateControl
-          style={geolocateStyle}
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-          fitBoundsOptions={{ maxZoom: 3 }}
-        />
+        <div className="geolocation-button">
+          <GeolocateControl
+            style={geolocateStyle}
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation={true}
+            fitBoundsOptions={{ maxZoom: 3 }}
+          />
+        </div>
 
         {this.getSnaps().map(snap => {
           return (
