@@ -15,8 +15,12 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SnapDetail from "./components/SnapDetail";
+
 import Footer from "./components/Footer";
+
 import SnapPreview from "./components/SnapPreview";
+import SnapEdit from "./components/SnapEdit";
+
 import SnapEdit from "./components/SnapEdit";
 
 class App extends React.Component {
@@ -112,6 +116,7 @@ class App extends React.Component {
                     <SnapPreview {...props} user={this.state.user} />
                   )}
                 />
+
                 <Route exact path="/" component={WelcomePopup} />
               </Switch>
             </div>

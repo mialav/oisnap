@@ -70,7 +70,7 @@ export default class Map extends Component {
         {...viewport}
         width="100vw"
         height="100vh"
-        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapStyle="mapbox://styles/mialav/ck7brnzxa0mg01invkw6jqlvj"
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
@@ -95,12 +95,18 @@ export default class Map extends Component {
               snapTitle={snap.title}
               snapCreated={snap.created_at}
             >
-              <img
+              <i
+                className="fas fa-map-marker-alt"
+                onClick={() => this.renderPopup(snap)}
+              ></i>
+              {/* <img
                 className="marker"
                 alt="marker"
                 src={require("../images/mapbox-icon.png")}
                 onClick={() => this.renderPopup(snap)}
-              />
+
+              /> */}
+
             </Marker>
           );
         })}

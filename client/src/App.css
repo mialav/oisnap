@@ -36,6 +36,7 @@ button {
 }
 
 /************************** BODY *******************/
+
 .body {
   display: flex;
   flex-direction: column;
@@ -49,6 +50,7 @@ button {
   transform: translate(-50%, -50%);
   top: 50%;
 }
+
 
 .container {
   display: flex;
@@ -108,6 +110,13 @@ footer,
   right: 0;
   top: 0;
   z-index: -1;
+}
+
+/* Font Awesome Icon */
+.fa-map-marker-alt {
+  color: #eb5757;
+  font-size: 2rem;
+  opacity: 1;
 }
 
 /* mapbox marker */
