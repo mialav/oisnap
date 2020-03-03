@@ -4,15 +4,19 @@ import { Link } from "react-router-dom";
 const Toolbar = () => {
   return (
     <div className="toolbar">
-      <button>
+      {/* <button>
         <Link to="/filter">Filter</Link>
-      </button>
+      </button> */}
       <button>
-        <Link to="/add">Add</Link>
+        <Link to="/add">
+          <div className="addSnap">
+            <i className="fas fa-camera"></i>
+          </div>
+        </Link>
       </button>
-      <button>
+      {/* <button>
         <Link to="/search">Search</Link>
-      </button>
+      </button> */}
     </div>
   );
 };
