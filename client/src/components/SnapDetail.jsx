@@ -59,15 +59,8 @@ class SnapDetail extends Component {
         ? (timeStamp = hours + ":0" + minutes)
         : (timeStamp = hours + ":" + minutes);
 
-
-      return (
-       
-      console.log(this.state.snap.category);
-      console.log(categoryColor(this.state.snap));
-
       return (
         <div className="container" style={categoryColor(this.state.category)}>
-
           <div className="snap-box">
             <div className="time-box">
               <p>Created at {timeStamp}</p>
