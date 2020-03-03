@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 export default class SnapEdit extends Component {
   state = {
@@ -10,7 +10,8 @@ export default class SnapEdit extends Component {
     description: "",
     location: "",
     category: "",
-    img: ""
+    img: "",
+    address: ""
   };
 
   componentDidMount() {
@@ -22,17 +23,10 @@ export default class SnapEdit extends Component {
           title: response.data.title,
           description: response.data.description,
           category: response.data.category,
-          img: response.data.image
+          img: response.data.image,
+          address: response.data.address,
+          location: response.data.location
         });
-        Geocode.fromLatLng(
-          response.data.location.lat,
-          response.data.location.lng
-        )
-          .then(response => {
-            const address = response.results[0].formatted_address;
-            this.setState({ location: address });
-          })
-          .catch(err => console.log(err));
       })
       .catch(err => {
         this.setState({
@@ -74,6 +68,25 @@ export default class SnapEdit extends Component {
     });
   };
 
+  updateLocation = event => {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(response => {
+      let location = {
+        lat: response.coords.latitude,
+        lng: response.coords.longitude
+      };
+
+      Geocode.fromLatLng(location.lat, location.lng)
+        .then(response => {
+          this.setState({
+            location: location,
+            address: response.results[0].formatted_address
+          });
+        })
+        .catch(err => console.log(err));
+    });
+  };
+
   render() {
     return (
       <div className="container">
@@ -109,14 +122,15 @@ export default class SnapEdit extends Component {
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
-                <label htmlFor="location"> Location </label>
+                <label htmlFor="address"> Location </label>
                 <input
                   type="text"
-                  name="location"
-                  id="location"
-                  value={this.state.location}
+                  name="address"
+                  id="address"
+                  value={this.state.address}
                   onChange={this.handleChange}
                 />
+                <button onClick={this.updateLocation}>Update Location</button>
                 <p>Current Category: {this.state.category}</p>
                 <button onClick={this.assignCategory} value="free">
                   FREE

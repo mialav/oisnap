@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Login from "./Login";
 import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 class NewSnap extends Component {
   state = {
@@ -29,6 +29,25 @@ class NewSnap extends Component {
         message: "can you just..?"
       });
     }
+  };
+
+  componentDidMount = () => {
+    console.log();
+    navigator.geolocation.getCurrentPosition(response => {
+      let location = {
+        lat: response.coords.latitude,
+        lng: response.coords.longitude
+      };
+
+      Geocode.fromLatLng(location.lat, location.lng)
+        .then(response => {
+          this.setState({
+            location: location,
+            address: response.results[0].formatted_address
+          });
+        })
+        .catch(err => console.log(err));
+    });
   };
 
   goBack = () => {
@@ -60,7 +79,7 @@ class NewSnap extends Component {
     } else {
       //axios
 
-      Geocode.fromAddress(this.state.location)
+      Geocode.fromAddress(this.state.address)
         .then(response => {
           console.log(response);
           axios
@@ -117,9 +136,6 @@ class NewSnap extends Component {
   };
 
   render() {
-    navigator.geolocation.getCurrentPosition(response =>
-      console.log(response.coords.latitude, response.coords.longitude)
-    );
     return (
       <>
         {!this.props.user ? (
@@ -206,7 +222,7 @@ class NewSnap extends Component {
                       type="text"
                       name="address"
                       id="address"
-                      value={this.state.location}
+                      value={this.state.address}
                       onChange={this.handleChange}
                     />
                     <button type="submit"> Add to</button>
