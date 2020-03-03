@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import categoryColor from "../styles/snapStyles";
 
 class SnapPreview extends Component {
   state = {
@@ -40,7 +41,7 @@ class SnapPreview extends Component {
         : (timeStamp = hours + ":" + minutes);
 
       return (
-        <div className="preview">
+        <div className="preview" style={categoryColor(this.state.category)}>
           <div className="snap-box">
             <div className="time-box">
               <p>Created at {timeStamp}</p>

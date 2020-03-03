@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import SnapPreview from "./SnapPreview.jsx";
+import history from "../history";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
@@ -51,25 +52,39 @@ export default class Map extends Component {
     });
   };
 
+  closeWindows = () => {
+    history.push("/home");
+    console.log("MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP");
+  };
+
   render() {
     const { viewport } = this.state;
+
+    const geolocateStyle = {
+      float: "left",
+      marginTop: "100px",
+      padding: "10px"
+    };
 
     return (
       <MapGL
         {...viewport}
         width="100vw"
         height="100vh"
-        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapStyle="mapbox://styles/mialav/ck7brnzxa0mg01invkw6jqlvj"
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
+        onClick={this.closeWindows}
       >
-        <GeolocateControl
-          style={geolocateStyle}
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-          fitBoundsOptions={{ maxZoom: 3 }}
-        />
+        <div className="geolocation-button">
+          <GeolocateControl
+            style={geolocateStyle}
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation={true}
+            fitBoundsOptions={{ maxZoom: 3 }}
+          />
+        </div>
 
         {this.getSnaps().map(snap => {
           return (
@@ -81,12 +96,16 @@ export default class Map extends Component {
               snapTitle={snap.title}
               snapCreated={snap.created_at}
             >
-              <img
+              <i
+                className="fas fa-map-marker-alt"
+                onClick={() => this.renderPopup(snap)}
+              ></i>
+              {/* <img
                 className="marker"
                 alt="marker"
                 src={require("../images/mapbox-icon.png")}
                 onClick={() => this.renderPopup(snap)}
-              />
+              /> */}
             </Marker>
           );
         })}

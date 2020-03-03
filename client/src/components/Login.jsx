@@ -61,7 +61,7 @@ export default class Login extends Component {
             />
 
             <button type="submit" onClick={this.handleSubmit}>
-              Sign Up
+              Log in
             </button>
           </form>
         </div>
