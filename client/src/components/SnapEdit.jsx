@@ -12,7 +12,7 @@ export default class SnapEdit extends Component {
     location: "",
     category: "",
     img: "",
-    creationDate: ""
+    creationDate: "",
     address: ""
   };
 
@@ -26,7 +26,7 @@ export default class SnapEdit extends Component {
           description: response.data.description,
           category: response.data.category,
           img: response.data.image,
-          creationDate: response.created_at
+          creationDate: response.created_at,
           address: response.data.address,
           location: response.data.location
         });

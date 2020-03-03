@@ -21,12 +21,6 @@ import Footer from "./components/Footer";
 import SnapPreview from "./components/SnapPreview";
 import SnapEdit from "./components/SnapEdit";
 
-<<<<<<< HEAD
-=======
-import SnapEdit from "./components/SnapEdit";
-
-
->>>>>>> 274529cf49cf7a8c96a03f96d9ea2b85ac7d21a3
 class App extends React.Component {
   state = {
     user: this.props.user,
@@ -57,7 +51,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-
         <Router history={history}>
           <div className="map">
             <Map snapsData={this.state.data} />
@@ -129,13 +122,6 @@ class App extends React.Component {
               <Toolbar />
             </Switch>
           </div>
-
-          <Switch>
-            <Route exact path="/" component={WelcomePopup} />
-            <Toolbar />
-
-          </Switch>
-
         </Router>
       </div>
     );
