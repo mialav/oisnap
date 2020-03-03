@@ -4,7 +4,6 @@ import SnapPreview from "./SnapPreview.jsx";
 
 import history from "../history";
 
-
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
 const geolocateStyle = {
@@ -54,11 +53,9 @@ export default class Map extends Component {
     });
   };
 
-
   closeWindows = () => {
     history.push("/home");
   };
-
 
   render() {
     const { viewport } = this.state;
@@ -80,17 +77,16 @@ export default class Map extends Component {
         className="mapContainer"
         onClick={this.closeWindows}
       >
-
-
         <div className="geolocation-button">
           <GeolocateControl
             style={geolocateStyle}
             positionOptions={{ enableHighAccuracy: true }}
             trackUserLocation={true}
-            fitBoundsOptions={{ maxZoom: 3 }}
+            onViewportChange={viewport => {
+              this.setState({ viewport: { ...viewport, zoom: 16 } });
+            }}
           />
         </div>
-
 
         {this.getSnaps().map(snap => {
           return (
@@ -117,7 +113,6 @@ export default class Map extends Component {
 
 
               /> */}
-
             </Marker>
           );
         })}

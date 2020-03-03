@@ -123,11 +123,6 @@ class App extends React.Component {
               <Toolbar />
             </Switch>
           </div>
-
-          <Switch>
-            <Route exact path="/" component={WelcomePopup} />
-            <Toolbar />
-          </Switch>
         </Router>
       </div>
     );
