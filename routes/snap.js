@@ -31,6 +31,7 @@ router.post("/", (req, res, next) => {
     category: newSnap.category,
     user: req.user._id,
     location: newSnap.location,
+    address: newSnap.address,
     image: newSnap.image,
     expireAt: expiryDate
   })

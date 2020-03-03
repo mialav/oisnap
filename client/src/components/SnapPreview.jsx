@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 import categoryColor from "../styles/snapStyles";
+
 
 class SnapPreview extends Component {
   state = {
@@ -54,6 +56,7 @@ class SnapPreview extends Component {
       return <div>LOADING</div>;
     } else {
       return (
+
         <div className="preview" style={categoryColor(this.state.category)}>
           <div className="snap-box">
             <div className="time-box">

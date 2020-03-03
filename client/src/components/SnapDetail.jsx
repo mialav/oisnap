@@ -28,6 +28,9 @@ class SnapDetail extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
+    console.log(this.props.match.params.id);
+    console.log(this.props.history);
+
     if (event.target.innerText === "Edit") {
       this.props.history.push(`/snaps/${this.props.match.params.id}/edit`);
     } else if (event.target.innerText === "Delete") {
@@ -69,11 +72,25 @@ class SnapDetail extends Component {
     if (!snap) {
       return <div>LOADING</div>;
     } else {
+<<<<<<< HEAD
+=======
+      const hours = new Date(snap.created_at).getHours();
+      const minutes = new Date(snap.created_at).getMinutes();
+      let timeStamp;
+      minutes < 10
+        ? (timeStamp = hours + ":0" + minutes)
+        : (timeStamp = hours + ":" + minutes);
+
+
+      return (
+       
+>>>>>>> 100e2559e2099cf9c987cb44e120035a32cc4cc8
       console.log(this.state.snap.category);
       console.log(categoryColor(this.state.snap));
 
       return (
         <div className="container" style={categoryColor(this.state.category)}>
+
           <div className="snap-box">
             <div className="time-box">
               <p>Created {this.getTime(snap)} ago</p>
