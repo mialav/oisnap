@@ -23,6 +23,7 @@ import SnapEdit from "./components/SnapEdit";
 
 import SnapEdit from "./components/SnapEdit";
 
+
 class App extends React.Component {
   state = {
     user: this.props.user,
@@ -54,6 +55,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+
         <Router history={history}>
           <div className="map">
             <Map snapsData={this.state.data} />
@@ -125,6 +127,13 @@ class App extends React.Component {
               <Toolbar />
             </Switch>
           </div>
+
+          <Switch>
+            <Route exact path="/" component={WelcomePopup} />
+            <Toolbar />
+
+          </Switch>
+
         </Router>
       </div>
     );
