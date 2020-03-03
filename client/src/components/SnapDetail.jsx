@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import categoryColor from "../styles/snapStyles";
 
 class SnapDetail extends Component {
   state = {
@@ -26,8 +27,10 @@ class SnapDetail extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     console.log(this.props.match.params.id);
     console.log(this.props.history);
+
     if (event.target.innerText === "Edit") {
       this.props.history.push(`/snaps/${this.props.match.params.id}/edit`);
     } else if (event.target.innerText === "Delete") {
@@ -43,25 +46,50 @@ class SnapDetail extends Component {
     }
   };
 
+  getTime = snap => {
+    const currentTime = new Date();
+    const snapTime = new Date(snap.created_at);
+
+    let timeDiff = currentTime.getTime() - snapTime.getTime();
+
+    let hours = parseInt(timeDiff / (1000 * 3600));
+    let minutes = parseInt(timeDiff / (1000 * 60));
+
+    if (hours > 1) {
+      return hours + " hours ";
+    } else if (hours === 1) {
+      return hours + " hour ";
+    } else if (minutes > 1) {
+      return minutes + " minutes ";
+    } else {
+      return minutes + " minute ";
+    }
+  };
+
   render() {
     const snap = this.state.snap;
-    console.log("snap", snap);
 
     if (!snap) {
       return <div>LOADING</div>;
     } else {
-      const hours = new Date(snap.created_at).getHours();
-      const minutes = new Date(snap.created_at).getMinutes();
-      let timeStamp;
-      minutes < 10
-        ? (timeStamp = hours + ":0" + minutes)
-        : (timeStamp = hours + ":" + minutes);
+
+      console.log(this.state.snap.category);
+      console.log(categoryColor(this.state.snap));
+
 
       return (
-        <div className="container">
+        <div
+          className="container"
+          style={{
+            backgroundColor: categoryColor(
+              this.state.snap.category,
+              this.state.snap.created_at
+            )
+          }}
+        >
           <div className="snap-box">
             <div className="time-box">
-              <p>Created at {timeStamp}</p>
+              <p>Created {this.getTime(snap)} ago</p>
             </div>
             <div className="snap-img">
               <img

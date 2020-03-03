@@ -1,48 +1,33 @@
-/* @import "./markus..css"; */
-
 .App {
   text-align: center;
   display: flex;
   flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: pink;
-}
 /************************** NAVBAR **************/
 .navbar {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
   background-color: white;
+  padding: 5%;
+  height: 5vh;
 }
+.logo {
+  width: 35vw;
+}
+
 .dropdown {
   position: absolute;
   right: 0;
+  top: 10%;
   display: flex;
   flex-direction: column;
+  padding: 3%;
+  background-color: white;
 }
 
 /************************** Landing Page *****************************/
@@ -52,12 +37,28 @@
   background-color: white;
 }
 
-/*************************** BODY *******************/
+/************************** BODY *******************/
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.body-view {
+  position: absolute;
+  box-sizing: border-box;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
 
 .container {
+  display: flex;
+  flex-direction: column;
   align-content: center;
-  background-color: white;
-  height: 70vh;
+  background-color: whitesmoke;
+  margin: auto;
 }
 
 /******************************FILTER****************/
@@ -98,17 +99,8 @@ footer,
   position: fixed;
   bottom: 0;
   width: 100%;
-  border-top: 1px solid black;
   background-color: white;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  padding: 3% 0;
 }
 
 /* MAPBOX STYLING */
@@ -119,6 +111,12 @@ footer,
   right: 0;
   top: 0;
   z-index: -1;
+}
+
+/* Font Awesome Icon */
+.fa-map-marker-alt {
+  font-size: 2rem;
+  opacity: 1;
 }
 
 /* mapbox marker */
@@ -143,4 +141,23 @@ footer,
 .map {
   position: absolute;
   z-index: -1;
+}
+
+.addSnap {
+  border: 1px black solid;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.fa-camera {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  font-size: 2em;
+  color: black;
 }

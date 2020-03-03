@@ -13,6 +13,7 @@ const snapSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     location: Object,
     address: String,
+
     image: String,
     expireAt: { type: Date, default: undefined }
   },

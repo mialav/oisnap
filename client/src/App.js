@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
+import history from "./history";
 
 import Navbar from "./components/Navbar";
 import WelcomePopup from "./components/WelcomePopup";
@@ -15,10 +16,10 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SnapDetail from "./components/SnapDetail";
 
+import Footer from "./components/Footer";
+
 import SnapPreview from "./components/SnapPreview";
-
 import SnapEdit from "./components/SnapEdit";
-
 
 class App extends React.Component {
   state = {
@@ -50,71 +51,78 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navbar user={this.state.user} setUser={this.setUser} />
-        <div className="map">
-          <Map snapsData={this.state.data} />
-        </div>
-        <div className="body-view">
-          <Switch>
-            <Route exact path="/search" component={Search} />
-            <Route exact path="/filter" component={Filter} />
-            <Route
-              exact
-              path="/add"
-              render={props => (
-                <NewSnap
-                  user={this.state.user}
-                  refresh={this.getData}
-                  history={props.history}
+        <Router history={history}>
+          <div className="map">
+            <Map snapsData={this.state.data} />
+          </div>
+          <div className="body">
+            <Navbar user={this.state.user} setUser={this.setUser} />
+            <div className="body-view">
+              <Switch>
+                <Route exact path="/search" component={Search} />
+                <Route exact path="/filter" component={Filter} />
+                <Route
+                  exact
+                  path="/add"
+                  render={props => (
+                    <NewSnap
+                      user={this.state.user}
+                      refresh={this.getData}
+                      history={props.history}
+                    />
+                  )}
                 />
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={props => (
-                <Signup setUser={this.setUser} history={props.history} />
-              )}
-            />
-            <Route
-              exact
-              path="/login"
-              render={props => (
-                <Login setUser={this.setUser} history={props.history} />
-              )}
-            />
-            <Route
-              exact
-              path="/profile"
-              render={props => (
-                <Profile user={this.state.user} history={props.history} />
-              )}
-            />
-            <Route
-              exact
-              path="/snaps/:id/edit"
-              render={props => <SnapEdit user={this.state.user} {...props} />}
-            />
-            <Route
-              path="/snaps/:id"
-              render={props => <SnapDetail {...props} user={this.state.user} />}
-            />
+                <Route
+                  exact
+                  path="/signup"
+                  render={props => (
+                    <Signup setUser={this.setUser} history={props.history} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  render={props => (
+                    <Login setUser={this.setUser} history={props.history} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  render={props => (
+                    <Profile user={this.state.user} history={props.history} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/snaps/:id/edit"
+                  render={props => (
+                    <SnapEdit user={this.state.user} {...props} />
+                  )}
+                />
+                <Route
+                  path="/snaps/:id"
+                  render={props => (
+                    <SnapDetail {...props} user={this.state.user} />
+                  )}
+                />
 
-            <Route
-              path="/snaps/:id/preview"
-              render={props => (
-                <SnapPreview {...props} user={this.state.user} />
-              )}
-            />
+                <Route
+                  path="/snaps/:id/preview"
+                  render={props => (
+                    <SnapPreview {...props} user={this.state.user} />
+                  )}
+                />
 
-
-
-          </Switch>
-        </div>
-        <Switch>
-          <Route exact path="/" component={WelcomePopup} />
-          <Toolbar />
-        </Switch>
+                <Route exact path="/" component={WelcomePopup} />
+              </Switch>
+            </div>
+            <Switch>
+              <Route exact path="/" component={Footer} />
+              <Toolbar />
+            </Switch>
+          </div>
+        </Router>
       </div>
     );
   }
