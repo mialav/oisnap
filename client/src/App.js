@@ -21,8 +21,6 @@ import Footer from "./components/Footer";
 import SnapPreview from "./components/SnapPreview";
 import SnapEdit from "./components/SnapEdit";
 
-import SnapEdit from "./components/SnapEdit";
-
 class App extends React.Component {
   state = {
     user: this.props.user,
@@ -37,7 +35,6 @@ class App extends React.Component {
     axios
       .get("/snaps")
       .then(response => {
-        console.log(response.data);
         this.setState({
           data: response.data
         });

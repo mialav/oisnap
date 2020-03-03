@@ -62,10 +62,12 @@ class SnapDetail extends Component {
       return (
         <div
           className="container"
-          style={categoryColor(
-            this.state.snap.category,
-            this.state.snap.created_at
-          )}
+          style={{
+            backgroundColor: categoryColor(
+              this.state.snap.category,
+              this.state.snap.created_at
+            )
+          }}
         >
           <div className="snap-box">
             <div className="time-box">

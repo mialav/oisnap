@@ -34,10 +34,13 @@ export default class Map extends Component {
         return {
           _id: snap._id,
           latitude: snap.location.lat,
-          longitude: snap.location.lng
+          longitude: snap.location.lng,
+          category: snap.category,
+          creationDate: snap.created_at
         };
       });
     }
+
     return snaps;
   };
 
@@ -65,6 +68,7 @@ export default class Map extends Component {
       marginTop: "100px",
       padding: "10px"
     };
+
     return (
       <MapGL
         {...viewport}
@@ -95,7 +99,11 @@ export default class Map extends Component {
               snapTitle={snap.title}
               snapCreated={snap.created_at}
             >
-              <span style={categoryColor(snap.category, snap.created_at)}>
+              <span
+                style={{
+                  color: categoryColor(snap.category, snap.creationDate)
+                }}
+              >
                 <i
                   className="fas fa-map-marker-alt"
                   onClick={() => this.renderPopup(snap)}
@@ -109,7 +117,6 @@ export default class Map extends Component {
                 onClick={() => this.renderPopup(snap)}
 
               /> */}
-
             </Marker>
           );
         })}
@@ -120,6 +127,12 @@ export default class Map extends Component {
             longitude={this.state.popupInfo.longitude}
             dynamicPosition={true}
             closeButton={false}
+            style={{
+              backgroundColor: `${categoryColor(
+                this.state.popupInfo.category,
+                this.state.popupInfo.created_at
+              )}`
+            }}
           >
             <div onClick={this.closePopup}>
               <SnapPreview id={this.state.popupInfo._id} />

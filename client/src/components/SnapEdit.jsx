@@ -81,7 +81,12 @@ export default class SnapEdit extends Component {
     return (
       <div
         className="container"
-        state={categoryColor(this.state.category, this.state.creationDate)}
+        style={{
+          backgroundColor: `${categoryColor(
+            this.state.category,
+            this.state.creationDate
+          )}`
+        }}
       >
         {this.props.user._id === this.state.user ? (
           <React.Fragment>
