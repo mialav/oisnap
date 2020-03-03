@@ -38,14 +38,12 @@ class NewSnap extends Component {
     if (!this.props.user) {
       this.props.history.push("/login");
     }
-    console.log();
     navigator.geolocation.getCurrentPosition(response => {
       let location = {
         lat: response.coords.latitude,
         lng: response.coords.longitude
       };
 
-      console.log(location);
       Geocode.fromLatLng(location.lat, location.lng)
         .then(response => {
           this.setState({
