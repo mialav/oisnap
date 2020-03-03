@@ -185,7 +185,6 @@ class NewSnap extends Component {
                   alt={this.state.title}
                 />
               )}
-
               <button onClick={this.assignCategory} value="free">
                 FREE
               </button>

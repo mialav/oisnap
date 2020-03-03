@@ -28,6 +28,26 @@ class SnapPreview extends Component {
       });
   }
 
+  getTime = snap => {
+    const currentTime = new Date();
+    const snapTime = new Date(snap.created_at);
+
+    let timeDiff = currentTime.getTime() - snapTime.getTime();
+
+    let hours = parseInt(timeDiff / (1000 * 3600));
+    let minutes = parseInt(timeDiff / (1000 * 60));
+
+    if (hours > 1) {
+      return hours + " hours ";
+    } else if (hours === 1) {
+      return hours + " hour ";
+    } else if (minutes > 1) {
+      return minutes + " minutes ";
+    } else {
+      return minutes + " minute ";
+    }
+  };
+
   render() {
     const snap = this.state.snap;
     console.log("snap", snap);
@@ -35,19 +55,12 @@ class SnapPreview extends Component {
     if (!snap) {
       return <div>LOADING</div>;
     } else {
-      const hours = new Date(snap.created_at).getHours();
-      const minutes = new Date(snap.created_at).getMinutes();
-      let timeStamp;
-      minutes < 10
-        ? (timeStamp = hours + ":0" + minutes)
-        : (timeStamp = hours + ":" + minutes);
-
       return (
 
         <div className="preview" style={categoryColor(this.state.category)}>
           <div className="snap-box">
             <div className="time-box">
-              <p>Created at {timeStamp}</p>
+              <p>Created {this.getTime(snap)} ago</p>
             </div>
             <div className="snap-img">
               <img
