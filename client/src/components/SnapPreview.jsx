@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class SnapPreview extends Component {
   state = {
@@ -8,7 +9,7 @@ class SnapPreview extends Component {
   };
 
   componentDidMount() {
-    const snapId = this.props.match.params.id;
+    const snapId = this.props.id;
 
     axios
       .get(`/snaps/${snapId}`)
@@ -30,33 +31,35 @@ class SnapPreview extends Component {
 
     if (!snap) {
       return <div>LOADING</div>;
-    }
+    } else {
+      const hours = new Date(snap.created_at).getHours();
+      const minutes = new Date(snap.created_at).getMinutes();
+      let timeStamp;
+      minutes < 10
+        ? (timeStamp = hours + ":0" + minutes)
+        : (timeStamp = hours + ":" + minutes);
 
-    return (
-      <div className="preview">
-        <div className="snap-box">
-          <div className="time-box">
-            <p>Created at {snap.created_at}</p>
-          </div>
-          <div className="snap-img">
-            <img
-              src={snap.image}
-              alt={snap.title}
-              style={{ height: "150px" }}
-            />
-          </div>
-          <div className="details-box">
-            <h2>{snap.title}</h2>
-            {this.props.user._id === snap.user && (
-              <div>
-                <button>EDIT</button>
-                <button>REMOVE</button>
-              </div>
-            )}
+      return (
+        <div className="preview">
+          <div className="snap-box">
+            <div className="time-box">
+              <p>Created at {timeStamp}</p>
+            </div>
+            <div className="snap-img">
+              <img
+                src={snap.image}
+                alt={snap.title}
+                style={{ height: "150px" }}
+              />
+            </div>
+            <div className="details-box">
+              <h2>{snap.title}</h2>
+              <Link to={`/snaps/${snap._id}`}>View more</Link>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

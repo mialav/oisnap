@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Login from "./Login";
+import Geocode from "react-geocode";
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 class NewSnap extends Component {
   state = {
@@ -12,7 +14,8 @@ class NewSnap extends Component {
     description: "",
     emptyError: "",
     loading: false,
-    image: null
+    image: null,
+    address: ""
   };
 
   goNext = () => {
@@ -26,6 +29,25 @@ class NewSnap extends Component {
         message: "can you just..?"
       });
     }
+  };
+
+  componentDidMount = () => {
+    console.log();
+    navigator.geolocation.getCurrentPosition(response => {
+      let location = {
+        lat: response.coords.latitude,
+        lng: response.coords.longitude
+      };
+
+      Geocode.fromLatLng(location.lat, location.lng)
+        .then(response => {
+          this.setState({
+            location: location,
+            address: response.results[0].formatted_address
+          });
+        })
+        .catch(err => console.log(err));
+    });
   };
 
   goBack = () => {
@@ -56,26 +78,33 @@ class NewSnap extends Component {
       });
     } else {
       //axios
-      axios
-        .post("/snaps/", {
-          title: this.state.title,
-          description: this.state.description,
-          category: this.state.category,
-          location: this.state.location,
-          image: this.state.image
-        })
+
+      Geocode.fromAddress(this.state.address)
         .then(response => {
-          console.log("Snap was sent!");
           console.log(response);
-          this.props.refresh();
-          // call update data method from app.js
-          this.props.history.push(`/snaps/${response.data._id}`);
+          axios
+            .post("/snaps/", {
+              title: this.state.title,
+              description: this.state.description,
+              category: this.state.category,
+              address: this.state.address,
+              location: response.results[0].geometry.location,
+              image: this.state.image
+            })
+            .then(response => {
+              console.log("Snap was sent!");
+              console.log(response);
+              this.props.refresh();
+              // call update data method from app.js
+              this.props.history.push(`/snaps/${response.data._id}`);
+            })
+            .catch(err => {
+              this.setState({
+                emptyError: err.response.data.message
+              });
+            });
         })
-        .catch(err => {
-          this.setState({
-            emptyError: err.response.data.message
-          });
-        });
+        .catch(err => console.log(err));
     }
   };
 
@@ -188,12 +217,12 @@ class NewSnap extends Component {
                       value={this.state.description}
                       onChange={this.handleChange}
                     />
-                    <label htmlFor="location"> Location </label>
+                    <label htmlFor="address"> Location </label>
                     <input
                       type="text"
-                      name="location"
-                      id="location"
-                      value={this.state.location}
+                      name="address"
+                      id="address"
+                      value={this.state.address}
                       onChange={this.handleChange}
                     />
                     <button type="submit"> Add to</button>

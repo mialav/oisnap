@@ -14,7 +14,11 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SnapDetail from "./components/SnapDetail";
+
 import SnapPreview from "./components/SnapPreview";
+
+import SnapEdit from "./components/SnapEdit";
+
 
 class App extends React.Component {
   state = {
@@ -48,7 +52,7 @@ class App extends React.Component {
       <div className="App">
         <Navbar user={this.state.user} setUser={this.setUser} />
         <div className="map">
-          <Map />
+          <Map snapsData={this.state.data} />
         </div>
         <div className="body-view">
           <Switch>
@@ -87,16 +91,24 @@ class App extends React.Component {
               )}
             />
             <Route
+              exact
+              path="/snaps/:id/edit"
+              render={props => <SnapEdit user={this.state.user} {...props} />}
+            />
+            <Route
               path="/snaps/:id"
               render={props => <SnapDetail {...props} user={this.state.user} />}
             />
+
             <Route
               path="/snaps/:id/preview"
               render={props => (
                 <SnapPreview {...props} user={this.state.user} />
               )}
             />
-            />
+
+
+
           </Switch>
         </div>
         <Switch>
