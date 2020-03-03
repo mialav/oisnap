@@ -3,7 +3,7 @@ import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import SnapPreview from "./SnapPreview.jsx";
 
 import history from "../history";
-
+import categoryColor from "../styles/snapStyles.js";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
@@ -35,10 +35,13 @@ export default class Map extends Component {
         return {
           _id: snap._id,
           latitude: snap.location.lat,
-          longitude: snap.location.lng
+          longitude: snap.location.lng,
+          category: snap.category,
+          creationDate: snap.created_at
         };
       });
     }
+
     return snaps;
   };
 
@@ -54,11 +57,9 @@ export default class Map extends Component {
     });
   };
 
-
   closeWindows = () => {
     history.push("/home");
   };
-
 
   render() {
     const { viewport } = this.state;
@@ -80,17 +81,16 @@ export default class Map extends Component {
         className="mapContainer"
         onClick={this.closeWindows}
       >
-
-
         <div className="geolocation-button">
           <GeolocateControl
             style={geolocateStyle}
             positionOptions={{ enableHighAccuracy: true }}
             trackUserLocation={true}
-            fitBoundsOptions={{ maxZoom: 3 }}
+            onViewportChange={viewport => {
+              this.setState({ viewport: { ...viewport, zoom: 16 } });
+            }}
           />
         </div>
-
 
         {this.getSnaps().map(snap => {
           return (
@@ -102,10 +102,17 @@ export default class Map extends Component {
               snapTitle={snap.title}
               snapCreated={snap.created_at}
             >
-              <i
-                className="fas fa-map-marker-alt"
-                onClick={() => this.renderPopup(snap)}
-              ></i>
+              <span
+                style={{
+                  color: categoryColor(snap.category, snap.creationDate)
+                }}
+              >
+                <i
+                  className="fas fa-map-marker-alt"
+                  onClick={() => this.renderPopup(snap)}
+                ></i>
+              </span>
+
               {/* <img
                 className="marker"
                 alt="marker"
@@ -117,7 +124,6 @@ export default class Map extends Component {
 
 
               /> */}
-
             </Marker>
           );
         })}
@@ -128,6 +134,12 @@ export default class Map extends Component {
             longitude={this.state.popupInfo.longitude}
             dynamicPosition={true}
             closeButton={false}
+            style={{
+              backgroundColor: `${categoryColor(
+                this.state.popupInfo.category,
+                this.state.popupInfo.created_at
+              )}`
+            }}
           >
             <div onClick={this.closePopup}>
               <SnapPreview id={this.state.popupInfo._id} />

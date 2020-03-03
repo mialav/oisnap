@@ -35,7 +35,6 @@ class App extends React.Component {
     axios
       .get("/snaps")
       .then(response => {
-        console.log(response.data);
         this.setState({
           data: response.data
         });
@@ -123,11 +122,14 @@ class App extends React.Component {
               <Toolbar />
             </Switch>
           </div>
+<<<<<<< HEAD
 
           <Switch>
             <Route exact path="/" component={WelcomePopup} />
             <Toolbar />
           </Switch>
+=======
+>>>>>>> 908bfb9518a863ffc1c93cee7d28888ac05f33c0
         </Router>
       </div>
     );
