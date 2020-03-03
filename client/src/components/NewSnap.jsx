@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import categoryFunction from "../styles/snapStyles";
 import categoryColor from "../styles/snapStyles";
 import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
@@ -10,7 +9,7 @@ class NewSnap extends Component {
     page: 1,
     category: null,
     message: "",
-    location: "", //props
+    location: "",
     title: "",
     description: "",
     snapError: "",
@@ -53,7 +52,7 @@ class NewSnap extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    if (this.state.title === "") {
+    if (this.state.title === "" || !this.state.location) {
       this.setState({
         message: "PLEEEEEEASE"
       });
@@ -106,7 +105,6 @@ class NewSnap extends Component {
         return res.json();
       })
       .then(responseData => {
-        console.log(responseData);
         this.setState({
           image: responseData.secure_url,
           loading: false
@@ -127,13 +125,9 @@ class NewSnap extends Component {
   };
 
   render() {
-    console.log(categoryFunction("promo"));
     return (
       <React.Fragment>
-        <div
-          className="container"
-          style={categoryFunction(this.state.category)}
-        >
+        <div className="container" style={categoryColor(this.state.category)}>
           <button onClick={this.goBack} className="page-button">
             {" "}
             BACK{" "}
