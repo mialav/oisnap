@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
-import categoryColor from "../styles/snapStyles";
+
+import Login from "./Login";
 import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
+import categoryColor from "../styles/snapStyles";
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 class NewSnap extends Component {
   state = {
@@ -14,7 +17,8 @@ class NewSnap extends Component {
     description: "",
     snapError: "",
     loading: false,
-    image: null
+    image: null,
+    address: ""
   };
 
   goNext = () => {
@@ -28,6 +32,29 @@ class NewSnap extends Component {
         message: "can you just..?"
       });
     }
+  };
+
+  componentDidMount = () => {
+    if (!this.props.user) {
+      this.props.history.push("/login");
+    }
+    console.log();
+    navigator.geolocation.getCurrentPosition(response => {
+      let location = {
+        lat: response.coords.latitude,
+        lng: response.coords.longitude
+      };
+
+      console.log(location);
+      Geocode.fromLatLng(location.lat, location.lng)
+        .then(response => {
+          this.setState({
+            location: location,
+            address: response.results[0].formatted_address
+          });
+        })
+        .catch(err => console.log(err));
+    });
   };
 
   goBack = () => {
@@ -59,7 +86,7 @@ class NewSnap extends Component {
     } else {
       //axios
 
-      Geocode.fromAddress(this.state.location)
+      Geocode.fromAddress(this.state.address)
         .then(response => {
           console.log(response);
           axios
@@ -67,6 +94,8 @@ class NewSnap extends Component {
               title: this.state.title,
               description: this.state.description,
               category: this.state.category,
+
+              address: this.state.address,
               location: response.results[0].geometry.location,
               image: this.state.image
             })
@@ -116,12 +145,6 @@ class NewSnap extends Component {
           snapError: "Couldn't upload the image, please try again"
         });
       });
-  };
-
-  componentDidMount = () => {
-    if (!this.props.user) {
-      this.props.history.push("/login");
-    }
   };
 
   render() {
@@ -203,12 +226,12 @@ class NewSnap extends Component {
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
-                <label htmlFor="location"> Location </label>
+                <label htmlFor="address"> Location </label>
                 <input
                   type="text"
-                  name="location"
-                  id="location"
-                  value={this.state.location}
+                  name="address"
+                  id="address"
+                  value={this.state.address}
                   onChange={this.handleChange}
                 />
                 <button type="submit"> Add to</button>

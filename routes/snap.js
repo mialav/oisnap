@@ -31,6 +31,7 @@ router.post("/", (req, res, next) => {
     category: newSnap.category,
     user: req.user._id,
     location: newSnap.location,
+    address: newSnap.address,
     image: newSnap.image,
     expireAt: expiryDate
   })
@@ -45,10 +46,12 @@ router.post("/", (req, res, next) => {
           }
         }
       )
-        .then(response => console.log(response))
-        .catch(err => console.log(err));
+        .then(response => {
+          console.log(response);
+          res.json(snapDocument);
+        })
 
-      res.json(snapDocument);
+        .catch(err => console.log(err));
 
       //TODO: need to calculte score of the user
     })
@@ -90,11 +93,13 @@ router.patch("/:id", (req, res, next) => {
           title: editedSnap.title,
           description: editedSnap.description,
           category: editedSnap.category,
-          location: editedSnap.location
+          location: editedSnap.location,
+          address: editedSnap.address
         }
       )
         .then(response => {
           console.log(response);
+          res.json();
 
           //TODO - update the score / category count
         })

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Geocode from "react-geocode";
 import categoryColor from "../styles/snapStyles";
-Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 export default class SnapEdit extends Component {
   state = {
@@ -13,6 +13,7 @@ export default class SnapEdit extends Component {
     category: "",
     img: "",
     creationDate: ""
+    address: ""
   };
 
   componentDidMount() {
@@ -26,16 +27,9 @@ export default class SnapEdit extends Component {
           category: response.data.category,
           img: response.data.image,
           creationDate: response.created_at
+          address: response.data.address,
+          location: response.data.location
         });
-        Geocode.fromLatLng(
-          response.data.location.lat,
-          response.data.location.lng
-        )
-          .then(response => {
-            const address = response.results[0].formatted_address;
-            this.setState({ location: address });
-          })
-          .catch(err => console.log(err));
       })
       .catch(err => {
         this.setState({
@@ -52,9 +46,10 @@ export default class SnapEdit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
+    console.log(this.state.address);
     Geocode.fromAddress(this.state.location)
       .then(response => {
+        console.log(response);
         axios
           .patch(`/snaps/${this.props.match.params.id}`, {
             ...this.state,
@@ -62,12 +57,11 @@ export default class SnapEdit extends Component {
           })
           .then(response => {
             console.log(response);
+            this.props.history.push(`/snaps/${this.props.match.params.id}`);
           })
           .catch(err => console.log(err.message));
       })
       .catch(err => console.log(err));
-
-    this.props.history.push(`/snaps/${this.props.match.params.id}`);
   };
 
   assignCategory = event => {
@@ -77,7 +71,27 @@ export default class SnapEdit extends Component {
     });
   };
 
+  updateLocation = event => {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(response => {
+      let location = {
+        lat: response.coords.latitude,
+        lng: response.coords.longitude
+      };
+
+      Geocode.fromLatLng(location.lat, location.lng)
+        .then(response => {
+          this.setState({
+            location: location,
+            address: response.results[0].formatted_address
+          });
+        })
+        .catch(err => console.log(err));
+    });
+  };
+
   render() {
+    console.log(this.state.address);
     return (
       <div
         className="container"
@@ -120,14 +134,17 @@ export default class SnapEdit extends Component {
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
-                <label htmlFor="location"> Location </label>
+
+                <label htmlFor="address"> Location </label>
                 <input
                   type="text"
-                  name="location"
-                  id="location"
-                  value={this.state.location}
+                  name="address"
+                  id="address"
+                  value={this.state.address}
                   onChange={this.handleChange}
                 />
+                <button onClick={this.updateLocation}>Update Location</button>
+
                 <p>Current Category: {this.state.category}</p>
                 <button onClick={this.assignCategory} value="free">
                   FREE
