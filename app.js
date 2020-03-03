@@ -36,6 +36,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static("client/build"));
 
 // Express View engine setup
 
@@ -80,5 +81,10 @@ app.use("/auth", authRoutes);
 
 const snapRoutes = require("./routes/snap");
 app.use("/snaps", snapRoutes);
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/client/build/index.html");
+});
 
 module.exports = app;
