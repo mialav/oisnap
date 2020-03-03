@@ -3,11 +3,9 @@ import axios from "axios";
 
 import Login from "./Login";
 import Geocode from "react-geocode";
-Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
-
 import categoryColor from "../styles/snapStyles";
 
-
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 class NewSnap extends Component {
   state = {
@@ -83,7 +81,6 @@ class NewSnap extends Component {
       });
     } else {
       //axios
-
 
       Geocode.fromAddress(this.state.address)
         .then(response => {
@@ -181,18 +178,11 @@ class NewSnap extends Component {
               <button onClick={() => this.fileInput.click()}>
                 Upload image
               </button>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> b64187000f97a6c469b714916884ca31957374a4
               <button onClick={this.goNext} className="page-button">
                 {" "}
                 NEXT{" "}
               </button>
-
               <p>Step {this.state.page} out of 2 </p>
-
               {/* /* ***PAGE 1 upload and category *** */}
               {this.state.page === 1 && (
                 <div className="page photo-page">
@@ -232,9 +222,7 @@ class NewSnap extends Component {
                 </div>
               )}
               {this.state.message && <p>{this.state.message}</p>}
-
               {/* /* *************  PAGE 2 snap details************* */}
-
               {this.state.page === 2 && (
                 <div className="page detail-page">
                   <form onSubmit={this.handleSubmit}>
@@ -267,11 +255,8 @@ class NewSnap extends Component {
                   {this.state.title ? <p></p> : <p>can titile?</p>}
                   {this.state.emptyError && <p>{this.state.emptyError}</p>}
                 </div>
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> b64187000f97a6c469b714916884ca31957374a4
+              )}
+              ;
               {this.state.loading ? (
                 <h3>Loading </h3>
               ) : (
@@ -280,13 +265,7 @@ class NewSnap extends Component {
                   style={{ height: "30vh" }}
                   alt={this.state.title}
                 />
-<<<<<<< HEAD
->>>>>>> 1c2a6a0521ffa5c15878dab28a935fbf7ed22218
-=======
-
->>>>>>> b64187000f97a6c469b714916884ca31957374a4
               )}
-
               <button onClick={this.assignCategory} value="free">
                 FREE
               </button>
