@@ -96,6 +96,13 @@ footer,
   z-index: -1;
 }
 
+/* Font Awesome Icon */
+.fa-map-marker-alt {
+  color: #eb5757;
+  font-size: 2rem;
+  opacity: 1;
+}
+
 /* mapbox marker */
 .marker {
   background-image: url("./images/mapbox-icon.png");
