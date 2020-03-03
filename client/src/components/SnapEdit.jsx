@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Geocode from "react-geocode";
+import categoryColor from "../styles/snapStyles";
 Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
 
 export default class SnapEdit extends Component {
@@ -10,7 +11,8 @@ export default class SnapEdit extends Component {
     description: "",
     location: "",
     category: "",
-    img: ""
+    img: "",
+    creationDate: ""
   };
 
   componentDidMount() {
@@ -22,7 +24,8 @@ export default class SnapEdit extends Component {
           title: response.data.title,
           description: response.data.description,
           category: response.data.category,
-          img: response.data.image
+          img: response.data.image,
+          creationDate: response.created_at
         });
         Geocode.fromLatLng(
           response.data.location.lat,
@@ -76,7 +79,10 @@ export default class SnapEdit extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div
+        className="container"
+        state={categoryColor(this.state.category, this.state.creationDate)}
+      >
         {this.props.user._id === this.state.user ? (
           <React.Fragment>
             <h3>Edit your Snap</h3>

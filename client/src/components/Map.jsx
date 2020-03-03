@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import SnapPreview from "./SnapPreview.jsx";
 import history from "../history";
+import categoryColor from "../styles/snapStyles.js";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
@@ -64,7 +65,6 @@ export default class Map extends Component {
       marginTop: "100px",
       padding: "10px"
     };
-
     return (
       <MapGL
         {...viewport}
@@ -95,10 +95,13 @@ export default class Map extends Component {
               snapTitle={snap.title}
               snapCreated={snap.created_at}
             >
-              <i
-                className="fas fa-map-marker-alt"
-                onClick={() => this.renderPopup(snap)}
-              ></i>
+              <span style={categoryColor(snap.category, snap.created_at)}>
+                <i
+                  className="fas fa-map-marker-alt"
+                  onClick={() => this.renderPopup(snap)}
+                ></i>
+              </span>
+
               {/* <img
                 className="marker"
                 alt="marker"

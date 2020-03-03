@@ -41,7 +41,13 @@ class SnapPreview extends Component {
         : (timeStamp = hours + ":" + minutes);
 
       return (
-        <div className="preview" style={categoryColor(this.state.category)}>
+        <div
+          className="preview"
+          style={categoryColor(
+            this.state.snap.category,
+            this.state.snap.created_at
+          )}
+        >
           <div className="snap-box">
             <div className="time-box">
               <p>Created at {timeStamp}</p>

@@ -1,5 +1,8 @@
 const categoryColor = (category, creation) => {
+  if (!category) return {};
   let styles = {};
+
+  console.log("Creatriomnn", creation);
 
   // Markus' math
   // MAX: 86400000
@@ -8,7 +11,7 @@ const categoryColor = (category, creation) => {
   let fromMiliseconds = new Date().getTime();
 
   if (creation) {
-    fromMiliseconds = creation.getTime();
+    fromMiliseconds = new Date(creation).getTime();
   }
 
   let startMiliseconds = Date.now();
