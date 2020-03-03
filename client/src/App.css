@@ -22,6 +22,7 @@ button {
 .dropdown {
   position: absolute;
   right: 0;
+  top: 10%;
   display: flex;
   flex-direction: column;
   padding: 5%;
@@ -35,6 +36,21 @@ button {
 }
 
 /************************** BODY *******************/
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.body-view {
+  position: absolute;
+  box-sizing: border-box;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+
 
 .container {
   display: flex;
