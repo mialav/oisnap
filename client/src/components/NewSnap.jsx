@@ -84,8 +84,6 @@ class NewSnap extends Component {
         message: "PLEEEEEEASE"
       });
     } else {
-      //axios
-
       Geocode.fromAddress(this.state.address)
         .then(response => {
           console.log(response);
@@ -95,16 +93,14 @@ class NewSnap extends Component {
               description: this.state.description,
               category: this.state.category,
 
-              address: this.state.address,
+              address: response.results[0].formatted_address,
               location: response.results[0].geometry.location,
               image: this.state.image
             })
             .then(response => {
-              console.log("Snap was sent!");
-              console.log(response);
-              this.props.refresh();
               // call update data method from app.js
               this.props.history.push(`/snaps/${response.data._id}`);
+              this.props.refresh();
             })
             .catch(err => {
               this.setState({

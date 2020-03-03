@@ -46,17 +46,17 @@ export default class SnapEdit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.address);
-    Geocode.fromAddress(this.state.location)
+    Geocode.fromAddress(this.state.address)
       .then(response => {
         console.log(response);
         axios
           .patch(`/snaps/${this.props.match.params.id}`, {
             ...this.state,
+            address: response.results[0].formatted_address,
             location: response.results[0].geometry.location
           })
           .then(response => {
-            console.log(response);
+            this.props.refresh();
             this.props.history.push(`/snaps/${this.props.match.params.id}`);
           })
           .catch(err => console.log(err.message));

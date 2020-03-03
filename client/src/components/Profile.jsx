@@ -33,6 +33,7 @@ export default class Profile extends Component {
         .delete(`/snaps/${event.target.parentNode.getAttribute("id")}`)
         .then(response => {
           console.log(response);
+          this.props.refresh();
           this.getData();
         })
         .catch(err => {

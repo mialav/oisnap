@@ -24,7 +24,8 @@ import SnapEdit from "./components/SnapEdit";
 class App extends React.Component {
   state = {
     user: this.props.user,
-    data: []
+    data: [],
+    dropdown: false
   };
 
   setUser = userObj => {
@@ -44,6 +45,13 @@ class App extends React.Component {
       });
   };
 
+  setDropdown = () => {
+    console.log("clicked");
+    this.setState({
+      dropdown: !this.state.dropdown
+    });
+  };
+
   componentDidMount = () => {
     this.getData();
   };
@@ -56,7 +64,12 @@ class App extends React.Component {
             <Map snapsData={this.state.data} />
           </div>
           <div className="body">
-            <Navbar user={this.state.user} setUser={this.setUser} />
+            <Navbar
+              dropdown={this.state.dropdown}
+              setDropdown={this.setDropdown}
+              user={this.state.user}
+              setUser={this.setUser}
+            />
             <div className="body-view">
               <Switch>
                 <Route exact path="/search" component={Search} />
@@ -69,6 +82,7 @@ class App extends React.Component {
                       user={this.state.user}
                       refresh={this.getData}
                       history={props.history}
+                      setDropdown={this.setDropdown}
                     />
                   )}
                 />
@@ -76,34 +90,57 @@ class App extends React.Component {
                   exact
                   path="/signup"
                   render={props => (
-                    <Signup setUser={this.setUser} history={props.history} />
+                    <Signup
+                      setUser={this.setUser}
+                      history={props.history}
+                      setDropdown={this.setDropdown}
+                    />
                   )}
                 />
                 <Route
                   exact
                   path="/login"
                   render={props => (
-                    <Login setUser={this.setUser} history={props.history} />
+                    <Login
+                      setUser={this.setUser}
+                      history={props.history}
+                      setDropdown={this.setDropdown}
+                    />
                   )}
                 />
                 <Route
                   exact
                   path="/profile"
                   render={props => (
-                    <Profile user={this.state.user} history={props.history} />
+                    <Profile
+                      user={this.state.user}
+                      history={props.history}
+                      refresh={this.getData}
+                      setDropdown={this.setDropdown}
+                    />
                   )}
                 />
                 <Route
                   exact
                   path="/snaps/:id/edit"
                   render={props => (
-                    <SnapEdit user={this.state.user} {...props} />
+                    <SnapEdit
+                      user={this.state.user}
+                      {...props}
+                      refresh={this.getData}
+                      setDropdown={this.setDropdown}
+                    />
                   )}
                 />
                 <Route
                   path="/snaps/:id"
                   render={props => (
-                    <SnapDetail {...props} user={this.state.user} />
+                    <SnapDetail
+                      {...props}
+                      user={this.state.user}
+                      refresh={this.getData}
+                      setDropdown={this.setDropdown}
+                    />
                   )}
                 />
 
