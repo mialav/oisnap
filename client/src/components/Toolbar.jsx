@@ -12,7 +12,6 @@ const Toolbar = () => {
           <i className="fas fa-camera"></i>
         </div>
       </Link>
-
       {/* <button>
         <Link to="/search">Search</Link>
       </button> */}
