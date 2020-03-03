@@ -72,10 +72,8 @@ class SnapDetail extends Component {
     if (!snap) {
       return <div>LOADING</div>;
     } else {
-
       console.log(this.state.snap.category);
       console.log(categoryColor(this.state.snap));
-
 
       return (
         <div
