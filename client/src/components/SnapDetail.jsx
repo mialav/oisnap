@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import categoryColor from "../styles/snapStyles";
 
 class SnapDetail extends Component {
   state = {
@@ -26,8 +27,10 @@ class SnapDetail extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     console.log(this.props.match.params.id);
     console.log(this.props.history);
+
     if (event.target.innerText === "Edit") {
       this.props.history.push(`/snaps/${this.props.match.params.id}/edit`);
     } else if (event.target.innerText === "Delete") {
@@ -45,7 +48,6 @@ class SnapDetail extends Component {
 
   render() {
     const snap = this.state.snap;
-    console.log("snap", snap);
 
     if (!snap) {
       return <div>LOADING</div>;
@@ -57,8 +59,15 @@ class SnapDetail extends Component {
         ? (timeStamp = hours + ":0" + minutes)
         : (timeStamp = hours + ":" + minutes);
 
+
       return (
-        <div className="container">
+       
+      console.log(this.state.snap.category);
+      console.log(categoryColor(this.state.snap));
+
+      return (
+        <div className="container" style={categoryColor(this.state.category)}>
+
           <div className="snap-box">
             <div className="time-box">
               <p>Created at {timeStamp}</p>

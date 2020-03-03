@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import logo from "../images/3a.png";
 
 class Navbar extends Component {
   state = {
@@ -44,7 +45,9 @@ class Navbar extends Component {
       <div>
         <div className="navbar">
           <div>
-            <Link to="/home">OiSnap!</Link>
+            <Link to="/home">
+              <img className="logo" src={logo} />
+            </Link>
           </div>
           <button onClick={this.eventHandler}>User</button>
         </div>
