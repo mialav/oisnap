@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
 
 const WelcomePopup = () => {
   return (
@@ -17,7 +16,6 @@ const WelcomePopup = () => {
           <Link to="/home">START</Link>
         </button>
       </div>
-      <Footer />
     </div>
   );
 };
