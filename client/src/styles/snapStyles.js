@@ -18,7 +18,7 @@ const categoryColor = (category, creation) => {
 
   let colorNumber = (timeDifference / maxTime) * 100; // A number from 0-100
 
-  console.log(colorNumber);
+  // console.log(colorNumber);
 
   switch (category) {
     case "promo":
