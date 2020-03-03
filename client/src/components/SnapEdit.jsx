@@ -3,7 +3,6 @@ import axios from "axios";
 import Geocode from "react-geocode";
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
-
 export default class SnapEdit extends Component {
   state = {
     user: "",
@@ -13,7 +12,6 @@ export default class SnapEdit extends Component {
     category: "",
     img: "",
     address: ""
-
   };
 
   componentDidMount() {
@@ -29,7 +27,6 @@ export default class SnapEdit extends Component {
           address: response.data.address,
           location: response.data.location
         });
-
       })
       .catch(err => {
         this.setState({
@@ -46,9 +43,10 @@ export default class SnapEdit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
+    console.log(this.state.address);
     Geocode.fromAddress(this.state.location)
       .then(response => {
+        console.log(response);
         axios
           .patch(`/snaps/${this.props.match.params.id}`, {
             ...this.state,
@@ -56,12 +54,11 @@ export default class SnapEdit extends Component {
           })
           .then(response => {
             console.log(response);
+            this.props.history.push(`/snaps/${this.props.match.params.id}`);
           })
           .catch(err => console.log(err.message));
       })
       .catch(err => console.log(err));
-
-    this.props.history.push(`/snaps/${this.props.match.params.id}`);
   };
 
   assignCategory = event => {
@@ -70,7 +67,6 @@ export default class SnapEdit extends Component {
       category: event.target.value
     });
   };
-
 
   updateLocation = event => {
     event.preventDefault();
@@ -91,8 +87,8 @@ export default class SnapEdit extends Component {
     });
   };
 
-
   render() {
+    console.log(this.state.address);
     return (
       <div className="container">
         {this.props.user._id === this.state.user ? (

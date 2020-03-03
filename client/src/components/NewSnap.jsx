@@ -35,6 +35,9 @@ class NewSnap extends Component {
   };
 
   componentDidMount = () => {
+    if (!this.props.user) {
+      this.props.history.push("/login");
+    }
     console.log();
     navigator.geolocation.getCurrentPosition(response => {
       let location = {
@@ -42,6 +45,7 @@ class NewSnap extends Component {
         lng: response.coords.longitude
       };
 
+      console.log(location);
       Geocode.fromLatLng(location.lat, location.lng)
         .then(response => {
           this.setState({
@@ -143,12 +147,6 @@ class NewSnap extends Component {
       });
   };
 
-  componentDidMount = () => {
-    if (!this.props.user) {
-      this.props.history.push("/login");
-    }
-  };
-
   render() {
     return (
       <React.Fragment>
@@ -178,85 +176,6 @@ class NewSnap extends Component {
               <button onClick={() => this.fileInput.click()}>
                 Upload image
               </button>
-              <button onClick={this.goNext} className="page-button">
-                {" "}
-                NEXT{" "}
-              </button>
-              <p>Step {this.state.page} out of 2 </p>
-              {/* /* ***PAGE 1 upload and category *** */}
-              {this.state.page === 1 && (
-                <div className="page photo-page">
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    name="file"
-                    placeholder="Upload an image"
-                    onChange={this.uploadImage}
-                    ref={fileInput => (this.fileInput = fileInput)}
-                  />
-                  <button onClick={() => this.fileInput.click()}>
-                    Upload image
-                  </button>
-                  {this.state.loading ? (
-                    <h3>Loading </h3>
-                  ) : (
-                    <img
-                      src={this.state.image}
-                      style={{ height: "200px" }}
-                      alt={this.state.title}
-                    />
-                  )}
-
-                  <button onClick={this.assignCategory} value="free">
-                    FREE
-                  </button>
-                  <button onClick={this.assignCategory} value="promo">
-                    PROMO
-                  </button>
-                  <button onClick={this.assignCategory} value="crowd">
-                    CROWD
-                  </button>
-                  <button onClick={this.assignCategory} value="happening">
-                    HAPPENING
-                  </button>
-                </div>
-              )}
-              {this.state.message && <p>{this.state.message}</p>}
-              {/* /* *************  PAGE 2 snap details************* */}
-              {this.state.page === 2 && (
-                <div className="page detail-page">
-                  <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="title">Snap title *</label>
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      value={this.state.title}
-                      onChange={this.handleChange}
-                    />
-                    <label htmlFor="description"> Short description</label>
-                    <input
-                      type="text"
-                      name="description"
-                      id="description"
-                      value={this.state.description}
-                      onChange={this.handleChange}
-                    />
-                    <label htmlFor="address"> Location </label>
-                    <input
-                      type="text"
-                      name="address"
-                      id="address"
-                      value={this.state.address}
-                      onChange={this.handleChange}
-                    />
-                    <button type="submit"> Add to</button>
-                  </form>
-                  {this.state.title ? <p></p> : <p>can titile?</p>}
-                  {this.state.emptyError && <p>{this.state.emptyError}</p>}
-                </div>
-              )}
-              ;
               {this.state.loading ? (
                 <h3>Loading </h3>
               ) : (
@@ -303,12 +222,12 @@ class NewSnap extends Component {
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
-                <label htmlFor="location"> Location </label>
+                <label htmlFor="address"> Location </label>
                 <input
                   type="text"
-                  name="location"
-                  id="location"
-                  value={this.state.location}
+                  name="address"
+                  id="address"
+                  value={this.state.address}
                   onChange={this.handleChange}
                 />
                 <button type="submit"> Add to</button>
