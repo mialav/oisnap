@@ -3,6 +3,7 @@ import axios from "axios";
 import Geocode from "react-geocode";
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
+
 export default class SnapEdit extends Component {
   state = {
     user: "",
@@ -12,6 +13,7 @@ export default class SnapEdit extends Component {
     category: "",
     img: "",
     address: ""
+
   };
 
   componentDidMount() {
@@ -27,6 +29,7 @@ export default class SnapEdit extends Component {
           address: response.data.address,
           location: response.data.location
         });
+
       })
       .catch(err => {
         this.setState({
@@ -68,6 +71,7 @@ export default class SnapEdit extends Component {
     });
   };
 
+
   updateLocation = event => {
     event.preventDefault();
     navigator.geolocation.getCurrentPosition(response => {
@@ -86,6 +90,7 @@ export default class SnapEdit extends Component {
         .catch(err => console.log(err));
     });
   };
+
 
   render() {
     return (
@@ -122,6 +127,7 @@ export default class SnapEdit extends Component {
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
+
                 <label htmlFor="address"> Location </label>
                 <input
                   type="text"
@@ -131,6 +137,7 @@ export default class SnapEdit extends Component {
                   onChange={this.handleChange}
                 />
                 <button onClick={this.updateLocation}>Update Location</button>
+
                 <p>Current Category: {this.state.category}</p>
                 <button onClick={this.assignCategory} value="free">
                   FREE

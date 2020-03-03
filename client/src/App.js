@@ -20,6 +20,7 @@ import SnapPreview from "./components/SnapPreview";
 
 import SnapEdit from "./components/SnapEdit";
 
+
 class App extends React.Component {
   state = {
     user: this.props.user,
@@ -51,6 +52,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+
         <Router history={history}>
           <Navbar user={this.state.user} setUser={this.setUser} />
           <div className="body">
@@ -119,6 +121,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={WelcomePopup} />
             <Toolbar />
+
           </Switch>
         </Router>
       </div>
