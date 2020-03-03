@@ -36,6 +36,7 @@ button {
 }
 
 /************************** BODY *******************/
+
 .body {
   display: flex;
   flex-direction: column;
@@ -49,6 +50,7 @@ button {
   transform: translate(-50%, -50%);
   top: 50%;
 }
+
 
 .container {
   display: flex;
