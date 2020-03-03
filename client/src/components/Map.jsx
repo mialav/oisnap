@@ -57,7 +57,6 @@ export default class Map extends Component {
 
   closeWindows = () => {
     history.push("/home");
-    console.log("MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP");
   };
 
 
@@ -113,7 +112,9 @@ export default class Map extends Component {
                 src={require("../images/mapbox-icon.png")}
                 onClick={() => this.renderPopup(snap)}
 
+
               />
+
 
               /> */}
 
