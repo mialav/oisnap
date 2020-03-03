@@ -15,9 +15,8 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SnapDetail from "./components/SnapDetail";
-
+import Footer from "./components/Footer";
 import SnapPreview from "./components/SnapPreview";
-
 import SnapEdit from "./components/SnapEdit";
 
 class App extends React.Component {
@@ -52,11 +51,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router history={history}>
-          <Navbar user={this.state.user} setUser={this.setUser} />
+          <div className="map">
+            <Map snapsData={this.state.data} />
+          </div>
           <div className="body">
-            <div className="map">
-              <Map snapsData={this.state.data} />
-            </div>
+            <Navbar user={this.state.user} setUser={this.setUser} />
             <div className="body-view">
               <Switch>
                 <Route exact path="/search" component={Search} />
@@ -113,13 +112,14 @@ class App extends React.Component {
                     <SnapPreview {...props} user={this.state.user} />
                   )}
                 />
+                <Route exact path="/" component={WelcomePopup} />
               </Switch>
             </div>
+            <Switch>
+              <Route exact path="/" component={Footer} />
+              <Toolbar />
+            </Switch>
           </div>
-          <Switch>
-            <Route exact path="/" component={WelcomePopup} />
-            <Toolbar />
-          </Switch>
         </Router>
       </div>
     );

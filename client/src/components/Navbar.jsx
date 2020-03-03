@@ -42,7 +42,7 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div className="navbar">
           <div>
             <Link to="/home">
@@ -65,7 +65,7 @@ class Navbar extends Component {
             </Link>
           </div>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }

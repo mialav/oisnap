@@ -54,7 +54,6 @@ export default class Map extends Component {
 
   closeWindows = () => {
     history.push("/home");
-    console.log("MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP");
   };
 
   render() {
