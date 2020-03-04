@@ -28,9 +28,9 @@ class SnapDetail extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    if (event.target.innerText === "Edit") {
+    if (event.target.getAttribute("name") === "edit") {
       this.props.history.push(`/snaps/${this.props.match.params.id}/edit`);
-    } else if (event.target.innerText === "Delete") {
+    } else if (event.target.getAttribute("name") === "delete") {
       axios
         .delete(`/snaps/${this.props.match.params.id}`)
         .then(response => {
@@ -69,35 +69,37 @@ class SnapDetail extends Component {
       return <div>LOADING</div>;
     } else {
       return (
-        <div
-          className="container"
-          style={{
-            backgroundColor: categoryColor(
-              this.state.snap.category,
-              this.state.snap.created_at
-            )
-          }}
-        >
-          <div className="snap-box">
-            <div className="time-box">
-              <p>Created {this.getTime(snap)} ago</p>
-            </div>
-            <div className="snap-img">
-              <img
-                src={snap.image}
-                alt={snap.title}
-                style={{ height: "40vh" }}
-              />
-            </div>
-            <div className="details-box">
-              <h2>{snap.title}</h2>
-              {snap.description !== "" && <p>{snap.description}</p>}
-              {this.props.user._id === snap.user && (
-                <div>
-                  <button onClick={this.handleSubmit}>Edit</button>
-                  <button onClick={this.handleSubmit}>Delete</button>
-                </div>
-              )}
+        <div className="container">
+          <div
+            className="time-box"
+            style={{
+              backgroundColor: categoryColor(
+                this.state.snap.category,
+                this.state.snap.created_at
+              )
+            }}
+          >
+            <p>Created {this.getTime(snap)} ago</p>
+          </div>
+          <div className="container-content ">
+            <div className="snap-box">
+              <div>
+                <img className="snap-img" src={snap.image} alt={snap.title} />
+              </div>
+              <div className="details-box">
+                <h2>{snap.title}</h2>
+                {snap.description !== "" && <p>{snap.description}</p>}
+                {this.props.user._id === snap.user && (
+                  <div>
+                    <button onClick={this.handleSubmit}>
+                      <i name="edit" className="fas fa-pen"></i>
+                    </button>
+                    <button onClick={this.handleSubmit}>
+                      <i name="delete" className="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

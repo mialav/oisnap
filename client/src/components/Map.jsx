@@ -70,11 +70,11 @@ export default class Map extends Component {
   render() {
     const { viewport } = this.state;
 
-    const geolocateStyle = {
-      float: "left",
-      marginTop: "100px",
-      padding: "10px"
-    };
+    // const geolocateStyle = {
+    //   // float: "left",
+    //   // marginTop: "100px",
+    //   // padding: "10px"
+    // };
 
     return (
       <MapGL
@@ -87,20 +87,23 @@ export default class Map extends Component {
         className="mapContainer"
         onClick={this.closeWindows}
       >
-        <div className="geolocation-button">
-          <GeolocateControl
-            style={geolocateStyle}
-            positionOptions={{ enableHighAccuracy: true }}
-            trackUserLocation={true}
-            onViewportChange={viewport => {
-              this.setState({ viewport: { ...viewport, zoom: 16 } });
-            }}
-          />
-        </div>
-        <div style={{ position: "absolute", right: 0, top: 100 }}>
-          <NavigationControl showCompass={false} />
-        </div>
+        <div className="map-controls">
+          <div className="geolocation-button">
+            <GeolocateControl
+              // style={geolocateStyle}
+              className="map-geolocateStyle"
+              positionOptions={{ enableHighAccuracy: true }}
+              trackUserLocation={true}
+              onViewportChange={viewport => {
+                this.setState({ viewport: { ...viewport, zoom: 16 } });
+              }}
+            />
+          </div>
 
+          <div>
+            <NavigationControl showCompass={false} />
+          </div>
+        </div>
         {this.getSnaps().map(snap => {
           return (
             <Marker

@@ -19,8 +19,10 @@ class NewSnap extends Component {
     address: ""
   };
 
-  goNext = () => {
+  goNext = event => {
     if (this.state.category && this.state.image) {
+      event.target.classList.add("hidden");
+      document.getElementById("back-button").classList.remove("hidden");
       this.setState({
         page: 2,
         message: ""
@@ -54,7 +56,9 @@ class NewSnap extends Component {
     });
   };
 
-  goBack = () => {
+  goBack = event => {
+    event.target.classList.add("hidden");
+    document.getElementById("next-button").classList.remove("hidden");
     this.setState({
       page: 1
     });
@@ -62,6 +66,13 @@ class NewSnap extends Component {
 
   assignCategory = event => {
     const category = event.target.value;
+    const buttons = document.getElementsByClassName("category-button");
+
+    for (let button of buttons) {
+      button.classList.remove("selected-button");
+    }
+
+    event.target.classList.add("selected-button");
 
     this.setState({
       category: category
@@ -141,93 +152,136 @@ class NewSnap extends Component {
   render() {
     return (
       <React.Fragment>
-        <div
-          className="container"
-          style={{ backgroundColor: categoryColor(this.state.category) }}
-        >
-          <p>Step {this.state.page} out of 2 </p>
-
+        <div className="container">
+          <div
+            className="navigation-items"
+            style={{ backgroundColor: categoryColor(this.state.category) }}
+          >
+            <div className="buttons">
+              <button
+                className="navigation-button hidden"
+                id="back-button"
+                onClick={this.goBack}
+              >
+                BACK
+              </button>
+              <button
+                id="next-button"
+                className="navigation-button"
+                onClick={this.goNext}
+              >
+                NEXT
+              </button>
+            </div>
+            <p className="step-count">
+              <b> Step {this.state.page} out of 2</b>{" "}
+            </p>
+          </div>
           {/* /* ***PAGE 1 upload and category *** */}
           {this.state.page === 1 && (
-            <div className="page photo-page">
-              <input
-                style={{ display: "none" }}
-                type="file"
-                name="file"
-                placeholder="Upload an image"
-                onChange={this.uploadImage}
-                ref={fileInput => (this.fileInput = fileInput)}
-              />
-              <button onClick={() => this.fileInput.click()}>
-                Upload image
-              </button>
-              {this.state.loading ? (
-                <h3>Loading </h3>
-              ) : (
-                <img
-                  src={this.state.image}
-                  style={{ height: "30vh" }}
-                  alt={this.state.title}
+            <div className="test">
+              <div className="container-content page photo-page">
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  name="file"
+                  placeholder="Upload an image"
+                  onChange={this.uploadImage}
+                  ref={fileInput => (this.fileInput = fileInput)}
                 />
-              )}
-              <button onClick={this.assignCategory} value="free">
-                FREE
-              </button>
-              <button onClick={this.assignCategory} value="promo">
-                PROMO
-              </button>
-              <button onClick={this.assignCategory} value="crowd">
-                CROWD
-              </button>
-              <button onClick={this.assignCategory} value="happening">
-                HAPPENING
-              </button>
-
-              <button onClick={this.goNext} className="page-button">
-                {" "}
-                NEXT{" "}
-              </button>
-              {this.state.message && <p>{this.state.message}</p>}
+                <button
+                  className="upload-image"
+                  onClick={() => this.fileInput.click()}
+                >
+                  <i className="fas fa-camera"></i>
+                </button>
+                {this.state.loading ? (
+                  <h3>Loading </h3>
+                ) : (
+                  <img
+                    className="uploaded-img"
+                    src={this.state.image}
+                    // style={{ height: "30vh" }}
+                    alt={this.state.title}
+                  />
+                )}
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="free"
+                >
+                  FREE
+                </button>
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="promo"
+                >
+                  PROMO
+                </button>
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="crowd"
+                >
+                  CROWD
+                </button>
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="happening"
+                >
+                  HAPPENING
+                </button>
+                {this.state.message && (
+                  <p className="error-message">{this.state.message}</p>
+                )}
+              </div>
             </div>
           )}
 
           {/* /* *************  PAGE 2 snap details************* */}
-
           {this.state.page === 2 && (
-            <div className="page detail-page">
-              <form onSubmit={this.handleSubmit}>
-                <label htmlFor="title">Snap title *</label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-                <label htmlFor="description"> Short description</label>
-                <input
-                  type="text"
-                  name="description"
-                  id="description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-                <label htmlFor="address"> Location </label>
-                <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                />
+            <div className="container-content">
+              <div className="page detail-page snap-form">
+                <form onSubmit={this.handleSubmit}>
+                  <label htmlFor="title">Snap title *</label>
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="description"> Short description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    id="description"
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="address"> Location </label>
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                  />
 
-                <button type="submit"> Add to</button>
-                <button onClick={this.goBack} className="page-button">
-                  {" "}
-                  BACK{" "}
-                </button>
-              </form>
-              {this.state.message && <p>{this.state.message}</p>}
+                  <button
+                    className="button-visible submit-button"
+                    type="submit"
+                  >
+                    Add to
+                  </button>
+                </form>
+
+                {this.state.snapError && (
+                  <p className="error-message">{this.state.snapError}</p>
+                )}
+              </div>
             </div>
           )}
         </div>

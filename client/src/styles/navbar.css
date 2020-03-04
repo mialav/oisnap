@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background-color: whitesmoke;
+  padding: 1.5em;
+  /* height: 4vw; */
+}
+
+.navbarHome {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-content: center;
+}
+.logo {
+  height: 90%;
+  min-height: 40px;
+  max-height: 4vw;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  background-color: whitesmoke;
+}
+
+.fa-user {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  font-size: 3em;
+  color: black;
+}
