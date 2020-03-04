@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import Login from "./Login";
 import Geocode from "react-geocode";
 import categoryColor from "../styles/snapStyles";
 
@@ -38,6 +37,7 @@ class NewSnap extends Component {
     if (!this.props.user) {
       this.props.history.push("/login");
     }
+
     navigator.geolocation.getCurrentPosition(response => {
       let location = {
         lat: response.coords.latitude,
@@ -84,7 +84,6 @@ class NewSnap extends Component {
     } else {
       Geocode.fromAddress(this.state.address)
         .then(response => {
-          console.log(response);
           axios
             .post("/snaps/", {
               title: this.state.title,
@@ -96,9 +95,9 @@ class NewSnap extends Component {
               image: this.state.image
             })
             .then(response => {
+              this.props.refresh();
               // call update data method from app.js
               this.props.history.push(`/snaps/${response.data._id}`);
-              this.props.refresh();
             })
             .catch(err => {
               this.setState({
@@ -148,15 +147,6 @@ class NewSnap extends Component {
           className="container"
           style={{ backgroundColor: categoryColor(this.state.category) }}
         >
-          <button onClick={this.goBack} className="page-button">
-            {" "}
-            BACK{" "}
-          </button>
-          <button onClick={this.goNext} className="page-button">
-            {" "}
-            NEXT{" "}
-          </button>
-
           <p>Step {this.state.page} out of 2 </p>
 
           {/* /* ***PAGE 1 upload and category *** */}
@@ -194,6 +184,11 @@ class NewSnap extends Component {
               <button onClick={this.assignCategory} value="happening">
                 HAPPENING
               </button>
+
+              <button onClick={this.goNext} className="page-button">
+                {" "}
+                NEXT{" "}
+              </button>
             </div>
           )}
           {this.state.message && <p>{this.state.message}</p>}
@@ -227,7 +222,12 @@ class NewSnap extends Component {
                   value={this.state.address}
                   onChange={this.handleChange}
                 />
+
                 <button type="submit"> Add to</button>
+                <button onClick={this.goBack} className="page-button">
+                  {" "}
+                  BACK{" "}
+                </button>
               </form>
               {this.state.title ? <p></p> : <p>can titile?</p>}
               {this.state.snapError && <p>{this.state.snapError}</p>}

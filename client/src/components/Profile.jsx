@@ -9,7 +9,6 @@ export default class Profile extends Component {
     axios
       .get(`/snaps?user=${this.props.user._id}`)
       .then(response => {
-        console.log(response);
         this.setState({ snapData: response.data });
       })
       .catch(err => console.log(err));
@@ -23,7 +22,7 @@ export default class Profile extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(event.target.parentNode.getAttribute("id"));
+
     if (event.target.innerText === "Edit") {
       this.props.history.push(
         `/snaps/${event.target.parentNode.getAttribute("id")}/edit`
@@ -32,13 +31,14 @@ export default class Profile extends Component {
       axios
         .delete(`/snaps/${event.target.parentNode.getAttribute("id")}`)
         .then(response => {
+<<<<<<< HEAD
           console.log(response);
           this.props.refresh();
+=======
+>>>>>>> d05f3a54197ea0a7e0b507eacad1170b5ae2f12d
           this.getData();
         })
-        .catch(err => {
-          console.log(err);
-        });
+        .catch(err => {});
     }
   };
 

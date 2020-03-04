@@ -49,7 +49,6 @@ class SnapPreview extends Component {
 
   render() {
     const snap = this.state.snap;
-    console.log("snap", snap);
 
     if (!snap) {
       return <div>LOADING</div>;
