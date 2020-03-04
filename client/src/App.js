@@ -24,7 +24,21 @@ import SnapEdit from "./components/SnapEdit";
 class App extends React.Component {
   state = {
     user: this.props.user,
-    data: []
+    data: [],
+    dropdown: false
+  };
+
+  setDropdown = event => {
+    console.log(event.target.innerText);
+    if (event.target.innerText === "User") {
+      this.setState({
+        dropdown: !this.state.dropdown
+      });
+    } else {
+      this.setState({
+        dropdown: false
+      });
+    }
   };
 
   setUser = userObj => {
@@ -50,13 +64,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" onClick={this.setDropdown}>
         <Router history={history}>
           <div className="map">
             <Map snapsData={this.state.data} />
           </div>
           <div className="body">
-            <Navbar user={this.state.user} setUser={this.setUser} />
+            <Navbar
+              user={this.state.user}
+              setUser={this.setUser}
+              dropdown={this.state.dropdown}
+              setDropdown={this.setDropdown}
+            />
             <div className="body-view">
               <Switch>
                 <Route exact path="/search" component={Search} />
