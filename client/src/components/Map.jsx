@@ -12,12 +12,12 @@ import categoryColor from "../styles/snapStyles.js";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
-const geolocateStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  margin: 10
-};
+// const geolocateStyle = {
+//   position: "absolute",
+//   top: 0,
+//   left: 0,
+//   margin: 10
+// };
 
 export default class Map extends Component {
   state = {
