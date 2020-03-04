@@ -8,7 +8,6 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 router.post("/login", (req, res, next) => {
-  // console.log(req.user);
   passport.authenticate("local", (err, user, info) => {
     console.log("user at beginning of auth:", user);
     if (err) {

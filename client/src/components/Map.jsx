@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
+import MapGL, {
+  GeolocateControl,
+  Marker,
+  Popup,
+  NavigationControl
+} from "react-map-gl";
 import SnapPreview from "./SnapPreview.jsx";
 
 import history from "../history";
@@ -79,6 +84,7 @@ export default class Map extends Component {
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
+        // closeOnClick={true}
         onClick={this.closeWindows}
       >
         <div className="geolocation-button">
@@ -90,6 +96,9 @@ export default class Map extends Component {
               this.setState({ viewport: { ...viewport, zoom: 16 } });
             }}
           />
+        </div>
+        <div style={{ position: "absolute", right: 0, top: 100 }}>
+          <NavigationControl showCompass={false} />
         </div>
 
         {this.getSnaps().map(snap => {

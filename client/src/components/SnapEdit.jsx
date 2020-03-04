@@ -46,6 +46,7 @@ export default class SnapEdit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     Geocode.fromAddress(this.state.location)
       .then(response => {
         axios
@@ -88,7 +89,6 @@ export default class SnapEdit extends Component {
   };
 
   render() {
-    console.log(this.state.address);
     return (
       <div
         className="container"
