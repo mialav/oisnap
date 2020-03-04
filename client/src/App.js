@@ -50,7 +50,7 @@ class App extends React.Component {
       .get("/snaps")
       .then(response => {
         this.setState({
-          data: response.data
+          data: response.data.snapList
         });
       })
       .catch(err => {

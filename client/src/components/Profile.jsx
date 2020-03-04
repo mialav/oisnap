@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default class Profile extends Component {
-  state = { snapData: [] };
+  state = { snapData: [], score: null };
 
   getData = () => {
     axios
       .get(`/snaps?user=${this.props.user._id}`)
       .then(response => {
-        this.setState({ snapData: response.data });
+        console.log("response.score :", response.data.score);
+        this.setState({
+          snapData: response.data.snapList,
+          score: response.data.score
+        });
       })
       .catch(err => console.log(err));
   };
@@ -41,6 +45,9 @@ export default class Profile extends Component {
     return (
       <div className="container">
         <h3>{this.props.user.username}'s Profile</h3>
+        <p>
+          Snap score: <i>{this.state.score}</i>
+        </p>
         <h4>Your current snaps</h4>
         <div className="user-snaps">
           {this.state.snapData?.map(snap => {
