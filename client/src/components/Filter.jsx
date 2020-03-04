@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 
 class Filter extends Component {
+  state = {
+    snaps: this.props.snapsdata
+  };
+
   render() {
+    console.log("Filter: ", this.props);
     return (
       <div className="filters">
         <div>
