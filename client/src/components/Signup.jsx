@@ -27,7 +27,6 @@ export default class Signup extends Component {
         this.props.history.push("/home");
       })
       .catch(err => {
-        console.log(err.response.data.message);
         this.setState({
           message: err.response.data.message
         });

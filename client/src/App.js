@@ -29,7 +29,6 @@ class App extends React.Component {
   };
 
   setDropdown = event => {
-    console.log(event.target.innerText);
     if (event.target.innerText === "User") {
       this.setState({
         dropdown: !this.state.dropdown
@@ -74,7 +73,6 @@ class App extends React.Component {
               user={this.state.user}
               setUser={this.setUser}
               dropdown={this.state.dropdown}
-              setDropdown={this.setDropdown}
             />
             <div className="body-view">
               <Switch>
