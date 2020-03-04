@@ -22,16 +22,16 @@ class Navbar extends Component {
           </Link>
 
           <button>
-            <i class="fas fa-user"></i>
+            <i name="user" className="fas fa-user"></i>
           </button>
 
-          {this.state.dropdown && !this.props.user && (
+          {this.props.dropdown && !this.props.user && (
             <div className="dropdown">
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
             </div>
           )}
-          {this.state.dropdown && this.props.user && (
+          {this.props.dropdown && this.props.user && (
             <div className="dropdown">
               <Link to="/profile">Profile</Link>
               <Link to="/home" onClick={this.logout}>

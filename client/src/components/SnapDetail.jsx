@@ -92,10 +92,10 @@ class SnapDetail extends Component {
                 {this.props.user._id === snap.user && (
                   <div>
                     <button onClick={this.handleSubmit}>
-                      <i name="edit" class="fas fa-pen"></i>
+                      <i name="edit" className="fas fa-pen"></i>
                     </button>
                     <button onClick={this.handleSubmit}>
-                      <i name="delete" class="fas fa-trash-alt"></i>
+                      <i name="delete" className="fas fa-trash-alt"></i>
                     </button>
                   </div>
                 )}

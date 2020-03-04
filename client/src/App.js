@@ -29,7 +29,7 @@ class App extends React.Component {
   };
 
   setDropdown = event => {
-    if (event.target.innerText === "User") {
+    if (event.target.getAttribute("name") === "user") {
       this.setState({
         dropdown: !this.state.dropdown
       });

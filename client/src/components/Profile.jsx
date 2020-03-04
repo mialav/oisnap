@@ -50,17 +50,13 @@ export default class Profile extends Component {
   render() {
     return (
       <div className="container">
-<<<<<<< HEAD
         <div className="user-info">
           <h3>{this.props.user.username}'s Profile</h3>
+          <p>
+            Snap score: <i>{this.state.score}</i>
+          </p>
         </div>
 
-=======
-        <h3>{this.props.user.username}'s Profile</h3>
-        <p>
-          Snap score: <i>{this.state.score}</i>
-        </p>
->>>>>>> e3a96f61741b71abaea790f5432eeffe53e899fc
         <h4>Your current snaps</h4>
         <div className="container-content">
           <div className="user-snaps">
@@ -78,10 +74,10 @@ export default class Profile extends Component {
                   </div>
                   <div className="snap-edit">
                     <button onClick={this.handleSubmit}>
-                      <i name="edit" class="fas fa-pen"></i>
+                      <i name="edit" className="fas fa-pen"></i>
                     </button>
                     <button onClick={this.handleSubmit}>
-                      <i name="delete" class="fas fa-trash-alt"></i>
+                      <i name="delete" className="fas fa-trash-alt"></i>
                     </button>
                   </div>
                 </div>
