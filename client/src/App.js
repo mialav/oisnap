@@ -44,6 +44,19 @@ class App extends React.Component {
     this.setState({ user: userObj });
   };
 
+  filterSnaps = array => {
+    let filtered = this.state.data.filter(snap => {
+      for (let category of array) {
+        if (snap.category === category) {
+          return snap;
+        }
+      }
+    });
+    this.setState({
+      data: filtered
+    });
+  };
+
   getData = () => {
     axios
       .get("/snaps")
@@ -57,9 +70,9 @@ class App extends React.Component {
       });
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.getData();
-  };
+  }
 
   render() {
     return (
@@ -77,7 +90,16 @@ class App extends React.Component {
             <div className="body-view">
               <Switch>
                 <Route exact path="/search" component={Search} />
-                <Route exact path="/filter" component={Filter} />
+                <Route
+                  exact
+                  path="/filter"
+                  render={props => (
+                    <Filter
+                      filterSnaps={this.filterSnaps}
+                      history={props.history}
+                    />
+                  )}
+                />
                 <Route
                   exact
                   path="/add"

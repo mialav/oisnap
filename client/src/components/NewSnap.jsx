@@ -14,7 +14,6 @@ class NewSnap extends Component {
     location: "",
     title: "",
     description: "",
-    snapError: "",
     loading: false,
     image: null,
     address: ""
@@ -82,8 +81,6 @@ class NewSnap extends Component {
         message: "Please give your snap a title and location."
       });
     } else {
-      //axios
-
       Geocode.fromAddress(this.state.address)
         .then(response => {
           axios
