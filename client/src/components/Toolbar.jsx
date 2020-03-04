@@ -6,7 +6,6 @@ class Toolbar extends Component {
     snaps: this.props.snapsdata
   };
   render() {
-    console.log("Snaps in toolbar: ", this.props.snapsdata);
     return (
       <div className="toolbar">
         <Link to="/filter" snapsdata={this.state.snaps}>
