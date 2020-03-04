@@ -97,8 +97,8 @@ export default class Map extends Component {
             }}
           />
         </div>
-        <div style={{ position: "absolute", right: 0 }}>
-          <NavigationControl />
+        <div style={{ position: "absolute", right: 0, top: 100 }}>
+          <NavigationControl showCompass={false} />
         </div>
 
         {this.getSnaps().map(snap => {
