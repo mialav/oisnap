@@ -31,8 +31,6 @@ export default class Map extends Component {
 
   _onViewportChange = viewport => this.setState({ viewport });
 
-  // onGeolocate = () => map.fitBoundsOptions({ maxZoom: 15 });
-
   getSnaps = () => {
     let snaps = [];
     if (this.props.snapsData.length !== 0) {
@@ -64,6 +62,9 @@ export default class Map extends Component {
 
   closeWindows = () => {
     history.push("/home");
+    this.setState({
+      popupInfo: null
+    });
   };
 
   render() {
