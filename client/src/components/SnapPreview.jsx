@@ -10,9 +10,8 @@ class SnapPreview extends Component {
     message: null
   };
 
-  componentDidMount() {
+  getData = () => {
     const snapId = this.props.id;
-
     axios
       .get(`/snaps/${snapId}`)
       .then(response => {
@@ -25,6 +24,16 @@ class SnapPreview extends Component {
           message: err
         });
       });
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      this.getData();
+    }
+    // console.log("hiiiii", snapId);
+  }
+  componentDidMount() {
+    this.getData();
   }
 
   getTime = snap => {
@@ -40,44 +49,45 @@ class SnapPreview extends Component {
       return hours + " hours ";
     } else if (hours === 1) {
       return hours + " hour ";
-    } else if (minutes > 1) {
-      return minutes + " minutes ";
-    } else {
+    } else if (minutes === 1) {
       return minutes + " minute ";
+    } else {
+      return minutes + " minutes ";
     }
   };
 
   render() {
     const snap = this.state.snap;
-    console.log("snap", snap);
 
     if (!snap) {
       return <div>LOADING</div>;
     } else {
       return (
-        <div
-          className="preview"
-          style={{
-            backgroundColor: categoryColor(
-              this.state.snap.category,
-              this.state.snap.created_at
-            )
-          }}
-        >
+        <div className="preview">
           <div className="snap-box">
-            <div className="time-box">
-              <p>Created {this.getTime(snap)} ago</p>
+            <div
+              className="preview-time-box"
+              style={{
+                backgroundColor: categoryColor(
+                  this.state.snap.category,
+                  this.state.snap.created_at
+                )
+              }}
+            >
+              <p className="time">Created {this.getTime(snap)} ago</p>
             </div>
-            <div className="snap-img">
+            <div className="container-content">
               <img
+                className="snap-img-preview"
                 src={snap.image}
                 alt={snap.title}
-                style={{ height: "150px" }}
               />
-            </div>
-            <div className="details-box">
-              <h2>{snap.title}</h2>
-              <Link to={`/snaps/${snap._id}`}>View more</Link>
+              <div className="details-box">
+                <h3>{snap.title}</h3>
+                <Link className="see-more" to={`/snaps/${snap._id}`}>
+                  View more
+                </Link>
+              </div>
             </div>
           </div>
         </div>

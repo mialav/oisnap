@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import Login from "./Login";
 import Geocode from "react-geocode";
 import categoryColor from "../styles/snapStyles";
 
@@ -15,21 +14,22 @@ class NewSnap extends Component {
     location: "",
     title: "",
     description: "",
-    snapError: "",
     loading: false,
     image: null,
     address: ""
   };
 
-  goNext = () => {
+  goNext = event => {
     if (this.state.category && this.state.image) {
+      event.target.classList.add("hidden");
+      document.getElementById("back-button").classList.remove("hidden");
       this.setState({
         page: 2,
         message: ""
       });
     } else {
       this.setState({
-        message: "can you just..?"
+        message: "Photo and category are required."
       });
     }
   };
@@ -38,14 +38,13 @@ class NewSnap extends Component {
     if (!this.props.user) {
       this.props.history.push("/login");
     }
-    console.log();
+
     navigator.geolocation.getCurrentPosition(response => {
       let location = {
         lat: response.coords.latitude,
         lng: response.coords.longitude
       };
 
-      console.log(location);
       Geocode.fromLatLng(location.lat, location.lng)
         .then(response => {
           this.setState({
@@ -57,7 +56,9 @@ class NewSnap extends Component {
     });
   };
 
-  goBack = () => {
+  goBack = event => {
+    event.target.classList.add("hidden");
+    document.getElementById("next-button").classList.remove("hidden");
     this.setState({
       page: 1
     });
@@ -65,6 +66,13 @@ class NewSnap extends Component {
 
   assignCategory = event => {
     const category = event.target.value;
+    const buttons = document.getElementsByClassName("category-button");
+
+    for (let button of buttons) {
+      button.classList.remove("selected-button");
+    }
+
+    event.target.classList.add("selected-button");
 
     this.setState({
       category: category
@@ -81,34 +89,28 @@ class NewSnap extends Component {
     event.preventDefault();
     if (this.state.title === "" || !this.state.location) {
       this.setState({
-        message: "PLEEEEEEASE"
+        message: "Please give your snap a title and location."
       });
     } else {
-      //axios
-
       Geocode.fromAddress(this.state.address)
         .then(response => {
-          console.log(response);
           axios
             .post("/snaps/", {
               title: this.state.title,
               description: this.state.description,
               category: this.state.category,
-
               address: this.state.address,
               location: response.results[0].geometry.location,
               image: this.state.image
             })
             .then(response => {
-              console.log("Snap was sent!");
-              console.log(response);
               this.props.refresh();
               // call update data method from app.js
               this.props.history.push(`/snaps/${response.data._id}`);
             })
             .catch(err => {
               this.setState({
-                emptyError: err.response.data.message
+                message: "Something went wrong, please try again."
               });
             });
         })
@@ -142,7 +144,7 @@ class NewSnap extends Component {
       .catch(err => {
         console.log(err);
         this.setState({
-          snapError: "Couldn't upload the image, please try again"
+          message: "Couldn't upload the photo, please try again."
         });
       });
   };
@@ -150,93 +152,136 @@ class NewSnap extends Component {
   render() {
     return (
       <React.Fragment>
-        <div
-          className="container"
-          style={{ backgroundColor: categoryColor(this.state.category) }}
-        >
-          <button onClick={this.goBack} className="page-button">
-            {" "}
-            BACK{" "}
-          </button>
-          <button onClick={this.goNext} className="page-button">
-            {" "}
-            NEXT{" "}
-          </button>
-
-          <p>Step {this.state.page} out of 2 </p>
-
-          {/* /* ***PAGE 1 upload and category *** */}
-          {this.state.page === 1 && (
-            <div className="page photo-page">
-              <input
-                style={{ display: "none" }}
-                type="file"
-                name="file"
-                placeholder="Upload an image"
-                onChange={this.uploadImage}
-                ref={fileInput => (this.fileInput = fileInput)}
-              />
-              <button onClick={() => this.fileInput.click()}>
-                Upload image
+        <div className="container">
+          <div
+            className="navigation-items"
+            style={{ backgroundColor: categoryColor(this.state.category) }}
+          >
+            <div className="buttons">
+              <button
+                className="navigation-button hidden"
+                id="back-button"
+                onClick={this.goBack}
+              >
+                BACK
               </button>
-              {this.state.loading ? (
-                <h3>Loading </h3>
-              ) : (
-                <img
-                  src={this.state.image}
-                  style={{ height: "30vh" }}
-                  alt={this.state.title}
-                />
-              )}
-              <button onClick={this.assignCategory} value="free">
-                FREE
-              </button>
-              <button onClick={this.assignCategory} value="promo">
-                PROMO
-              </button>
-              <button onClick={this.assignCategory} value="crowd">
-                CROWD
-              </button>
-              <button onClick={this.assignCategory} value="happening">
-                HAPPENING
+              <button
+                id="next-button"
+                className="navigation-button"
+                onClick={this.goNext}
+              >
+                NEXT
               </button>
             </div>
+            <p className="step-count">
+              <b> Step {this.state.page} out of 2</b>{" "}
+            </p>
+          </div>
+          {/* /* ***PAGE 1 upload and category *** */}
+          {this.state.page === 1 && (
+            <div className="test">
+              <div className="container-content page photo-page">
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  name="file"
+                  placeholder="Upload an image"
+                  onChange={this.uploadImage}
+                  ref={fileInput => (this.fileInput = fileInput)}
+                />
+                <button
+                  className="upload-image"
+                  onClick={() => this.fileInput.click()}
+                >
+                  <i className="fas fa-camera"></i>
+                </button>
+                {this.state.loading ? (
+                  <h3>Loading </h3>
+                ) : (
+                  <img
+                    className="uploaded-img"
+                    src={this.state.image}
+                    // style={{ height: "30vh" }}
+                    alt={this.state.title}
+                  />
+                )}
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="free"
+                >
+                  FREE
+                </button>
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="promo"
+                >
+                  PROMO
+                </button>
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="crowd"
+                >
+                  CROWD
+                </button>
+                <button
+                  className="button-visible category-button"
+                  onClick={this.assignCategory}
+                  value="happening"
+                >
+                  HAPPENING
+                </button>
+                {this.state.message && (
+                  <p className="error-message">{this.state.message}</p>
+                )}
+              </div>
+            </div>
           )}
-          {this.state.message && <p>{this.state.message}</p>}
 
           {/* /* *************  PAGE 2 snap details************* */}
-
           {this.state.page === 2 && (
-            <div className="page detail-page">
-              <form onSubmit={this.handleSubmit}>
-                <label htmlFor="title">Snap title *</label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-                <label htmlFor="description"> Short description</label>
-                <input
-                  type="text"
-                  name="description"
-                  id="description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-                <label htmlFor="address"> Location </label>
-                <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                />
-                <button type="submit"> Add to</button>
-              </form>
-              {this.state.title ? <p></p> : <p>can titile?</p>}
-              {this.state.snapError && <p>{this.state.snapError}</p>}
+            <div className="container-content">
+              <div className="page detail-page snap-form">
+                <form onSubmit={this.handleSubmit}>
+                  <label htmlFor="title">Snap title *</label>
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="description"> Short description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    id="description"
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor="address"> Location </label>
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                  />
+
+                  <button
+                    className="button-visible submit-button"
+                    type="submit"
+                  >
+                    Add to
+                  </button>
+                </form>
+
+                {this.state.snapError && (
+                  <p className="error-message">{this.state.snapError}</p>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -1,24 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-const Toolbar = () => {
-  return (
-    <div className="toolbar">
-      {/* <button>
+class Toolbar extends Component {
+  render() {
+    return (
+      <div className="toolbar">
         <Link to="/filter">Filter</Link>
-      </button> */}
-      <button>
         <Link to="/add">
           <div className="addSnap">
             <i className="fas fa-camera"></i>
           </div>
         </Link>
-      </button>
-      {/* <button>
-        <Link to="/search">Search</Link>
-      </button> */}
-    </div>
-  );
-};
+
+        {/* <Link to="/search" >
+          Search
+        </Link> */}
+      </div>
+    );
+  }
+}
 
 export default Toolbar;
