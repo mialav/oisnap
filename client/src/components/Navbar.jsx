@@ -4,20 +4,6 @@ import axios from "axios";
 import logo from "../images/3a.png";
 
 class Navbar extends Component {
-  state = {
-    dropdown: false
-    // user: ""
-  };
-
-  eventHandler = () => {
-    this.setState({
-      dropdown: !this.state.dropdown
-    });
-    this.setState({
-      dropdown: !this.state.dropdown
-    });
-  };
-
   // componentDidMount() {
   //   this.setState({
   //     user: this.props.user
@@ -49,16 +35,16 @@ class Navbar extends Component {
               <img className="logo" src={logo} />
             </Link>
           </div>
-          <button onClick={this.eventHandler}>User</button>
+          <button id="user">User</button>
         </div>
-        {this.state.dropdown && !this.props.user && (
-          <div className="dropdown">
+        {this.props.dropdown && !this.props.user && (
+          <div className="dropdown" onClick={this.setDropdown}>
             <Link to="/login">Login</Link>
             <Link to="/signup">Signup</Link>
           </div>
         )}
-        {this.state.dropdown && this.props.user && (
-          <div className="dropdown">
+        {this.props.dropdown && this.props.user && (
+          <div className="dropdown" onClick={this.props.setDropdown}>
             <Link to="/profile">Profile</Link>
             <Link to="/home" onClick={this.logout}>
               Logout
