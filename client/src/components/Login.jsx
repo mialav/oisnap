@@ -4,7 +4,8 @@ import axios from "axios";
 export default class Login extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    message: null
   };
 
   handleChange = event => {
@@ -22,14 +23,12 @@ export default class Login extends Component {
         password: this.state.password
       })
       .then(response => {
-        console.log(response);
         this.props.setUser(response.data);
         this.props.history.push("/home");
       })
       .catch(err => {
-        console.log(err.response.data.message);
         this.setState({
-          message: err.response.data.message
+          message: "Incorrect credentials, please try again"
         });
       });
   };
@@ -63,6 +62,7 @@ export default class Login extends Component {
               Log in
             </button>
           </form>
+          {this.state.message ? <p>{this.state.message}</p> : <p></p>}
         </div>
       </div>
     );

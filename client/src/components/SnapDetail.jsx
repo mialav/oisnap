@@ -55,10 +55,10 @@ class SnapDetail extends Component {
       return hours + " hours ";
     } else if (hours === 1) {
       return hours + " hour ";
-    } else if (minutes > 1) {
-      return minutes + " minutes ";
-    } else {
+    } else if (minutes === 1) {
       return minutes + " minute ";
+    } else {
+      return minutes + " minutes ";
     }
   };
 

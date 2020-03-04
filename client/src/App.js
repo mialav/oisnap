@@ -24,11 +24,37 @@ import SnapEdit from "./components/SnapEdit";
 class App extends React.Component {
   state = {
     user: this.props.user,
-    data: []
+    data: [],
+    dropdown: false
+  };
+
+  setDropdown = event => {
+    if (event.target.innerText === "User") {
+      this.setState({
+        dropdown: !this.state.dropdown
+      });
+    } else {
+      this.setState({
+        dropdown: false
+      });
+    }
   };
 
   setUser = userObj => {
     this.setState({ user: userObj });
+  };
+
+  filterSnaps = array => {
+    let filtered = this.state.data.filter(snap => {
+      for (let category of array) {
+        if (snap.category === category) {
+          return snap;
+        }
+      }
+    });
+    this.setState({
+      data: filtered
+    });
   };
 
   getData = () => {
@@ -36,7 +62,7 @@ class App extends React.Component {
       .get("/snaps")
       .then(response => {
         this.setState({
-          data: response.data
+          data: response.data.snapList
         });
       })
       .catch(err => {
@@ -44,23 +70,36 @@ class App extends React.Component {
       });
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.getData();
-  };
+  }
 
   render() {
     return (
-      <div className="App">
+      <div className="App" onClick={this.setDropdown}>
         <Router history={history}>
           <div className="map">
             <Map snapsData={this.state.data} />
           </div>
           <div className="body">
-            <Navbar user={this.state.user} setUser={this.setUser} />
+            <Navbar
+              user={this.state.user}
+              setUser={this.setUser}
+              dropdown={this.state.dropdown}
+            />
             <div className="body-view">
               <Switch>
                 <Route exact path="/search" component={Search} />
-                <Route exact path="/filter" component={Filter} />
+                <Route
+                  exact
+                  path="/filter"
+                  render={props => (
+                    <Filter
+                      filterSnaps={this.filterSnaps}
+                      history={props.history}
+                    />
+                  )}
+                />
                 <Route
                   exact
                   path="/add"
@@ -119,7 +158,7 @@ class App extends React.Component {
             </div>
             <Switch>
               <Route exact path="/" component={Footer} />
-              <Toolbar />
+              <Toolbar snapsdata={this.state.data} />
             </Switch>
           </div>
         </Router>

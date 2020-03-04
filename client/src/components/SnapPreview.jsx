@@ -10,9 +10,8 @@ class SnapPreview extends Component {
     message: null
   };
 
-  componentDidMount() {
+  getData = () => {
     const snapId = this.props.id;
-
     axios
       .get(`/snaps/${snapId}`)
       .then(response => {
@@ -25,6 +24,16 @@ class SnapPreview extends Component {
           message: err
         });
       });
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      this.getData();
+    }
+    // console.log("hiiiii", snapId);
+  }
+  componentDidMount() {
+    this.getData();
   }
 
   getTime = snap => {
@@ -40,10 +49,10 @@ class SnapPreview extends Component {
       return hours + " hours ";
     } else if (hours === 1) {
       return hours + " hour ";
-    } else if (minutes > 1) {
-      return minutes + " minutes ";
-    } else {
+    } else if (minutes === 1) {
       return minutes + " minute ";
+    } else {
+      return minutes + " minutes ";
     }
   };
 

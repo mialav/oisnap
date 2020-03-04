@@ -12,12 +12,12 @@ import categoryColor from "../styles/snapStyles.js";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
-const geolocateStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  margin: 10
-};
+// const geolocateStyle = {
+//   position: "absolute",
+//   top: 0,
+//   left: 0,
+//   margin: 10
+// };
 
 export default class Map extends Component {
   state = {
@@ -30,8 +30,6 @@ export default class Map extends Component {
   };
 
   _onViewportChange = viewport => this.setState({ viewport });
-
-  // onGeolocate = () => map.fitBoundsOptions({ maxZoom: 15 });
 
   getSnaps = () => {
     let snaps = [];
@@ -64,6 +62,9 @@ export default class Map extends Component {
 
   closeWindows = () => {
     history.push("/home");
+    this.setState({
+      popupInfo: null
+    });
   };
 
   render() {
@@ -80,11 +81,10 @@ export default class Map extends Component {
         {...viewport}
         width="100vw"
         height="100vh"
-        mapStyle="mapbox://styles/mialav/ck7brnzxa0mg01invkw6jqlvj"
+        mapStyle="mapbox://styles/mapbox/dark-v10"
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
-        // closeOnClick={true}
         onClick={this.closeWindows}
       >
         <div className="map-controls">
@@ -124,18 +124,6 @@ export default class Map extends Component {
                   onClick={() => this.renderPopup(snap)}
                 ></i>
               </span>
-
-              {/* <img
-                className="marker"
-                alt="marker"
-                src={require("../images/mapbox-icon.png")}
-                onClick={() => this.renderPopup(snap)}
-
-
-              />
-
-
-              /> */}
             </Marker>
           );
         })}
@@ -146,6 +134,7 @@ export default class Map extends Component {
             longitude={this.state.popupInfo.longitude}
             dynamicPosition={true}
             closeButton={false}
+            closeOnClick={true}
             style={{
               backgroundColor: `${categoryColor(
                 this.state.popupInfo.category,

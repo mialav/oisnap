@@ -4,37 +4,10 @@ import axios from "axios";
 import logo from "../images/3a.png";
 
 class Navbar extends Component {
-  state = {
-    dropdown: false
-    // user: ""
-  };
-
-  eventHandler = () => {
-    this.setState({
-      dropdown: !this.state.dropdown
-    });
-    this.setState({
-      dropdown: !this.state.dropdown
-    });
-  };
-
-  // componentDidMount() {
-  //   this.setState({
-  //     user: this.props.user
-  //   });
-  // }
-
-  // componentDidUpdate() {
-  //   this.setState({
-  //     user: this.props.user
-  //   });
-  // }
-
   logout = () => {
     axios
       .get("/auth/logout")
       .then(response => {
-        console.log(response);
         this.props.setUser(null);
       })
       .catch(err => console.log(err));
@@ -45,10 +18,10 @@ class Navbar extends Component {
       <React.Fragment>
         <div className="navbar">
           <Link className="navbarHome" to="/home">
-            <img className="logo" src={logo} />
+            <img className="logo" src={logo} alt="OiSnap-logo" />
           </Link>
 
-          <button onClick={this.eventHandler}>
+          <button>
             <i class="fas fa-user"></i>
           </button>
 

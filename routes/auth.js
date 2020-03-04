@@ -37,15 +37,12 @@ router.post("/signup", (req, res, next) => {
   console.log(password);
   if (username === "" || password === "") {
     console.log("username and password not filled");
-    return res
-      .status(400)
-      .json({ message: "Username and Password can't be empty" });
+    return res.status(400).json({ message: "Fields can't be empty." });
   }
 
   //checks if username has 4-8 characters and contains a number
   let regex = new RegExp("^(?=.*[0-9])(?=.{4,8})");
   if (!regex.test(password)) {
-    console.log("password stupid");
     return res.status(400).json({
       message:
         "The password must be between 4 and 8 characters long and has to contain at least one digit."
@@ -53,10 +50,8 @@ router.post("/signup", (req, res, next) => {
   }
 
   User.findOne({ username }, "username", (err, user) => {
-    console.log("looking for user");
     if (user !== null) {
-      console.log("user found. make up another one!");
-      return res.status(400).json({ message: "This user already exists." });
+      return res.status(400).json({ message: "Username already taken." });
     }
 
     const salt = bcrypt.genSaltSync(bcryptSalt);
@@ -81,19 +76,19 @@ router.post("/signup", (req, res, next) => {
         });
       })
       .catch(err => {
-        //TODO - Need to send a error response
+        res.status(500).json({
+          message: "Something went wrong, please try to refresh the page."
+        });
       });
   });
 });
 
 router.get("/logout", (req, res) => {
-  console.log("route /logout was called");
   req.logout();
   res.json({ message: "Successful logout" });
 });
 
 router.get("/loggedin", (req, res) => {
-  console.log("route /loggedin was called.");
   res.json(req.user);
 });
 

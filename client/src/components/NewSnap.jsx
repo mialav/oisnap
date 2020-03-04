@@ -14,7 +14,6 @@ class NewSnap extends Component {
     location: "",
     title: "",
     description: "",
-    snapError: "",
     loading: false,
     image: null,
     address: ""
@@ -30,7 +29,7 @@ class NewSnap extends Component {
       });
     } else {
       this.setState({
-        message: "can you just..?"
+        message: "Photo and category are required."
       });
     }
   };
@@ -90,11 +89,9 @@ class NewSnap extends Component {
     event.preventDefault();
     if (this.state.title === "" || !this.state.location) {
       this.setState({
-        message: "PLEEEEEEASE"
+        message: "Please give your snap a title and location."
       });
     } else {
-      //axios
-
       Geocode.fromAddress(this.state.address)
         .then(response => {
           axios
@@ -102,7 +99,6 @@ class NewSnap extends Component {
               title: this.state.title,
               description: this.state.description,
               category: this.state.category,
-
               address: this.state.address,
               location: response.results[0].geometry.location,
               image: this.state.image
@@ -114,7 +110,7 @@ class NewSnap extends Component {
             })
             .catch(err => {
               this.setState({
-                emptyError: err.response.data.message
+                message: "Something went wrong, please try again."
               });
             });
         })
@@ -148,7 +144,7 @@ class NewSnap extends Component {
       .catch(err => {
         console.log(err);
         this.setState({
-          snapError: "Couldn't upload the image, please try again"
+          message: "Couldn't upload the photo, please try again."
         });
       });
   };
@@ -278,7 +274,6 @@ class NewSnap extends Component {
                     className="button-visible submit-button"
                     type="submit"
                   >
-                    {" "}
                     Add to
                   </button>
                 </form>
