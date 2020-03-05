@@ -34,10 +34,7 @@ class SnapDetail extends Component {
       axios
         .delete(`/snaps/${this.props.match.params.id}`)
         .then(response => {
-<<<<<<< HEAD
           this.props.refresh();
-=======
->>>>>>> d05f3a54197ea0a7e0b507eacad1170b5ae2f12d
           this.props.history.push("/home");
         })
         .catch(err => {
@@ -72,12 +69,9 @@ class SnapDetail extends Component {
     if (!snap) {
       return <div>LOADING</div>;
     } else {
-<<<<<<< HEAD
       console.log(this.state.snap.category);
       console.log(categoryColor(this.state.snap));
 
-=======
->>>>>>> d05f3a54197ea0a7e0b507eacad1170b5ae2f12d
       return (
         <div
           className="container"

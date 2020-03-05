@@ -31,11 +31,8 @@ export default class Profile extends Component {
       axios
         .delete(`/snaps/${event.target.parentNode.getAttribute("id")}`)
         .then(response => {
-<<<<<<< HEAD
           console.log(response);
           this.props.refresh();
-=======
->>>>>>> d05f3a54197ea0a7e0b507eacad1170b5ae2f12d
           this.getData();
         })
         .catch(err => {});

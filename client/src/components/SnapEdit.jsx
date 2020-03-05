@@ -46,15 +46,8 @@ export default class SnapEdit extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-<<<<<<< HEAD
-<<<<<<< HEAD
-    Geocode.fromAddress(this.state.address)
-=======
-=======
 
->>>>>>> d05f3a54197ea0a7e0b507eacad1170b5ae2f12d
-    Geocode.fromAddress(this.state.location)
->>>>>>> 79de56e8a24624c4c02be18d62c5ec9aacf1dd71
+    Geocode.fromAddress(this.state.address)
       .then(response => {
         axios
           .patch(`/snaps/${this.props.match.params.id}`, {
@@ -63,10 +56,7 @@ export default class SnapEdit extends Component {
             location: response.results[0].geometry.location
           })
           .then(response => {
-<<<<<<< HEAD
             this.props.refresh();
-=======
->>>>>>> 79de56e8a24624c4c02be18d62c5ec9aacf1dd71
             this.props.history.push(`/snaps/${this.props.match.params.id}`);
           })
           .catch(err => console.log(err.message));
