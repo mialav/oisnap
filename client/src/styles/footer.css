@@ -2,9 +2,9 @@ footer,
 .toolbar {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 96%;
   background-color: whitesmoke;
-  padding: 1em;
+  padding: 2%;
 
   display: flex;
   flex-flow: row nowrap;

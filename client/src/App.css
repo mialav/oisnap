@@ -57,9 +57,9 @@ a:visited {
 /************************** BODY *******************/
 
 .body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: block;
+  /* flex-direction: column;
+  justify-content: space-between; */
 }
 
 .body-view {
@@ -93,6 +93,10 @@ a:visited {
 .container-header {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  height: 4em;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .basic-header {
