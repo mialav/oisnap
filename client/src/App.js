@@ -26,8 +26,6 @@ class App extends React.Component {
     user: this.props.user,
     data: [],
     dropdown: false
-<<<<<<< HEAD
-=======
   };
 
   setDropdown = event => {

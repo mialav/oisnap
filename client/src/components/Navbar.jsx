@@ -4,35 +4,6 @@ import axios from "axios";
 import logo from "../images/3a.png";
 
 class Navbar extends Component {
-<<<<<<< HEAD
-  state = {
-    dropdown: this.props.dropdown
-    // user: ""
-  };
-
-  eventHandler = () => {
-    this.props.setDropdown();
-    //   this.setState({
-    //     dropdown: !this.state.dropdown
-    //   });
-    //   this.setState({
-    //     dropdown: !this.state.dropdown
-    //   });
-    // };
-    // componentDidMount() {
-    //   this.setState({
-    //     user: this.props.user
-    //   });
-  };
-
-  // componentDidUpdate() {
-  //   this.setState({
-  //     user: this.props.user
-  //   });
-  // }
-
-=======
->>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
   logout = () => {
     axios
       .get("/auth/logout")
