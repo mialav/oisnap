@@ -127,7 +127,6 @@ export default class Profile extends Component {
                       {snap.title}
                     </Link>
                   </div>
-<<<<<<< HEAD
                   <div className="snap-edit">
                     <button onClick={this.handleSubmit}>
                       <i name="edit" className="fas fa-pen"></i>
@@ -136,8 +135,6 @@ export default class Profile extends Component {
                       <i name="delete" className="fas fa-trash"></i>
                     </button>
                   </div>
-=======
->>>>>>> 07f4f04bf3b90e92e81f3c83c940f7be76b708d1
                 </div>
               );
             })}
