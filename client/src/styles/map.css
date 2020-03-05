@@ -39,7 +39,7 @@
 
 .map-controls {
   display: flex;
-  margin-top: 70vh;
+  margin-top: 65vh;
   flex-flow: column nowrap;
   align-self: flex-start;
 }
