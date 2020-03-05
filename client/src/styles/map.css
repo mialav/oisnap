@@ -39,7 +39,7 @@
 
 .map-controls {
   display: flex;
-  margin-top: 65vh;
+  margin-top: 68vh;
   flex-flow: column nowrap;
   align-self: flex-start;
 }
@@ -63,4 +63,8 @@
 
 .map-geolocateStyle {
   margin-bottom: 0.5em;
+}
+
+.geolocation-button {
+  z-index: 1;
 }

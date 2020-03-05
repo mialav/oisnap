@@ -100,7 +100,7 @@ export default class Map extends Component {
             />
           </div>
 
-          <div>
+          <div className="geolocation-button">
             <NavigationControl showCompass={false} />
           </div>
         </div>
