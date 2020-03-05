@@ -335,7 +335,7 @@ class NewSnap extends Component {
               className="navigation-button"
               onClick={this.goNext}
             >
-              <i class="fas fa-arrow-right"></i>
+              <i className="fas fa-arrow-right"></i>
             </button>
           </div>
         </div>

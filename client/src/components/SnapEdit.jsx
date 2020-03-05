@@ -212,7 +212,7 @@ export default class SnapEdit extends Component {
                   <label htmlFor="address">
                     Location
                     <button onClick={this.updateLocation}>
-                      <i class="fas fa-map-marker"></i>
+                      <i className="fas fa-map-marker"></i>
                     </button>
                   </label>
 
