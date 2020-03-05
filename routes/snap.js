@@ -14,7 +14,12 @@ router.get("/", (req, res, next) => {
   console.log(req.user);
   Snap.find(filter)
     .then(snapList => {
-      res.json({ snapList: snapList, score: req.user.score });
+      let score = 0;
+
+      if (req.user) {
+        score = req.user.score;
+      }
+      res.json({ snapList: snapList, score: score });
     })
     .catch(err => {
       console.log(err);
