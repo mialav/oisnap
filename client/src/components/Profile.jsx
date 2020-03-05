@@ -67,11 +67,11 @@ export default class Profile extends Component {
               className="fas fa-user-circle"
               style={{ color: "white" }}
             ></i>
-            <h3 className="username"> {this.props.user.username}'s Profile</h3>
           </div>
+          <h3 className="username"> {this.props.user.username}'s Profile</h3>
+
           <p className="user-score">
-            <i className="fas fa-star"></i> Snap score:{" "}
-            <i>{this.state.score}</i>
+            <i className="fas fa-star"></i> Snap score <i>{this.state.score}</i>
           </p>
         </div>
 
