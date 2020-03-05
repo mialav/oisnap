@@ -91,7 +91,7 @@ class SnapPreview extends Component {
         <div className="preview">
           <div className="snap-box">
             <div
-              className="preview-time-box"
+              className="preview-time-box container-header"
               style={{
                 backgroundColor: categoryColor(
                   this.state.snap.category,
@@ -99,15 +99,14 @@ class SnapPreview extends Component {
                 )
               }}
             >
-              <p>
-                <img
-                  className="category-icon"
-                  src={this.state.categoryImg}
-                  alt={this.state.category}
-                  style={{ height: "10%" }}
-                />
-              </p>
+              <img
+                className="category-icon"
+                src={this.state.categoryImg}
+                alt={this.state.category}
+              />
+
               <p className="time">{this.getTime(snap)} ago</p>
+              <div className="container-header-div"></div>
             </div>
             <div className="container-content">
               <img
