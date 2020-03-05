@@ -5,7 +5,11 @@ class Toolbar extends Component {
   render() {
     return (
       <div className="toolbar">
-        <Link className="toolbar-button" to="/filter">
+        <Link
+          className="toolbar-button"
+          to="/filter"
+          onClick={() => this.props.getData()}
+        >
           <i className="fas fa-filter"></i>
         </Link>
         <Link to="/add">
