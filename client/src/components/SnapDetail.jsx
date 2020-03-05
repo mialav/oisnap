@@ -132,7 +132,7 @@ class SnapDetail extends Component {
                   </div>
                 )}
                 <p className="info">
-                  <i class="fas fa-map-marker"></i> {snap.address}
+                  <i className="fas fa-map-marker"></i> {snap.address}
                 </p>
               </div>
             </div>
