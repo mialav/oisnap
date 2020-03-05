@@ -95,6 +95,7 @@ export default class Profile extends Component {
                         <React.Fragment>
                           <div className="snap-edit">
                             <button
+                              className="action-button"
                               title={snap.title}
                               onClick={event =>
                                 this.handleSubmit(event, snap._id)
@@ -102,7 +103,9 @@ export default class Profile extends Component {
                             >
                               <i name="edit" className="fas fa-pen"></i>
                             </button>
+                            <br></br>
                             <button
+                              className="action-button"
                               title={snap.title}
                               onClick={event =>
                                 this.handleSubmit(event, snap._id)
