@@ -36,7 +36,10 @@ export default class Signup extends Component {
   render() {
     return (
       <div className="container">
-        <div className="detail-page">
+        <div className="container-header basic-header">
+          <h3>Sign Up</h3>
+        </div>
+        <div className="container-content">
           <form>
             <label htmlFor="username">Username</label>
             <input
@@ -58,9 +61,15 @@ export default class Signup extends Component {
               value={this.state.password}
             />
 
-            {this.state.message && <p>{this.state.message}</p>}
+            {this.state.message && (
+              <p className="error-message">{this.state.message}</p>
+            )}
 
-            <button type="submit" onClick={this.handleSubmit}>
+            <button
+              className="button-visible"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
               Sign Up
             </button>
           </form>

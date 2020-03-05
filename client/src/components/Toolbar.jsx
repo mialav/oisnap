@@ -5,16 +5,18 @@ class Toolbar extends Component {
   render() {
     return (
       <div className="toolbar">
-        <Link to="/filter">Filter</Link>
+        <Link className="toolbar-button" to="/filter">
+          <i className="fas fa-filter"></i>
+        </Link>
         <Link to="/add">
-          <div className="addSnap">
+          <div className="toolbar-button addSnap">
             <i className="fas fa-camera"></i>
           </div>
         </Link>
 
-        {/* <Link to="/search" >
-          Search
-        </Link> */}
+        <Link className="toolbar-button" to="/search">
+          <i className="fas fa-map-marker"></i>
+        </Link>
       </div>
     );
   }
