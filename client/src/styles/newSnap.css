@@ -81,8 +81,10 @@
 }
 
 .category-icon {
-  position: absolute;
+  /* position: absolute;
   left: 0;
   top: 0;
-  padding: 0.5em;
+  padding: 0.5em; */
+  width: 3em;
+  /* height: 3em; */
 }

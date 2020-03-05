@@ -97,7 +97,7 @@ class SnapDetail extends Component {
       return (
         <div className="container">
           <div
-            className="time-box"
+            className="container-header"
             style={{
               backgroundColor: categoryColor(
                 this.state.snap.category,
@@ -109,9 +109,11 @@ class SnapDetail extends Component {
               className="category-icon"
               src={this.state.categoryImg}
               alt={this.state.category}
-              style={{ height: "10%" }}
             />
-            <p>Created {this.getTime(snap)} ago</p>
+            <p className="content-header-text">
+              Created {this.getTime(snap)} ago
+            </p>
+            <div className="content-header-div"></div>
           </div>
           <div className="container-content ">
             <div className="snap-box">

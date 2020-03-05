@@ -145,6 +145,7 @@ export default class SnapEdit extends Component {
                 />
               </p>
               <h3>Edit your Snap</h3>
+              <div className="content-header-div"></div>
             </div>
             <div className="container-content">
               {/* <img
