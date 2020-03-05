@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default class Profile extends Component {
-  state = { snapData: [], score: null };
+  state = {
+    snapData: [],
+    score: null,
+    isMouseInside: false,
+    isMouseInsideId: ""
+  };
 
   getData = () => {
     axios
@@ -24,22 +29,14 @@ export default class Profile extends Component {
     this.getData();
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event, id) => {
     event.preventDefault();
 
     if (event.target.getAttribute("name") === "edit") {
-      this.props.history.push(
-        `/snaps/${event.target.parentNode.parentNode.parentNode.getAttribute(
-          "id"
-        )}/edit`
-      );
+      this.props.history.push(`/snaps/${id}/edit`);
     } else if (event.target.getAttribute("name") === "delete") {
       axios
-        .delete(
-          `/snaps/${event.target.parentNode.parentNode.parentNode.getAttribute(
-            "id"
-          )}`
-        )
+        .delete(`/snaps/${id}`)
         .then(response => {
           console.log(response);
           this.props.refresh();
@@ -49,38 +46,86 @@ export default class Profile extends Component {
     }
   };
 
+  mouseEnter = (event, id) => {
+    this.setState({ isMouseInside: true, isMouseInsideId: id });
+    console.log("ENTER", event.target.getAttribute("title"));
+    console.log(event.target);
+    return event.target.getAttribute("title");
+  };
+  mouseLeave = () => {
+    this.setState({ isMouseInside: false, isMouseInsideId: false });
+    console.log("LEAVE");
+  };
+
   render() {
     return (
       <div className="container">
-        <div className="user-info">
-          <h3>{this.props.user.username}'s Profile</h3>
-          <p>
-            Snap score: <i>{this.state.score}</i>
+        <div className="container-header basic-header">
+          <div className="user">
+            <i
+              name="user"
+              className="fas fa-user-circle"
+              style={{ color: "white" }}
+            ></i>
+            <h3 className="username"> {this.props.user.username}'s Profile</h3>
+          </div>
+          <p className="user-score">
+            <i className="fas fa-star"></i> Snap score:{" "}
+            <i>{this.state.score}</i>
           </p>
         </div>
 
         <h4>Your current snaps</h4>
-        <div className="container-content">
+        <div
+          className="container-content profile-body"
+          style={{ paddingTop: "0" }}
+        >
           <div className="user-snaps">
             {this.state.snapData?.map(snap => {
               return (
                 <div className="user-snap" id={snap._id} key={snap._id}>
                   <div className="snap-info">
-                    <img
-                      className="snap-img-preview"
-                      src={snap.image}
-                      alt={snap.title}
-                    />
+                    <div
+                      className="image-vs-buttons"
+                      onMouseEnter={event => this.mouseEnter(event, snap._id)}
+                      onMouseLeave={event => this.mouseLeave(event, snap._id)}
+                    >
+                      <img
+                        title={snap.title}
+                        className="snap-img-preview-profile"
+                        src={snap.image}
+                        alt={snap.title}
+                      />
+                      {this.state.isMouseInsideId === snap._id ? (
+                        <React.Fragment>
+                          <div className="snap-edit">
+                            <button
+                              title={snap.title}
+                              onClick={event =>
+                                this.handleSubmit(event, snap._id)
+                              }
+                            >
+                              <i name="edit" className="fas fa-pen"></i>
+                            </button>
+                            <button
+                              title={snap.title}
+                              onClick={event =>
+                                this.handleSubmit(event, snap._id)
+                              }
+                            >
+                              <i name="delete" className="fas fa-trash-alt"></i>
+                            </button>
+                          </div>
+                          <div className="image-vs-buttons-overlay"></div>
+                        </React.Fragment>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
 
-                    <Link to={`/snaps/${snap._id}`}>{snap.title}</Link>
-                  </div>
-                  <div className="snap-edit">
-                    <button onClick={this.handleSubmit}>
-                      <i name="edit" className="fas fa-pen"></i>
-                    </button>
-                    <button onClick={this.handleSubmit}>
-                      <i name="delete" className="fas fa-trash-alt"></i>
-                    </button>
+                    <Link className="snap-link" to={`/snaps/${snap._id}`}>
+                      {snap.title}
+                    </Link>
                   </div>
                 </div>
               );

@@ -4,6 +4,12 @@ import axios from "axios";
 import Geocode from "react-geocode";
 import categoryColor from "../styles/snapStyles";
 
+// import cameraImage from "../images/addPicture.png";
+import freeImg from "../images/free.png";
+import crowdImg from "../images/crowd.png";
+import happeningImg from "../images/happening.png";
+import promoImg from "../images/promo.png";
+
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 class NewSnap extends Component {
@@ -16,13 +22,14 @@ class NewSnap extends Component {
     description: "",
     loading: false,
     image: null,
-    address: ""
+    address: "",
+    categoryImg: ""
   };
 
   goNext = event => {
     if (this.state.category && this.state.image) {
       event.target.classList.add("hidden");
-      document.getElementById("back-button").classList.remove("hidden");
+      // document.getElementById("back-button").classList.remove("hidden");
       this.setState({
         page: 2,
         message: ""
@@ -66,6 +73,25 @@ class NewSnap extends Component {
 
   assignCategory = event => {
     const category = event.target.value;
+    let categoryImg = "";
+    switch (category) {
+      case "free":
+        categoryImg = freeImg;
+        break;
+
+      case "promo":
+        categoryImg = promoImg;
+        break;
+
+      case "crowd":
+        categoryImg = crowdImg;
+        break;
+
+      case "happening":
+        categoryImg = happeningImg;
+        break;
+    }
+
     const buttons = document.getElementsByClassName("category-button");
 
     for (let button of buttons) {
@@ -75,7 +101,8 @@ class NewSnap extends Component {
     event.target.classList.add("selected-button");
 
     this.setState({
-      category: category
+      category: category,
+      categoryImg: categoryImg
     });
   };
 
@@ -154,33 +181,28 @@ class NewSnap extends Component {
       <React.Fragment>
         <div className="container">
           <div
-            className="navigation-items"
-            style={{ backgroundColor: categoryColor(this.state.category) }}
+            className="navigation-items container-header basic-header"
+            style={{
+              backgroundColor: categoryColor(this.state.category),
+              color: "black"
+            }}
           >
-            <div className="buttons">
-              <button
-                className="navigation-button hidden"
-                id="back-button"
-                onClick={this.goBack}
-              >
-                BACK
-              </button>
-              <button
-                id="next-button"
-                className="navigation-button"
-                onClick={this.goNext}
-              >
-                NEXT
-              </button>
-            </div>
+            {/* <img src="" alt=""/> */}
+            <img
+              className="category-icon"
+              src={this.state.categoryImg}
+              alt={this.state.category}
+              // style={{ height: "10%" }}
+            />
             <p className="step-count">
               <b> Step {this.state.page} out of 2</b>{" "}
             </p>
+            <div className="content-header-div"></div>
           </div>
           {/* /* ***PAGE 1 upload and category *** */}
           {this.state.page === 1 && (
-            <div className="test">
-              <div className="container-content page photo-page">
+            <div className="container-content picture-container">
+              <div className="page photo-page">
                 <input
                   style={{ display: "none" }}
                   type="file"
@@ -189,12 +211,16 @@ class NewSnap extends Component {
                   onChange={this.uploadImage}
                   ref={fileInput => (this.fileInput = fileInput)}
                 />
-                <button
+                {/* <button
                   className="upload-image"
                   onClick={() => this.fileInput.click()}
                 >
-                  <i className="fas fa-camera"></i>
-                </button>
+                  <img
+                    src={cameraImage}
+                    alt="Add a Picture"
+                    style={{ width: "15%" }}
+                  />
+                </button> */}
                 {this.state.loading ? (
                   <h3>Loading </h3>
                 ) : (
@@ -207,28 +233,40 @@ class NewSnap extends Component {
                 )}
                 <button
                   className="button-visible category-button"
-                  onClick={this.assignCategory}
+                  onClick={element => {
+                    this.assignCategory(element);
+                    this.fileInput.click();
+                  }}
                   value="free"
                 >
                   FREE
                 </button>
                 <button
                   className="button-visible category-button"
-                  onClick={this.assignCategory}
+                  onClick={element => {
+                    this.assignCategory(element);
+                    this.fileInput.click();
+                  }}
                   value="promo"
                 >
                   PROMO
                 </button>
                 <button
                   className="button-visible category-button"
-                  onClick={this.assignCategory}
+                  onClick={element => {
+                    this.assignCategory(element);
+                    this.fileInput.click();
+                  }}
                   value="crowd"
                 >
                   CROWD
                 </button>
                 <button
                   className="button-visible category-button"
-                  onClick={this.assignCategory}
+                  onClick={element => {
+                    this.assignCategory(element);
+                    this.fileInput.click();
+                  }}
                   value="happening"
                 >
                   HAPPENING
@@ -284,6 +322,22 @@ class NewSnap extends Component {
               </div>
             </div>
           )}
+          <div className="buttons">
+            {/* <button
+                className="navigation-button hidden"
+                id="back-button"
+                onClick={this.goBack}
+              >
+                BACK
+              </button> */}
+            <button
+              id="next-button"
+              className="navigation-button"
+              onClick={this.goNext}
+            >
+              <i className="fas fa-arrow-right"></i>
+            </button>
+          </div>
         </div>
       </React.Fragment>
     );

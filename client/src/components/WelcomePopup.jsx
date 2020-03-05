@@ -10,7 +10,7 @@ const WelcomePopup = () => {
 
         <p>
           OiSnap is a social platform that allows users around Berlin to share
-          their best tips of the moment based on location. Share a picutre of a
+          their best tips of the moment based on location. Share a picture of a
           couch up for grabs on the street, the line to Berghain or an awesome
           street artist – all snaps disappear after 24 hours.
         </p>

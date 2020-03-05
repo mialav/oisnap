@@ -22,62 +22,71 @@ class Filter extends Component {
 
   goToMap() {
     history.push("/home");
+    this.setState({
+      filters: []
+    });
   }
 
   render() {
     return (
-      <div className="filters">
-        <div>
-          <div>
-            <input
-              type="checkbox"
-              id=""
-              name="free"
-              value="free"
-              onChange={this.handleChange}
-            />
-            <label htmlFor="free"> FREE </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id=""
-              name="happening"
-              value="happening"
-              onChange={this.handleChange}
-            />
-            <label htmlFor="happening"> HAPPENING </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id=""
-              name="crowd"
-              value="crowd"
-              onChange={this.handleChange}
-            />
-            <label htmlFor="crowd"> CROWD </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id=""
-              name="promo"
-              value="promo"
-              onChange={this.handleChange}
-            />
-            <label htmlFor="promo"> PROMO </label>
-          </div>
+      <div className="container">
+        <div className="container-header basic-header">
+          <h3>Filter The Snaps</h3>
         </div>
         <div>
-          <button
-            onClick={() => {
-              this.goToMap();
-              this.props.filterSnaps(this.state.filters);
-            }}
-          >
-            GO
-          </button>
+          <div className="container-content filer-items">
+            <div className="filter-item">
+              <input
+                type="checkbox"
+                id=""
+                name="free"
+                value="free"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="free"> FREE </label>
+            </div>
+            <div className="filter-item">
+              <input
+                type="checkbox"
+                id=""
+                name="happening"
+                value="happening"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="happening"> HAPPENING </label>
+            </div>
+            <div className="filter-item">
+              <input
+                type="checkbox"
+                id=""
+                name="crowd"
+                value="crowd"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="crowd"> CROWD </label>
+            </div>
+            <div className="filter-item">
+              <input
+                type="checkbox"
+                id=""
+                name="promo"
+                value="promo"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="promo"> PROMO </label>
+            </div>
+          </div>
+          <div>
+            <button
+              className="button-visible"
+              onClick={() => {
+                this.props.filterSnaps(this.state.filters);
+                this.goToMap();
+              }}
+            >
+              GO
+            </button>
+          </div>
         </div>
       </div>
     );

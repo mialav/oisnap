@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 import categoryColor from "../styles/snapStyles";
 
+import freeImg from "../images/free.png";
+import crowdImg from "../images/crowd.png";
+import happeningImg from "../images/happening.png";
+import promoImg from "../images/promo.png";
+
 class SnapDetail extends Component {
   state = {
     snap: null,
-    message: null
+    message: null,
+    categoryImg: ""
   };
 
   componentDidMount() {
@@ -14,8 +20,27 @@ class SnapDetail extends Component {
     axios
       .get(`/snaps/${snapId}`)
       .then(response => {
+        let categoryImg = "";
+        switch (response.data.category) {
+          case "free":
+            categoryImg = freeImg;
+            break;
+
+          case "promo":
+            categoryImg = promoImg;
+            break;
+
+          case "crowd":
+            categoryImg = crowdImg;
+            break;
+
+          case "happening":
+            categoryImg = happeningImg;
+            break;
+        }
         this.setState({
-          snap: response.data
+          snap: response.data,
+          categoryImg: categoryImg
         });
       })
       .catch(err => {
@@ -69,13 +94,10 @@ class SnapDetail extends Component {
     if (!snap) {
       return <div>LOADING</div>;
     } else {
-      console.log(this.state.snap.category);
-      console.log(categoryColor(this.state.snap));
-
       return (
         <div className="container">
           <div
-            className="time-box"
+            className="container-header"
             style={{
               backgroundColor: categoryColor(
                 this.state.snap.category,
@@ -83,7 +105,15 @@ class SnapDetail extends Component {
               )
             }}
           >
-            <p>Created {this.getTime(snap)} ago</p>
+            <img
+              className="category-icon"
+              src={this.state.categoryImg}
+              alt={this.state.category}
+            />
+            <p className="content-header-text">
+              Created {this.getTime(snap)} ago
+            </p>
+            <div className="content-header-div"></div>
           </div>
           <div className="container-content ">
             <div className="snap-box">
@@ -99,10 +129,13 @@ class SnapDetail extends Component {
                       <i name="edit" className="fas fa-pen"></i>
                     </button>
                     <button onClick={this.handleSubmit}>
-                      <i name="delete" className="fas fa-trash-alt"></i>
+                      <i name="delete" className="fas fa-trash"></i>
                     </button>
                   </div>
                 )}
+                <p className="info">
+                  <i className="fas fa-map-marker"></i> {snap.address}
+                </p>
               </div>
             </div>
           </div>

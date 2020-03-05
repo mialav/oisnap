@@ -14,21 +14,20 @@ const categoryColor = (category, creation) => {
   let timeDifference = startMiliseconds - fromMiliseconds;
   if (timeDifference <= 0) timeDifference = 1;
 
-  let colorNumber = (timeDifference / maxTime) * 100; // A number from 0-100
+  let colorNumber = 1 - (timeDifference / maxTime) * 0.6; // A number from 1-0.4
 
   switch (category) {
     case "promo":
-      color = `rgb(255, ${colorNumber + 50}, ${colorNumber + 50})`;
+      color = `rgba(238, 99, 82, ${colorNumber.toFixed(1)})`;
       break;
     case "happening":
-      color = `rgb(${colorNumber + 100}, ${colorNumber + 100}, ${colorNumber +
-        100})`;
+      color = `rgba(45, 156, 219, ${colorNumber.toFixed(1)})`;
       break;
     case "crowd":
-      color = `rgb(255, 255, ${colorNumber})`;
+      color = `rgba(242, 201, 76, ${colorNumber.toFixed(1)})`;
       break;
     case "free":
-      color = `rgb(${colorNumber}, ${colorNumber + 204}, ${colorNumber})`;
+      color = `rgba(39, 174, 96, ${colorNumber.toFixed(1)})`;
       break;
 
     default:

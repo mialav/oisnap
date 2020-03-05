@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import Geocode from "react-geocode";
 import categoryColor from "../styles/snapStyles";
+import freeImg from "../images/free.png";
+import crowdImg from "../images/crowd.png";
+import happeningImg from "../images/happening.png";
+import promoImg from "../images/promo.png";
+
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 export default class SnapEdit extends Component {
@@ -13,13 +18,37 @@ export default class SnapEdit extends Component {
     category: "",
     img: "",
     creationDate: "",
-    address: ""
+    address: "",
+    categoryImg: ""
+  };
+
+  getCategoryImg = category => {
+    let categoryImg = "";
+    switch (category) {
+      case "free":
+        categoryImg = freeImg;
+        break;
+
+      case "promo":
+        categoryImg = promoImg;
+        break;
+
+      case "crowd":
+        categoryImg = crowdImg;
+        break;
+
+      case "happening":
+        categoryImg = happeningImg;
+        break;
+    }
+    return categoryImg;
   };
 
   componentDidMount() {
     axios
       .get(`/snaps/${this.props.match.params.id}`)
       .then(response => {
+        let categoryImg = this.getCategoryImg(response.data.category);
         this.setState({
           user: response.data.user,
           title: response.data.title,
@@ -28,7 +57,8 @@ export default class SnapEdit extends Component {
           img: response.data.image,
           creationDate: response.created_at,
           address: response.data.address,
-          location: response.data.location
+          location: response.data.location,
+          categoryImg: categoryImg
         });
       })
       .catch(err => {
@@ -66,8 +96,10 @@ export default class SnapEdit extends Component {
 
   assignCategory = event => {
     event.preventDefault();
+    let categoryImg = this.getCategoryImg(event.target.value);
     this.setState({
-      category: event.target.value
+      category: event.target.value,
+      categoryImg: categoryImg
     });
   };
 
@@ -104,21 +136,59 @@ export default class SnapEdit extends Component {
                 )}`
               }}
             >
+              <p>
+                <img
+                  className="category-icon"
+                  src={this.state.categoryImg}
+                  alt={this.state.category}
+                />
+              </p>
               <h3>Edit your Snap</h3>
+              <div className="content-header-div"></div>
             </div>
             <div className="container-content">
-              <img
+              {/* <img
                 className="snap-img"
                 src={this.state.img}
                 alt={this.state.title}
                 style={{ height: "40vh" }}
-              />
-              <p>
+              /> */}
+              <div className="category-buttons">
+                <button
+                  className="button-visible category-button category-edit-button"
+                  onClick={this.assignCategory}
+                  value="free"
+                >
+                  FREE
+                </button>
+                <button
+                  className="button-visible category-button category-edit-button"
+                  onClick={this.assignCategory}
+                  value="promo"
+                >
+                  PROMO
+                </button>
+                <button
+                  className="button-visible category-button category-edit-button"
+                  onClick={this.assignCategory}
+                  value="crowd"
+                >
+                  CROWD
+                </button>
+                <button
+                  className="button-visible category-button category-edit-button"
+                  onClick={this.assignCategory}
+                  value="happening"
+                >
+                  HAPPENING
+                </button>
+              </div>
+              <p className="info">
                 <i>You cannot edit the picture once it was posted.</i>
               </p>
               {/* className="page detail-page" */}
               <div>
-                <form>
+                <form className="snap-form">
                   <label htmlFor="title">Snap title</label>
                   <input
                     type="text"
@@ -136,8 +206,15 @@ export default class SnapEdit extends Component {
                     value={this.state.description}
                     onChange={this.handleChange}
                   />
+                  <br />
 
-                  <label htmlFor="address"> Location </label>
+                  <label htmlFor="address">
+                    Location
+                    <button onClick={this.updateLocation}>
+                      <i className="fas fa-map-marker"></i>
+                    </button>
+                  </label>
+
                   <input
                     type="text"
                     name="address"
@@ -145,24 +222,14 @@ export default class SnapEdit extends Component {
                     value={this.state.address}
                     onChange={this.handleChange}
                   />
-                  <button onClick={this.updateLocation}>Update Location</button>
-
-                  <p>Current Category: {this.state.category}</p>
-                  <button onClick={this.assignCategory} value="free">
-                    FREE
-                  </button>
-                  <button onClick={this.assignCategory} value="promo">
-                    PROMO
-                  </button>
-                  <button onClick={this.assignCategory} value="crowd">
-                    CROWD
-                  </button>
-                  <button onClick={this.assignCategory} value="happening">
-                    HAPPENING
-                  </button>
 
                   <br />
-                  <button onClick={this.handleSubmit}>Save Changes</button>
+                  <button
+                    className="button-visible"
+                    onClick={this.handleSubmit}
+                  >
+                    Save Changes
+                  </button>
                 </form>
               </div>
             </div>
