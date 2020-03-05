@@ -14,7 +14,6 @@ export default class Profile extends Component {
     axios
       .get(`/snaps?user=${this.props.user._id}`)
       .then(response => {
-        console.log("response.score :", response.data.score);
         this.setState({
           snapData: response.data.snapList,
           score: response.data.score
@@ -38,7 +37,6 @@ export default class Profile extends Component {
       axios
         .delete(`/snaps/${id}`)
         .then(response => {
-          console.log(response);
           this.props.refresh();
           this.getData();
         })
@@ -48,13 +46,10 @@ export default class Profile extends Component {
 
   mouseEnter = (event, id) => {
     this.setState({ isMouseInside: true, isMouseInsideId: id });
-    console.log("ENTER", event.target.getAttribute("title"));
-    console.log(event.target);
     return event.target.getAttribute("title");
   };
   mouseLeave = () => {
     this.setState({ isMouseInside: false, isMouseInsideId: false });
-    console.log("LEAVE");
   };
 
   render() {
@@ -100,6 +95,7 @@ export default class Profile extends Component {
                         <React.Fragment>
                           <div className="snap-edit">
                             <button
+                              className="action-button"
                               title={snap.title}
                               onClick={event =>
                                 this.handleSubmit(event, snap._id)
@@ -107,7 +103,9 @@ export default class Profile extends Component {
                             >
                               <i name="edit" className="fas fa-pen"></i>
                             </button>
+                            <br></br>
                             <button
+                              className="action-button"
                               title={snap.title}
                               onClick={event =>
                                 this.handleSubmit(event, snap._id)
