@@ -38,7 +38,6 @@ class App extends React.Component {
         dropdown: false
       });
     }
->>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
   };
 
   setUser = userObj => {
@@ -71,18 +70,7 @@ class App extends React.Component {
       });
   };
 
-<<<<<<< HEAD
-  setDropdown = () => {
-    console.log("clicked");
-    this.setState({
-      dropdown: !this.state.dropdown
-    });
-  };
-
-  componentDidMount = () => {
-=======
   componentDidMount() {
->>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
     this.getData();
   }
 
@@ -95,16 +83,9 @@ class App extends React.Component {
           </div>
           <div className="body">
             <Navbar
-<<<<<<< HEAD
-              dropdown={this.state.dropdown}
-              setDropdown={this.setDropdown}
-              user={this.state.user}
-              setUser={this.setUser}
-=======
               user={this.state.user}
               setUser={this.setUser}
               dropdown={this.state.dropdown}
->>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
             />
             <div className="body-view">
               <Switch>

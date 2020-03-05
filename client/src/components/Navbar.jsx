@@ -40,23 +40,6 @@ class Navbar extends Component {
             </div>
           )}
         </div>
-<<<<<<< HEAD
-        {this.props.dropdown && !this.props.user && (
-          <div className="dropdown">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
-          </div>
-        )}
-        {this.props.dropdown && this.props.user && (
-          <div className="dropdown">
-            <Link to="/profile">Profile</Link>
-            <Link to="/home" onClick={this.logout}>
-              Logout
-            </Link>
-          </div>
-        )}
-=======
->>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
       </React.Fragment>
     );
   }
