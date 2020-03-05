@@ -39,7 +39,7 @@
 
 .map-controls {
   display: flex;
-  margin-top: 60vh;
+  margin-top: 65vh;
   flex-flow: column nowrap;
   align-self: flex-start;
 }
@@ -52,7 +52,8 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  margin-left: 0.5em;
+  margin-left: auto;
+  margin-right: 1em;
 }
 
 .mapboxgl-ctrl > button {

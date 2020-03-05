@@ -192,11 +192,12 @@ class NewSnap extends Component {
               className="category-icon"
               src={this.state.categoryImg}
               alt={this.state.category}
-              style={{ height: "10%" }}
+              // style={{ height: "10%" }}
             />
             <p className="step-count">
               <b> Step {this.state.page} out of 2</b>{" "}
             </p>
+            <div className="content-header-div"></div>
           </div>
           {/* /* ***PAGE 1 upload and category *** */}
           {this.state.page === 1 && (

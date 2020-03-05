@@ -141,10 +141,10 @@ export default class SnapEdit extends Component {
                   className="category-icon"
                   src={this.state.categoryImg}
                   alt={this.state.category}
-                  style={{ height: "10%" }}
                 />
               </p>
               <h3>Edit your Snap</h3>
+              <div className="content-header-div"></div>
             </div>
             <div className="container-content">
               {/* <img

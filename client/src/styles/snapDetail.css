@@ -1,9 +1,13 @@
-.time-box {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
 .snap-img-detail {
   width: 90%;
   max-height: 20vh;
+}
+
+.content-header-text {
+  width: fit-content;
+  margin: 0;
+}
+
+.content-header-div {
+  width: 3em;
 }
