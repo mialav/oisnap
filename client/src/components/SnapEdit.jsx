@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBh2aAsK418Q4BEEbtSafeh353MvH-EjsQ");
+import categoryColor from "../styles/snapStyles";
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
 
 export default class SnapEdit extends Component {
   state = {
@@ -10,7 +11,9 @@ export default class SnapEdit extends Component {
     description: "",
     location: "",
     category: "",
-    img: ""
+    img: "",
+    creationDate: "",
+    address: ""
   };
 
   componentDidMount() {
@@ -22,17 +25,11 @@ export default class SnapEdit extends Component {
           title: response.data.title,
           description: response.data.description,
           category: response.data.category,
-          img: response.data.image
+          img: response.data.image,
+          creationDate: response.created_at,
+          address: response.data.address,
+          location: response.data.location
         });
-        Geocode.fromLatLng(
-          response.data.location.lat,
-          response.data.location.lng
-        )
-          .then(response => {
-            const address = response.results[0].formatted_address;
-            this.setState({ location: address });
-          })
-          .catch(err => console.log(err));
       })
       .catch(err => {
         this.setState({
@@ -50,21 +47,21 @@ export default class SnapEdit extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    Geocode.fromAddress(this.state.location)
+    Geocode.fromAddress(this.state.address)
       .then(response => {
         axios
           .patch(`/snaps/${this.props.match.params.id}`, {
             ...this.state,
+            address: response.results[0].formatted_address,
             location: response.results[0].geometry.location
           })
           .then(response => {
-            console.log(response);
+            this.props.refresh();
+            this.props.history.push(`/snaps/${this.props.match.params.id}`);
           })
           .catch(err => console.log(err.message));
       })
       .catch(err => console.log(err));
-
-    this.props.history.push(`/snaps/${this.props.match.params.id}`);
   };
 
   assignCategory = event => {
@@ -74,66 +71,100 @@ export default class SnapEdit extends Component {
     });
   };
 
+  updateLocation = event => {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(response => {
+      let location = {
+        lat: response.coords.latitude,
+        lng: response.coords.longitude
+      };
+
+      Geocode.fromLatLng(location.lat, location.lng)
+        .then(response => {
+          this.setState({
+            location: location,
+            address: response.results[0].formatted_address
+          });
+        })
+        .catch(err => console.log(err));
+    });
+  };
+
   render() {
     return (
       <div className="container">
-        {this.props.user._id === this.state.user ? (
+        {this.props.user._id == this.state.user ? (
           <React.Fragment>
-            <h3>Edit your Snap</h3>
+            <div
+              className="container-header"
+              style={{
+                backgroundColor: `${categoryColor(
+                  this.state.category,
+                  this.state.creationDate
+                )}`
+              }}
+            >
+              <h3>Edit your Snap</h3>
+            </div>
+            <div className="container-content">
+              <img
+                className="snap-img"
+                src={this.state.img}
+                alt={this.state.title}
+                style={{ height: "40vh" }}
+              />
+              <p>
+                <i>You cannot edit the picture once it was posted.</i>
+              </p>
+              {/* className="page detail-page" */}
+              <div>
+                <form>
+                  <label htmlFor="title">Snap title</label>
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                  <br />
+                  <label htmlFor="description"> Short description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    id="description"
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                  />
 
-            <img
-              src={this.state.img}
-              alt={this.state.title}
-              style={{ height: "40vh" }}
-            />
-            <p>
-              <i>You cannot edit the picture once it was posted.</i>
-            </p>
-            {/* className="page detail-page" */}
-            <div>
-              <form>
-                <label htmlFor="title">Snap title</label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-                <br />
-                <label htmlFor="description"> Short description</label>
-                <input
-                  type="text"
-                  name="description"
-                  id="description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-                <label htmlFor="location"> Location </label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  value={this.state.location}
-                  onChange={this.handleChange}
-                />
-                <p>Current Category: {this.state.category}</p>
-                <button onClick={this.assignCategory} value="free">
-                  FREE
-                </button>
-                <button onClick={this.assignCategory} value="promo">
-                  PROMO
-                </button>
-                <button onClick={this.assignCategory} value="crowd">
-                  CROWD
-                </button>
-                <button onClick={this.assignCategory} value="happening">
-                  HAPPENING
-                </button>
+                  <label htmlFor="address"> Location </label>
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                  />
+                  <button onClick={this.updateLocation}>Update Location</button>
 
-                <br />
-                <button onClick={this.handleSubmit}>Save Changes</button>
-              </form>
+                  <p>Current Category: {this.state.category}</p>
+                  <button onClick={this.assignCategory} value="free">
+                    FREE
+                  </button>
+                  <button onClick={this.assignCategory} value="promo">
+                    PROMO
+                  </button>
+                  <button onClick={this.assignCategory} value="crowd">
+                    CROWD
+                  </button>
+                  <button onClick={this.assignCategory} value="happening">
+                    HAPPENING
+                  </button>
+
+                  <br />
+                  <button onClick={this.handleSubmit}>Save Changes</button>
+                </form>
+              </div>
             </div>
           </React.Fragment>
         ) : (

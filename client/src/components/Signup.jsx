@@ -15,7 +15,6 @@ export default class Signup extends Component {
   };
 
   handleSubmit = event => {
-    console.log("Submit was clicked");
     event.preventDefault();
 
     axios
@@ -24,12 +23,10 @@ export default class Signup extends Component {
         password: this.state.password
       })
       .then(response => {
-        console.log(response);
         this.props.setUser(response.data);
         this.props.history.push("/home");
       })
       .catch(err => {
-        console.log(err.response.data.message);
         this.setState({
           message: err.response.data.message
         });
@@ -37,8 +34,6 @@ export default class Signup extends Component {
   };
 
   render() {
-    console.log(this.props);
-
     return (
       <div className="container">
         <div className="detail-page">

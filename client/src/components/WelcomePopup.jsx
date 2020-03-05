@@ -1,23 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import logo from "../images/3a.png";
 
 const WelcomePopup = () => {
   return (
     <div className="container">
-      <div className="welcomePopup">
-        <h1>OiSnap!</h1>
+      <div className="welcomePopup container-content">
+        <img className="logo" src={logo} />
+
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi,
-          accusantium libero id neque modi in at tempora quas, deserunt iure
-          enim aspernatur? Asperiores nulla aperiam ad. Explicabo quos placeat
-          neque.
+          OiSnap is a social platform that allows users around Berlin to share
+          their best tips of the moment based on location. Share a picutre of a
+          couch up for grabs on the street, the line to Berghain or an awesome
+          street artist – all snaps disappear after 24 hours.
         </p>
-        <button>
-          <Link to="/home">START</Link>
+        <button className="button-visible">
+          <Link className="link" to="/home">
+            Explore
+          </Link>
         </button>
       </div>
-      <Footer />
     </div>
   );
 };

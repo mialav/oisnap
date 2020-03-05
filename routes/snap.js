@@ -11,9 +11,10 @@ router.get("/", (req, res, next) => {
   const filter = { ...req.query };
   console.log(filter);
 
+  console.log(req.user);
   Snap.find(filter)
     .then(snapList => {
-      res.json(snapList);
+      res.json({ snapList: snapList, score: req.user.score });
     })
     .catch(err => {
       console.log(err);
@@ -31,6 +32,7 @@ router.post("/", (req, res, next) => {
     category: newSnap.category,
     user: req.user._id,
     location: newSnap.location,
+    address: newSnap.address,
     image: newSnap.image,
     expireAt: expiryDate
   })
@@ -42,13 +44,18 @@ router.post("/", (req, res, next) => {
         {
           $push: {
             snaps: [snapDocument._id]
+          },
+          $inc: {
+            score: 155
           }
         }
       )
-        .then(response => console.log(response))
-        .catch(err => console.log(err));
+        .then(response => {
+          console.log(response);
+          res.json(snapDocument);
+        })
 
-      res.json(snapDocument);
+        .catch(err => console.log(err));
 
       //TODO: need to calculte score of the user
     })
@@ -90,11 +97,13 @@ router.patch("/:id", (req, res, next) => {
           title: editedSnap.title,
           description: editedSnap.description,
           category: editedSnap.category,
-          location: editedSnap.location
+          location: editedSnap.location,
+          address: editedSnap.address
         }
       )
         .then(response => {
           console.log(response);
+          res.json();
 
           //TODO - update the score / category count
         })
@@ -118,20 +127,19 @@ router.delete("/:id", (req, res, next) => {
 
       //delete the snap in the database
       Snap.deleteOne({ _id: snapDocument._id })
-        .then(response => console.log(response))
-        .catch(err => console.log(err));
+        .then(() =>
+          User.updateOne(
+            { _id: snapDocument.user },
+            {
+              $pull: {
+                snaps: snapDocument._id
+              },
+              $inc: { score: -155 }
 
-      //remove the snap from the user list of
-      User.updateOne(
-        { _id: snapDocument.user },
-        {
-          $pull: {
-            snaps: snapDocument._id
-          }
-
-          //TODO - update the score / category count
-        }
-      )
+              //TODO - update the score / category count
+            }
+          )
+        )
         .then(response => {
           // console.log(response);
           res.json({ message: "User updated" });
