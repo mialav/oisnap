@@ -14,6 +14,12 @@
   border-radius: 8px;
 }
 
+.snap-img-preview-profile {
+  width: 100%;
+  height: 100%;
+  /* margin-bottom: 0.5em; */
+}
+
 .user-snap {
   width: 50%;
   display: flex;
@@ -36,6 +42,11 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  position: absolute;
+  /* POSITION ME PLEASE! -Markus */
+  top: 40%;
+  left: 50%;
+  z-index: 201;
 }
 
 .user {
@@ -58,4 +69,19 @@
   display: flex;
   flex-flow: column;
   justify-content: flex-end;
+}
+
+.image-vs-buttons {
+  position: relative;
+  margin: 0;
+  height: 15vh;
+}
+
+.image-vs-buttons-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 200;
+  top: 0%;
 }

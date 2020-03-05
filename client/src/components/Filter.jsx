@@ -22,6 +22,9 @@ class Filter extends Component {
 
   goToMap() {
     history.push("/home");
+    this.setState({
+      filters: []
+    });
   }
 
   render() {
@@ -77,8 +80,8 @@ class Filter extends Component {
             <button
               className="button-visible"
               onClick={() => {
-                this.goToMap();
                 this.props.filterSnaps(this.state.filters);
+                this.goToMap();
               }}
             >
               GO
