@@ -182,7 +182,7 @@ class App extends React.Component {
             </div>
             <Switch>
               <Route exact path="/" component={Footer} />
-              <Toolbar snapsdata={this.state.data} />
+              <Toolbar snapsdata={this.state.data} getData={this.getData} />
             </Switch>
           </div>
         </Router>
