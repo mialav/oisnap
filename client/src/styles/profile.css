@@ -1,9 +1,17 @@
 .user-snaps {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   background-color: whitesmoke;
   overflow-y: scroll;
+}
+
+.snap-img-preview {
+  min-height: 10vh;
+  max-height: 10vh;
+  width: 15vh;
+  margin-bottom: 0.5em;
+  border-radius: 8px;
 }
 
 .snap-img-preview-profile {
@@ -13,11 +21,12 @@
 }
 
 .user-snap {
-  width: 40%;
+  width: 50%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   max-width: 40%;
+  margin: 0.5em;
 }
 
 .snap-info {
@@ -40,12 +49,26 @@
   z-index: 201;
 }
 
-.user-info {
-  background-color: #828282;
-  color: whitesmoke;
+.user {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  padding: 0.5em;
+  color: white;
+  border-bottom: 1px dotted rgb(163, 159, 159);
+}
 
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+.user-score {
+  margin: 1em 0;
+  /* margin-bottom: 0.5em; */
+}
+
+.username {
+  margin: 0;
+  margin-left: 1em;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
 }
 
 .image-vs-buttons {
