@@ -4,10 +4,16 @@ import { Link } from "react-router-dom";
 
 import categoryColor from "../styles/snapStyles";
 
+import freeImg from "../images/free.png";
+import crowdImg from "../images/crowd.png";
+import happeningImg from "../images/happening.png";
+import promoImg from "../images/promo.png";
+
 class SnapPreview extends Component {
   state = {
     snap: null,
-    message: null
+    message: null,
+    categoryImg: ""
   };
 
   getData = () => {
@@ -15,8 +21,27 @@ class SnapPreview extends Component {
     axios
       .get(`/snaps/${snapId}`)
       .then(response => {
+        let categoryImg = "";
+        switch (response.data.category) {
+          case "free":
+            categoryImg = freeImg;
+            break;
+
+          case "promo":
+            categoryImg = promoImg;
+            break;
+
+          case "crowd":
+            categoryImg = crowdImg;
+            break;
+
+          case "happening":
+            categoryImg = happeningImg;
+            break;
+        }
         this.setState({
-          snap: response.data
+          snap: response.data,
+          categoryImg: categoryImg
         });
       })
       .catch(err => {
@@ -74,7 +99,15 @@ class SnapPreview extends Component {
                 )
               }}
             >
-              <p className="time">Created {this.getTime(snap)} ago</p>
+              <p>
+                <img
+                  className="category-icon"
+                  src={this.state.categoryImg}
+                  alt={this.state.category}
+                  style={{ height: "10%" }}
+                />
+              </p>
+              <p className="time">{this.getTime(snap)} ago</p>
             </div>
             <div className="container-content">
               <img
@@ -83,9 +116,8 @@ class SnapPreview extends Component {
                 alt={snap.title}
               />
               <div className="details-box">
-                <h3>{snap.title}</h3>
-                <Link className="see-more" to={`/snaps/${snap._id}`}>
-                  View more
+                <Link className="snap-link" to={`/snaps/${snap._id}`}>
+                  <h3>{snap.title}</h3>
                 </Link>
               </div>
             </div>

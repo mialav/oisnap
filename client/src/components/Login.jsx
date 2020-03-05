@@ -36,7 +36,10 @@ export default class Login extends Component {
   render() {
     return (
       <div className="container">
-        <div className="detail-page">
+        <div className="container-header basic-header">
+          <h3>Login</h3>
+        </div>
+        <div className="container-content">
           <form>
             <label htmlFor="username">Username</label>
             <input
@@ -58,11 +61,19 @@ export default class Login extends Component {
               value={this.state.password}
             />
 
-            <button type="submit" onClick={this.handleSubmit}>
+            <button
+              className="button-visible"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
               Log in
             </button>
           </form>
-          {this.state.message ? <p>{this.state.message}</p> : <p></p>}
+          {this.state.message ? (
+            <p className="error-message">{this.state.message}</p>
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
     );

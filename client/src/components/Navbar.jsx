@@ -22,7 +22,7 @@ class Navbar extends Component {
           </Link>
 
           <button>
-            <i name="user" className="fas fa-user"></i>
+            <i name="user" className="fas fa-user-circle"></i>
           </button>
 
           {this.props.dropdown && !this.props.user && (

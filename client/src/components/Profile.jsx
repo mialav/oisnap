@@ -52,15 +52,26 @@ export default class Profile extends Component {
   render() {
     return (
       <div className="container">
-        <div className="user-info">
-          <h3>{this.props.user.username}'s Profile</h3>
-          <p>
-            Snap score: <i>{this.state.score}</i>
+        <div className="container-header basic-header">
+          <div className="user">
+            <i
+              name="user"
+              className="fas fa-user-circle"
+              style={{ color: "white" }}
+            ></i>
+            <h3 className="username"> {this.props.user.username}'s Profile</h3>
+          </div>
+          <p className="user-score">
+            <i className="fas fa-star"></i> Snap score:{" "}
+            <i>{this.state.score}</i>
           </p>
         </div>
 
         <h4>Your current snaps</h4>
-        <div className="container-content">
+        <div
+          className="container-content profile-body"
+          style={{ paddingTop: "0" }}
+        >
           <div className="user-snaps">
             {this.state.snapData?.map(snap => {
               return (
@@ -72,14 +83,16 @@ export default class Profile extends Component {
                       alt={snap.title}
                     />
 
-                    <Link to={`/snaps/${snap._id}`}>{snap.title}</Link>
+                    <Link className="snap-link" to={`/snaps/${snap._id}`}>
+                      {snap.title}
+                    </Link>
                   </div>
                   <div className="snap-edit">
                     <button onClick={this.handleSubmit}>
                       <i name="edit" className="fas fa-pen"></i>
                     </button>
                     <button onClick={this.handleSubmit}>
-                      <i name="delete" className="fas fa-trash-alt"></i>
+                      <i name="delete" className="fas fa-trash"></i>
                     </button>
                   </div>
                 </div>
