@@ -132,7 +132,7 @@ export default class Map extends Component {
             anchor="bottom-left"
             latitude={this.state.popupInfo.latitude}
             longitude={this.state.popupInfo.longitude}
-            dynamicPosition={true}
+            dynamicPosition={false}
             closeButton={false}
             closeOnClick={true}
             style={{
