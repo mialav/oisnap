@@ -26,10 +26,38 @@ class App extends React.Component {
     user: this.props.user,
     data: [],
     dropdown: false
+<<<<<<< HEAD
+=======
+  };
+
+  setDropdown = event => {
+    if (event.target.getAttribute("name") === "user") {
+      this.setState({
+        dropdown: !this.state.dropdown
+      });
+    } else {
+      this.setState({
+        dropdown: false
+      });
+    }
+>>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
   };
 
   setUser = userObj => {
     this.setState({ user: userObj });
+  };
+
+  filterSnaps = array => {
+    let filtered = this.state.data.filter(snap => {
+      for (let category of array) {
+        if (snap.category === category) {
+          return snap;
+        }
+      }
+    });
+    this.setState({
+      data: filtered
+    });
   };
 
   getData = () => {
@@ -37,7 +65,7 @@ class App extends React.Component {
       .get("/snaps")
       .then(response => {
         this.setState({
-          data: response.data
+          data: response.data.snapList
         });
       })
       .catch(err => {
@@ -45,6 +73,7 @@ class App extends React.Component {
       });
   };
 
+<<<<<<< HEAD
   setDropdown = () => {
     console.log("clicked");
     this.setState({
@@ -53,27 +82,45 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
+=======
+  componentDidMount() {
+>>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
     this.getData();
-  };
+  }
 
   render() {
     return (
-      <div className="App">
+      <div className="App" onClick={this.setDropdown}>
         <Router history={history}>
           <div className="map">
             <Map snapsData={this.state.data} />
           </div>
           <div className="body">
             <Navbar
+<<<<<<< HEAD
               dropdown={this.state.dropdown}
               setDropdown={this.setDropdown}
               user={this.state.user}
               setUser={this.setUser}
+=======
+              user={this.state.user}
+              setUser={this.setUser}
+              dropdown={this.state.dropdown}
+>>>>>>> 1fcc7bd2158179cf5009a0debd1610d8aa0ae082
             />
             <div className="body-view">
               <Switch>
                 <Route exact path="/search" component={Search} />
-                <Route exact path="/filter" component={Filter} />
+                <Route
+                  exact
+                  path="/filter"
+                  render={props => (
+                    <Filter
+                      filterSnaps={this.filterSnaps}
+                      history={props.history}
+                    />
+                  )}
+                />
                 <Route
                   exact
                   path="/add"
@@ -156,7 +203,7 @@ class App extends React.Component {
             </div>
             <Switch>
               <Route exact path="/" component={Footer} />
-              <Toolbar />
+              <Toolbar snapsdata={this.state.data} />
             </Switch>
           </div>
         </Router>

@@ -12,12 +12,12 @@ import categoryColor from "../styles/snapStyles.js";
 
 const MAPBOX_TOKEN = `${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
-const geolocateStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  margin: 10
-};
+// const geolocateStyle = {
+//   position: "absolute",
+//   top: 0,
+//   left: 0,
+//   margin: 10
+// };
 
 export default class Map extends Component {
   state = {
@@ -30,8 +30,6 @@ export default class Map extends Component {
   };
 
   _onViewportChange = viewport => this.setState({ viewport });
-
-  // onGeolocate = () => map.fitBoundsOptions({ maxZoom: 15 });
 
   getSnaps = () => {
     let snaps = [];
@@ -64,43 +62,48 @@ export default class Map extends Component {
 
   closeWindows = () => {
     history.push("/home");
+    this.setState({
+      popupInfo: null
+    });
   };
 
   render() {
     const { viewport } = this.state;
 
-    const geolocateStyle = {
-      float: "left",
-      marginTop: "100px",
-      padding: "10px"
-    };
+    // const geolocateStyle = {
+    //   // float: "left",
+    //   // marginTop: "100px",
+    //   // padding: "10px"
+    // };
 
     return (
       <MapGL
         {...viewport}
         width="100vw"
         height="100vh"
-        mapStyle="mapbox://styles/mialav/ck7brnzxa0mg01invkw6jqlvj"
+        mapStyle="mapbox://styles/mapbox/dark-v10"
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapContainer"
-        // closeOnClick={true}
         onClick={this.closeWindows}
       >
-        <div className="geolocation-button">
-          <GeolocateControl
-            style={geolocateStyle}
-            positionOptions={{ enableHighAccuracy: true }}
-            trackUserLocation={true}
-            onViewportChange={viewport => {
-              this.setState({ viewport: { ...viewport, zoom: 16 } });
-            }}
-          />
-        </div>
-        <div style={{ position: "absolute", right: 0, top: 100 }}>
-          <NavigationControl showCompass={false} />
-        </div>
+        <div className="map-controls">
+          <div className="geolocation-button">
+            <GeolocateControl
+              // style={geolocateStyle}
+              className="map-geolocateStyle"
+              positionOptions={{ enableHighAccuracy: true }}
+              trackUserLocation={true}
+              onViewportChange={viewport => {
+                this.setState({ viewport: { ...viewport, zoom: 16 } });
+              }}
+            />
+          </div>
 
+          <div>
+            <NavigationControl showCompass={false} />
+          </div>
+        </div>
         {this.getSnaps().map(snap => {
           return (
             <Marker
@@ -121,18 +124,6 @@ export default class Map extends Component {
                   onClick={() => this.renderPopup(snap)}
                 ></i>
               </span>
-
-              {/* <img
-                className="marker"
-                alt="marker"
-                src={require("../images/mapbox-icon.png")}
-                onClick={() => this.renderPopup(snap)}
-
-
-              />
-
-
-              /> */}
             </Marker>
           );
         })}
@@ -143,6 +134,7 @@ export default class Map extends Component {
             longitude={this.state.popupInfo.longitude}
             dynamicPosition={true}
             closeButton={false}
+            closeOnClick={true}
             style={{
               backgroundColor: `${categoryColor(
                 this.state.popupInfo.category,

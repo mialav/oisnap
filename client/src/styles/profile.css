@@ -1,0 +1,44 @@
+.user-snaps {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  background-color: whitesmoke;
+  overflow-y: scroll;
+}
+
+.snap-img-preview {
+  height: 15vh;
+  width: 15vh;
+  margin-bottom: 0.5em;
+}
+
+.user-snap {
+  width: 40%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  max-width: 40%;
+}
+
+.snap-info {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  color: whitesmoke;
+}
+
+.snap-edit {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.user-info {
+  background-color: #828282;
+  color: whitesmoke;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
