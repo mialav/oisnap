@@ -14,13 +14,10 @@ const categoryColor = (category, creation) => {
   let timeDifference = startMiliseconds - fromMiliseconds;
   if (timeDifference <= 0) timeDifference = 1;
 
-  let colorNumber = 1 - (timeDifference / maxTime) * 0.6; // A number from 0-100
-  // console.log(colorNumber.toFixed(1));
+  let colorNumber = 1 - (timeDifference / maxTime) * 0.6; // A number from 1-0.4
 
-  console.log(colorNumber);
   switch (category) {
     case "promo":
-      // console.log("red");
       color = `rgba(238, 99, 82, ${colorNumber.toFixed(1)})`;
       break;
     case "happening":
